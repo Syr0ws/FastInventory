@@ -11,10 +11,7 @@ import com.github.syr0ws.fastinventory.api.placeholder.PlaceholderManager;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.provider.Provider;
 import com.github.syr0ws.fastinventory.api.util.Context;
-import com.github.syr0ws.fastinventory.common.placeholder.InventorySizePlaceholder;
-import com.github.syr0ws.fastinventory.common.placeholder.InventoryTypePlaceholder;
-import com.github.syr0ws.fastinventory.common.placeholder.ItemSlotPlaceholder;
-import com.github.syr0ws.fastinventory.common.placeholder.PlayerNamePlaceholder;
+import com.github.syr0ws.fastinventory.common.placeholder.*;
 import com.github.syr0ws.fastinventory.internal.SimpleFastInventory;
 import com.github.syr0ws.fastinventory.internal.placeholder.SimplePlaceholderManager;
 import org.bukkit.entity.Player;
@@ -64,6 +61,7 @@ public abstract class CommonInventoryProvider implements InventoryProvider {
 
     protected void addPlaceholders(PlaceholderManager manager) {
         manager.addPlaceholder(new PlayerNamePlaceholder());
+        manager.addPlaceholder(new PlayerUUIDPlaceholder());
         manager.addPlaceholder(new InventoryTypePlaceholder());
         manager.addPlaceholder(new InventorySizePlaceholder());
         manager.addPlaceholder(new ItemSlotPlaceholder());
