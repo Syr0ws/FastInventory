@@ -6,6 +6,8 @@ import org.bukkit.entity.Player;
 
 public class MessageAction implements ClickAction {
 
+    public static final String ACTION_NAME = "MESSAGE";
+
     private final String message;
 
     public MessageAction(String message) {
@@ -25,7 +27,7 @@ public class MessageAction implements ClickAction {
 
     @Override
     public String getName() {
-        return ClickActionEnum.MESSAGE.name();
+        return ACTION_NAME;
     }
 
 }

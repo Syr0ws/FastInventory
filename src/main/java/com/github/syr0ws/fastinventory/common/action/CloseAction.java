@@ -6,6 +6,8 @@ import org.bukkit.entity.Player;
 
 public class CloseAction implements ClickAction {
 
+    public static final String ACTION_NAME = "CLOSE";
+
     @Override
     public void execute(FastInventoryClickEvent event) {
         Player player = event.getPlayer();
@@ -14,6 +16,6 @@ public class CloseAction implements ClickAction {
 
     @Override
     public String getName() {
-        return ClickActionEnum.CLOSE.name();
+        return ACTION_NAME;
     }
 }

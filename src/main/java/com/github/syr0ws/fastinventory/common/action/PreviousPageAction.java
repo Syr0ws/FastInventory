@@ -7,6 +7,8 @@ import com.github.syr0ws.fastinventory.api.pagination.Pagination;
 
 public class PreviousPageAction implements ClickAction {
 
+    public static final String ACTION_NAME = "PREVIOUS_PAGE";
+
     private final String paginationId;
 
     public PreviousPageAction(String paginationId) {
@@ -33,6 +35,6 @@ public class PreviousPageAction implements ClickAction {
 
     @Override
     public String getName() {
-        return ClickActionEnum.PREVIOUS_PAGE.name();
+        return ACTION_NAME;
     }
 }
