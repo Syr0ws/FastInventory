@@ -1,6 +1,5 @@
 package com.github.syr0ws.fastinventory.common.provider;
 
-import com.github.syr0ws.fastinventory.api.i18n.I18n;
 import com.github.syr0ws.fastinventory.api.item.ItemParser;
 import com.github.syr0ws.fastinventory.api.placeholder.PlaceholderManager;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
@@ -14,18 +13,8 @@ import java.util.List;
 
 public class CommonItemStackParser implements ItemParser {
 
-    private final I18n i18n;
-
-    public CommonItemStackParser(I18n i18n) {
-        this.i18n = i18n;
-    }
-
     @Override
     public ItemStack parse(InventoryProvider provider, ItemStack item, Context context) {
-
-        if(i18n != null && !context.hasData(CommonContextKeyEnum.VIEWER.name())) {
-            throw new IllegalStateException("I18n set but no viewer found in the context");
-        }
 
         PlaceholderManager manager = provider.getPlaceholderManager();
 
@@ -35,43 +24,42 @@ public class CommonItemStackParser implements ItemParser {
             return item;
         }
 
-        this.parseName(manager, meta, context);
-        this.parseLore(manager, meta, context);
+        this.parseName(provider, manager, meta, context);
+        this.parseLore(provider, manager, meta, context);
 
         item.setItemMeta(meta);
 
         return item;
     }
 
-    private void parseName(PlaceholderManager manager, ItemMeta meta, Context context) {
+    private void parseName(InventoryProvider provider, PlaceholderManager manager, ItemMeta meta, Context context) {
 
         if(!meta.hasDisplayName()) {
             return;
         }
 
-        String name = meta.getDisplayName();
-
-        if(this.i18n != null) {
-            Player viewer = context.getData(CommonContextKeyEnum.VIEWER.name(), Player.class);
-            name = this.i18n.getText(viewer, name);
-        }
+        String name = provider.getI18n()
+                .map(i18n -> {
+                    Player viewer = context.getData(CommonContextKeyEnum.VIEWER.name(), Player.class);
+                    return i18n.getText(viewer, meta.getDisplayName());
+                }).orElse(meta.getDisplayName());
 
         name = manager.parse(name, context);
+
         meta.setDisplayName(name);
     }
 
-    private void parseLore(PlaceholderManager manager, ItemMeta meta, Context context) {
+    private void parseLore(InventoryProvider provider, PlaceholderManager manager, ItemMeta meta, Context context) {
 
         if(!meta.hasLore()) {
             return;
         }
 
-        List<String> lore = meta.getLore();
-
-        if(this.i18n != null) {
-            Player viewer = context.getData(CommonContextKeyEnum.VIEWER.name(), Player.class);
-            lore = lore.stream().map(line -> i18n.getText(viewer, line)).toList();
-        }
+        List<String> lore = provider.getI18n()
+                .map(i18n -> {
+                    Player viewer = context.getData(CommonContextKeyEnum.VIEWER.name(), Player.class);
+                    return meta.getLore().stream().map(line -> i18n.getText(viewer, line)).toList();
+                }).orElse(meta.getLore());
 
         lore = lore.stream()
                 .map(line -> manager.parse(line, context))

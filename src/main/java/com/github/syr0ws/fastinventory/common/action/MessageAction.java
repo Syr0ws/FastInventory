@@ -29,7 +29,11 @@ public class MessageAction implements ClickAction {
         InventoryProvider provider = inventory.getProvider();
         PlaceholderManager placeholderManager = provider.getPlaceholderManager();
 
-        String message = placeholderManager.parse(this.message, inventory.getDefaultContext());
+        String message = provider.getI18n()
+                .map(i18n -> i18n.getText(event.getPlayer(), this.message))
+                .orElse(this.message);
+
+        message = placeholderManager.parse(message, inventory.getDefaultContext());
 
         Player player = event.getPlayer();
         player.sendMessage(message);

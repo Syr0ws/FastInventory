@@ -11,12 +11,6 @@ import org.bukkit.entity.Player;
 
 public class CommonTitleProvider implements Provider<String> {
 
-    private final I18n i18n;
-
-    public CommonTitleProvider(I18n i18n) {
-        this.i18n = i18n;
-    }
-
     @Override
     public String provide(InventoryProvider provider, Context context) {
 
@@ -25,7 +19,9 @@ public class CommonTitleProvider implements Provider<String> {
 
         Player viewer = context.getData(CommonContextKeyEnum.VIEWER.name(), Player.class);
 
-        String title = this.i18n == null ? config.getTitle() : this.i18n.getText(viewer, config.getTitle());
+        String title = provider.getI18n()
+                .map(i18n -> i18n.getText(viewer, config.getTitle()))
+                .orElse(config.getTitle());
 
         return placeholderManager.parse(title, context);
     }
