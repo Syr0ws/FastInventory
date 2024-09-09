@@ -1,7 +1,10 @@
 package com.github.syr0ws.fastinventory.common.action;
 
+import com.github.syr0ws.fastinventory.api.FastInventory;
 import com.github.syr0ws.fastinventory.api.action.ClickAction;
 import com.github.syr0ws.fastinventory.api.event.FastInventoryClickEvent;
+import com.github.syr0ws.fastinventory.api.placeholder.PlaceholderManager;
+import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import org.bukkit.entity.Player;
 
 public class MessageAction implements ClickAction {
@@ -21,8 +24,15 @@ public class MessageAction implements ClickAction {
 
     @Override
     public void execute(FastInventoryClickEvent event) {
+
+        FastInventory inventory = event.getFastInventory();
+        InventoryProvider provider = inventory.getProvider();
+        PlaceholderManager placeholderManager = provider.getPlaceholderManager();
+
+        String message = placeholderManager.parse(this.message, inventory.getDefaultContext());
+
         Player player = event.getPlayer();
-        player.sendMessage(this.message);
+        player.sendMessage(message);
     }
 
     @Override
