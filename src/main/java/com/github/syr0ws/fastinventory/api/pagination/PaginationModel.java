@@ -27,6 +27,10 @@ public interface PaginationModel<T> {
 
     int getLastPage();
 
+    int getPreviousPage();
+
+    int getNextPage();
+
     boolean hasPreviousPage();
 
     boolean hasNextPage();

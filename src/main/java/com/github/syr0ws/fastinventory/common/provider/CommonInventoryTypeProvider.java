@@ -14,7 +14,7 @@ public class CommonInventoryTypeProvider implements Provider<FastInventoryType> 
 
     @Override
     public String getName() {
-        return CommonProviderEnum.INVENTORY_TYPE.name();
+        return CommonProviderType.INVENTORY_TYPE.name();
     }
 
     @Override

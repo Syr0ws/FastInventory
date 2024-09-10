@@ -11,7 +11,12 @@ import com.github.syr0ws.fastinventory.api.placeholder.PlaceholderManager;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.provider.Provider;
 import com.github.syr0ws.fastinventory.api.util.Context;
-import com.github.syr0ws.fastinventory.common.placeholder.*;
+import com.github.syr0ws.fastinventory.common.placeholder.CommonPlaceholder;
+import com.github.syr0ws.fastinventory.common.placeholder.inventory.InventorySizePlaceholder;
+import com.github.syr0ws.fastinventory.common.placeholder.inventory.InventoryTypePlaceholder;
+import com.github.syr0ws.fastinventory.common.placeholder.item.ItemSlotPlaceholder;
+import com.github.syr0ws.fastinventory.common.placeholder.player.PlayerNamePlaceholder;
+import com.github.syr0ws.fastinventory.common.placeholder.player.PlayerUUIDPlaceholder;
 import com.github.syr0ws.fastinventory.internal.SimpleFastInventory;
 import com.github.syr0ws.fastinventory.internal.placeholder.SimplePlaceholderManager;
 import org.bukkit.entity.Player;
@@ -59,14 +64,14 @@ public abstract class CommonInventoryProvider implements InventoryProvider {
         this.addProvider(new CommonInventoryTypeProvider());
         this.addProvider(new CommonInventoryItemProvider(itemParser));
         this.addProvider(new CommonPaginationItemProvider(itemParser));
+        this.addProvider(new CommonPreviousPageItemProvider(itemParser));
+        this.addProvider(new CommonNextPageItemProvider(itemParser));
     }
 
     protected void addPlaceholders(PlaceholderManager manager) {
-        manager.addPlaceholder(new PlayerNamePlaceholder());
-        manager.addPlaceholder(new PlayerUUIDPlaceholder());
-        manager.addPlaceholder(new InventoryTypePlaceholder());
-        manager.addPlaceholder(new InventorySizePlaceholder());
-        manager.addPlaceholder(new ItemSlotPlaceholder());
+        Arrays.stream(CommonPlaceholder.values())
+                .map(CommonPlaceholder::getPlaceholder)
+                .forEach(manager::addPlaceholder);
     }
 
     protected void addProvider(Provider<?> provider) {

@@ -100,6 +100,16 @@ public class SimplePaginationModel<T> implements PaginationModel<T> {
     }
 
     @Override
+    public int getPreviousPage() {
+        return this.hasPreviousPage() ? this.currentPage - 1 : this.getFirstPage();
+    }
+
+    @Override
+    public int getNextPage() {
+        return this.hasNextPage() ? this.currentPage + 1 : this.getLastPage();
+    }
+
+    @Override
     public boolean hasPreviousPage() {
         return this.currentPage > 1;
     }

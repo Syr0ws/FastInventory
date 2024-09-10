@@ -2,13 +2,14 @@ package com.github.syr0ws.fastinventory.internal.pagination;
 
 import com.github.syr0ws.fastinventory.api.FastInventory;
 import com.github.syr0ws.fastinventory.api.InventoryContent;
+import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
 import com.github.syr0ws.fastinventory.api.item.InventoryItem;
 import com.github.syr0ws.fastinventory.api.pagination.Pagination;
 import com.github.syr0ws.fastinventory.api.pagination.PaginationModel;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.common.CommonContextKey;
-import com.github.syr0ws.fastinventory.common.provider.CommonProviderEnum;
+import com.github.syr0ws.fastinventory.common.provider.CommonProviderType;
 
 import java.util.Collections;
 import java.util.List;
@@ -46,6 +47,11 @@ public class SimplePagination<T> implements Pagination<T> {
 
     @Override
     public void update() {
+        this.updatePaginationItems();
+        this.updatePageItems();
+    }
+
+    private void updatePaginationItems() {
 
         InventoryProvider provider = this.inventory.getProvider();
         InventoryContent content = this.inventory.getContent();
@@ -64,7 +70,7 @@ public class SimplePagination<T> implements Pagination<T> {
                 context.addData(CommonContextKey.SLOT.name(), slot, Integer.class);
                 context.addData(CommonContextKey.PAGINATION_ITEM.name(), items.get(i), this.model.getDataType());
 
-                item = provider.provide(CommonProviderEnum.PAGINATION_ITEM.name(), InventoryItem.class, context).orElse(null);
+                item = provider.provide(CommonProviderType.PAGINATION_ITEM.name(), InventoryItem.class, context).orElse(null);
             }
 
             if(item == null) {
@@ -74,6 +80,35 @@ public class SimplePagination<T> implements Pagination<T> {
             }
 
             i++;
+        }
+    }
+
+    private void updatePageItems() {
+
+        InventoryProvider provider = this.inventory.getProvider();
+        InventoryContent content = this.inventory.getContent();
+
+        Context context = this.getPaginationContext();
+
+        PaginationConfig paginationConfig = provider.getConfig()
+                .getPaginationConfig(this.id)
+                .orElseThrow(() -> new NullPointerException("Pagination not found"));
+
+        if(this.model.hasPreviousPage()) {
+
+            provider.provide(CommonProviderType.PAGINATION_PREVIOUS_PAGE_ITEM.name(), InventoryItem.class, context)
+                    .ifPresent(item -> content.setItem(item, paginationConfig.getPreviousPageItemSlots()));
+
+        } else {
+            content.removeItems(paginationConfig.getPreviousPageItemSlots());
+        }
+
+        if(this.model.hasNextPage()) {
+
+            provider.provide(CommonProviderType.PAGINATION_NEXT_PAGE_ITEM.name(), InventoryItem.class, context)
+                    .ifPresent(item -> content.setItem(item, paginationConfig.getNextPageItemSlots()));
+        } else {
+            content.removeItems(paginationConfig.getNextPageItemSlots());
         }
     }
 
