@@ -1,4 +1,4 @@
-package com.github.syr0ws.fastinventory.common.placeholder;
+package com.github.syr0ws.fastinventory.common.placeholder.inventory;
 
 import com.github.syr0ws.fastinventory.api.FastInventory;
 import com.github.syr0ws.fastinventory.api.placeholder.Placeholder;
