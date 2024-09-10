@@ -8,7 +8,7 @@ import com.github.syr0ws.fastinventory.api.pagination.PaginationModel;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.provider.Provider;
 import com.github.syr0ws.fastinventory.api.util.Context;
-import com.github.syr0ws.fastinventory.common.CommonContextKeyEnum;
+import com.github.syr0ws.fastinventory.common.CommonContextKey;
 import com.github.syr0ws.fastinventory.internal.pagination.SimplePagination;
 import com.github.syr0ws.fastinventory.internal.pagination.SimplePaginationModel;
 
@@ -43,8 +43,8 @@ public class CommonPaginationProvider<T> implements Provider<Pagination> {
     @Override
     public Pagination<?> provide(InventoryProvider provider, Context context) {
 
-        FastInventory inventory = context.getData(CommonContextKeyEnum.INVENTORY.name(), FastInventory.class);
-        String paginationId = context.getData(CommonContextKeyEnum.PAGINATION_ID.name(), String.class);
+        FastInventory inventory = context.getData(CommonContextKey.INVENTORY.name(), FastInventory.class);
+        String paginationId = context.getData(CommonContextKey.PAGINATION_ID.name(), String.class);
 
         InventoryConfig config = provider.getConfig();
 

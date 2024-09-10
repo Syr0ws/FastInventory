@@ -5,7 +5,7 @@ import com.github.syr0ws.fastinventory.api.placeholder.PlaceholderManager;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.provider.Provider;
 import com.github.syr0ws.fastinventory.api.util.Context;
-import com.github.syr0ws.fastinventory.common.CommonContextKeyEnum;
+import com.github.syr0ws.fastinventory.common.CommonContextKey;
 import org.bukkit.entity.Player;
 
 public class CommonTitleProvider implements Provider<String> {
@@ -16,7 +16,7 @@ public class CommonTitleProvider implements Provider<String> {
         InventoryConfig config = provider.getConfig();
         PlaceholderManager placeholderManager = provider.getPlaceholderManager();
 
-        Player viewer = context.getData(CommonContextKeyEnum.VIEWER.name(), Player.class);
+        Player viewer = context.getData(CommonContextKey.VIEWER.name(), Player.class);
 
         String title = provider.getI18n()
                 .map(i18n -> i18n.getText(viewer, config.getTitle()))

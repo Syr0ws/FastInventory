@@ -7,7 +7,7 @@ import com.github.syr0ws.fastinventory.api.item.ItemParser;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.provider.Provider;
 import com.github.syr0ws.fastinventory.api.util.Context;
-import com.github.syr0ws.fastinventory.common.CommonContextKeyEnum;
+import com.github.syr0ws.fastinventory.common.CommonContextKey;
 import com.github.syr0ws.fastinventory.internal.item.SimpleInventoryItem;
 import org.bukkit.inventory.ItemStack;
 
@@ -29,7 +29,7 @@ public class CommonInventoryItemProvider implements Provider<InventoryItem> {
 
         InventoryConfig config = provider.getConfig();
 
-        Integer slot = context.getData(CommonContextKeyEnum.SLOT.name(), Integer.class);
+        Integer slot = context.getData(CommonContextKey.SLOT.name(), Integer.class);
         InventoryItemConfig itemConfig = config.getContent().get(slot);
 
         if(itemConfig == null) {

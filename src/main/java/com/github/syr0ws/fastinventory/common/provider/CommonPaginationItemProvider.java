@@ -8,7 +8,7 @@ import com.github.syr0ws.fastinventory.api.item.ItemParser;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.provider.Provider;
 import com.github.syr0ws.fastinventory.api.util.Context;
-import com.github.syr0ws.fastinventory.common.CommonContextKeyEnum;
+import com.github.syr0ws.fastinventory.common.CommonContextKey;
 import com.github.syr0ws.fastinventory.internal.item.SimpleInventoryItem;
 import org.bukkit.inventory.ItemStack;
 
@@ -30,7 +30,7 @@ public class CommonPaginationItemProvider implements Provider<InventoryItem> {
     @Override
     public InventoryItem provide(InventoryProvider provider, Context context) {
 
-        String paginationId = context.getData(CommonContextKeyEnum.PAGINATION_ID.name(), String.class);
+        String paginationId = context.getData(CommonContextKey.PAGINATION_ID.name(), String.class);
 
         InventoryConfig inventoryConfig = provider.getConfig();
 
