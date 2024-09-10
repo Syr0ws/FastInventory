@@ -5,6 +5,7 @@ import com.github.syr0ws.fastinventory.api.InventoryContent;
 import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
 import com.github.syr0ws.fastinventory.api.item.InventoryItem;
 import com.github.syr0ws.fastinventory.api.pagination.Pagination;
+import com.github.syr0ws.fastinventory.api.pagination.PaginationItemTransformer;
 import com.github.syr0ws.fastinventory.api.pagination.PaginationModel;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
@@ -20,8 +21,9 @@ public class SimplePagination<T> implements Pagination<T> {
     private final FastInventory inventory;
     private final PaginationModel<T> model;
     private final List<Integer> slots;
+    private final PaginationItemTransformer<T> transformer;
 
-    public SimplePagination(String id, FastInventory inventory, PaginationModel<T> model, List<Integer> slots) {
+    public SimplePagination(String id, FastInventory inventory, PaginationModel<T> model, List<Integer> slots, PaginationItemTransformer<T> transformer) {
 
         if(id == null || id.isEmpty()) {
             throw new IllegalArgumentException("id cannot be null or empty");
@@ -43,6 +45,7 @@ public class SimplePagination<T> implements Pagination<T> {
         this.inventory = inventory;
         this.model = model;
         this.slots = slots;
+        this.transformer = transformer;
     }
 
     @Override
@@ -58,28 +61,32 @@ public class SimplePagination<T> implements Pagination<T> {
 
         List<T> items = this.model.getCurrentItems();
 
-        int i = 0;
+        int index = 0;
 
         for(int slot : this.slots) {
 
-            InventoryItem item = null;
+            InventoryItem item;
 
-            if(i < items.size()) {
+            if(index < items.size()) {
 
                 Context context = this.getPaginationContext();
                 context.addData(CommonContextKey.SLOT.name(), slot, Integer.class);
-                context.addData(CommonContextKey.PAGINATION_ITEM.name(), items.get(i), this.model.getDataType());
+                context.addData(CommonContextKey.PAGINATION_ITEM.name(), items.get(index), this.model.getDataType());
 
-                item = provider.provide(CommonProviderType.PAGINATION_ITEM.name(), InventoryItem.class, context).orElse(null);
-            }
+                item = provider.provide(CommonProviderType.PAGINATION_ITEM.name(), InventoryItem.class, context)
+                        .orElseThrow(() -> new NullPointerException("Cannot provide pagination item"));
 
-            if(item == null) {
-                content.removeItem(slot);
-            } else {
+                if(this.transformer != null) {
+                    item = this.transformer.transform(context, items.get(index), item);
+                }
+
                 content.setItem(item, slot);
+
+            } else {
+                content.removeItem(slot);
             }
 
-            i++;
+            index++;
         }
     }
 

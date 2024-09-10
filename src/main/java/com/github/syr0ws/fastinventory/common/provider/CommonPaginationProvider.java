@@ -4,6 +4,7 @@ import com.github.syr0ws.fastinventory.api.FastInventory;
 import com.github.syr0ws.fastinventory.api.config.InventoryConfig;
 import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
 import com.github.syr0ws.fastinventory.api.pagination.Pagination;
+import com.github.syr0ws.fastinventory.api.pagination.PaginationItemTransformer;
 import com.github.syr0ws.fastinventory.api.pagination.PaginationModel;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.provider.Provider;
@@ -20,8 +21,9 @@ public class CommonPaginationProvider<T> implements Provider<Pagination> {
     private final String paginationId;
     private final Class<T> dataType;
     private final Supplier<List<T>> supplier;
+    private final PaginationItemTransformer<T> transformer;
 
-    public CommonPaginationProvider(String paginationId, Class<T> dataType, Supplier<List<T>> supplier) {
+    public CommonPaginationProvider(String paginationId, Class<T> dataType, Supplier<List<T>> supplier, PaginationItemTransformer<T> transformer) {
 
         if(paginationId == null || paginationId.isEmpty()) {
             throw new IllegalArgumentException("paginationId cannot be null or empty");
@@ -38,6 +40,11 @@ public class CommonPaginationProvider<T> implements Provider<Pagination> {
         this.paginationId = paginationId;
         this.dataType = dataType;
         this.supplier = supplier;
+        this.transformer = transformer;
+    }
+
+    public CommonPaginationProvider(String paginationId, Class<T> dataType, Supplier<List<T>> supplier) {
+        this(paginationId, dataType, supplier, null);
     }
 
     @Override
@@ -54,7 +61,7 @@ public class CommonPaginationProvider<T> implements Provider<Pagination> {
         PaginationModel<T> model = new SimplePaginationModel<>(this.dataType, paginationConfig.getSlots().size());
         model.setItems(this.supplier.get());
 
-        return new SimplePagination<>(paginationId, inventory, model, paginationConfig.getSlots());
+        return new SimplePagination<>(paginationId, inventory, model, paginationConfig.getSlots(), this.transformer);
     }
 
     @Override
