@@ -24,6 +24,7 @@ public class YamlLoreLoader implements ItemPropertyLoader<ConfigurationSection> 
 
         ItemMeta meta = item.getItemMeta();
         meta.setLore(lore);
+        item.setItemMeta(meta);
     }
 
     @Override

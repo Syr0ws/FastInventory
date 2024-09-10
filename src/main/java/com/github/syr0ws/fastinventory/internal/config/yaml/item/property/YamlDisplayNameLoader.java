@@ -22,6 +22,7 @@ public class YamlDisplayNameLoader implements ItemPropertyLoader<ConfigurationSe
 
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(name);
+        item.setItemMeta(meta);
     }
 
     @Override

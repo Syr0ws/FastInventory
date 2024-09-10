@@ -24,6 +24,7 @@ public class YamlGlowPropertyLoader implements ItemPropertyLoader<ConfigurationS
             ItemMeta meta = item.getItemMeta();
             meta.addEnchant(Enchantment.DURABILITY, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            item.setItemMeta(meta);
         }
     }
 
