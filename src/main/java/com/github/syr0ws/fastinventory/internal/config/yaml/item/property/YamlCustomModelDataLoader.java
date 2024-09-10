@@ -20,6 +20,7 @@ public class YamlCustomModelDataLoader implements ItemPropertyLoader<Configurati
 
         ItemMeta meta = item.getItemMeta();
         meta.setCustomModelData(customModelData);
+        item.setItemMeta(meta);
     }
 
     @Override
