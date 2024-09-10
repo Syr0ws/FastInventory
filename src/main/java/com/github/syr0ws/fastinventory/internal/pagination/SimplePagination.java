@@ -92,17 +92,24 @@ public class SimplePagination<T> implements Pagination<T> {
 
         PaginationConfig paginationConfig = provider.getConfig()
                 .getPaginationConfig(this.id)
-                .orElse(null);
+                .orElseThrow(() -> new NullPointerException("Pagination not found"));
 
-        if(paginationConfig == null) {
-            return; // Should not happen.
+        if(this.model.hasPreviousPage()) {
+
+            provider.provide(CommonProviderType.PAGINATION_PREVIOUS_PAGE_ITEM.name(), InventoryItem.class, context)
+                    .ifPresent(item -> content.setItem(item, paginationConfig.getPreviousPageItemSlots()));
+
+        } else {
+            content.removeItems(paginationConfig.getPreviousPageItemSlots());
         }
 
-        provider.provide(CommonProviderType.PAGINATION_PREVIOUS_PAGE_ITEM.name(), InventoryItem.class, context)
-                .ifPresent(item -> content.setItem(item, paginationConfig.getPreviousPageItemSlots()));
+        if(this.model.hasNextPage()) {
 
-        provider.provide(CommonProviderType.PAGINATION_NEXT_PAGE_ITEM.name(), InventoryItem.class, context)
-                .ifPresent(item -> content.setItem(item, paginationConfig.getNextPageItemSlots()));
+            provider.provide(CommonProviderType.PAGINATION_NEXT_PAGE_ITEM.name(), InventoryItem.class, context)
+                    .ifPresent(item -> content.setItem(item, paginationConfig.getNextPageItemSlots()));
+        } else {
+            content.removeItems(paginationConfig.getNextPageItemSlots());
+        }
     }
 
     @Override
