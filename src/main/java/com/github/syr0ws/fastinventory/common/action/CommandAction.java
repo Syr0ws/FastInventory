@@ -7,19 +7,19 @@ import com.github.syr0ws.fastinventory.api.placeholder.PlaceholderManager;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import org.bukkit.entity.Player;
 
-public class MessageAction implements ClickAction {
+public class CommandAction implements ClickAction {
 
-    public static final String ACTION_NAME = "MESSAGE";
+    public static final String ACTION_NAME = "EXECUTE_COMMAND";
 
-    private final String message;
+    private final String command;
 
-    public MessageAction(String message) {
+    public CommandAction(String command) {
 
-        if(message == null) {
-            throw new IllegalArgumentException("message cannot be null");
+        if(command == null || command.isEmpty()) {
+            throw new IllegalArgumentException("command cannot null or empty");
         }
 
-        this.message = message;
+        this.command = command;
     }
 
     @Override
@@ -29,19 +29,14 @@ public class MessageAction implements ClickAction {
         InventoryProvider provider = inventory.getProvider();
         PlaceholderManager placeholderManager = provider.getPlaceholderManager();
 
-        String message = provider.getI18n()
-                .map(i18n -> i18n.getText(event.getPlayer(), this.message))
-                .orElse(this.message);
-
-        message = placeholderManager.parse(message, inventory.getDefaultContext());
+        String command = placeholderManager.parse(this.command, inventory.getDefaultContext());
 
         Player player = event.getPlayer();
-        player.sendMessage(message);
+        player.performCommand(command);
     }
 
     @Override
     public String getName() {
         return ACTION_NAME;
     }
-
 }

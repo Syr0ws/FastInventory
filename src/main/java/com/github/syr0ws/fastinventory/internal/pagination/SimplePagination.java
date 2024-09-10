@@ -7,7 +7,7 @@ import com.github.syr0ws.fastinventory.api.pagination.Pagination;
 import com.github.syr0ws.fastinventory.api.pagination.PaginationModel;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
-import com.github.syr0ws.fastinventory.common.CommonContextKeyEnum;
+import com.github.syr0ws.fastinventory.common.CommonContextKey;
 import com.github.syr0ws.fastinventory.common.provider.CommonProviderEnum;
 
 import java.util.Collections;
@@ -61,8 +61,8 @@ public class SimplePagination<T> implements Pagination<T> {
             if(i < items.size()) {
 
                 Context context = this.getPaginationContext();
-                context.addData(CommonContextKeyEnum.SLOT.name(), slot, Integer.class);
-                context.addData(CommonContextKeyEnum.PAGINATION_ITEM.name(), items.get(i), this.model.getDataType());
+                context.addData(CommonContextKey.SLOT.name(), slot, Integer.class);
+                context.addData(CommonContextKey.PAGINATION_ITEM.name(), items.get(i), this.model.getDataType());
 
                 item = provider.provide(CommonProviderEnum.PAGINATION_ITEM.name(), InventoryItem.class, context).orElse(null);
             }
@@ -112,7 +112,7 @@ public class SimplePagination<T> implements Pagination<T> {
 
     private Context getPaginationContext() {
         Context context = this.inventory.getDefaultContext();
-        context.addData(CommonContextKeyEnum.PAGINATION_ID.name(), this.id, String.class);
+        context.addData(CommonContextKey.PAGINATION_ID.name(), this.id, String.class);
         return context;
     }
 }

@@ -5,17 +5,17 @@ import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.common.CommonContextKey;
 import org.bukkit.entity.Player;
 
-public class PlayerNamePlaceholder implements Placeholder {
+public class PlayerUUIDPlaceholder implements Placeholder {
 
     @Override
     public String getName() {
-        return "%player_name%";
+        return "%player_uuid%";
     }
 
     @Override
     public String getValue(Context context) {
-        Player player = context.getData(CommonContextKey.VIEWER.name(), Player.class);
-        return player.getName();
+        Player viewer = context.getData(CommonContextKey.VIEWER.name(), Player.class);
+        return viewer.getUniqueId().toString();
     }
 
     @Override

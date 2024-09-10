@@ -3,6 +3,7 @@ package com.github.syr0ws.fastinventory.api.provider;
 import com.github.syr0ws.fastinventory.api.FastInventory;
 import com.github.syr0ws.fastinventory.api.InventoryService;
 import com.github.syr0ws.fastinventory.api.config.InventoryConfig;
+import com.github.syr0ws.fastinventory.api.i18n.I18n;
 import com.github.syr0ws.fastinventory.api.placeholder.PlaceholderManager;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import org.bukkit.entity.Player;
@@ -27,4 +28,6 @@ public interface InventoryProvider {
     PlaceholderManager getPlaceholderManager();
 
     String getId();
+
+    Optional<I18n> getI18n();
 }

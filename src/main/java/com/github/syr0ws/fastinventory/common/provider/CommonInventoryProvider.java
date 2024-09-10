@@ -11,10 +11,7 @@ import com.github.syr0ws.fastinventory.api.placeholder.PlaceholderManager;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.provider.Provider;
 import com.github.syr0ws.fastinventory.api.util.Context;
-import com.github.syr0ws.fastinventory.common.placeholder.InventorySizePlaceholder;
-import com.github.syr0ws.fastinventory.common.placeholder.InventoryTypePlaceholder;
-import com.github.syr0ws.fastinventory.common.placeholder.ItemSlotPlaceholder;
-import com.github.syr0ws.fastinventory.common.placeholder.PlayerNamePlaceholder;
+import com.github.syr0ws.fastinventory.common.placeholder.*;
 import com.github.syr0ws.fastinventory.internal.SimpleFastInventory;
 import com.github.syr0ws.fastinventory.internal.placeholder.SimplePlaceholderManager;
 import org.bukkit.entity.Player;
@@ -27,6 +24,7 @@ public abstract class CommonInventoryProvider implements InventoryProvider {
 
     private final Plugin plugin;
     private final InventoryConfigDAO dao;
+    private final I18n i18n;
     private final PlaceholderManager placeholderManager = new SimplePlaceholderManager();
     private final Map<String, Provider<?>> providers = new HashMap<>();
 
@@ -44,19 +42,20 @@ public abstract class CommonInventoryProvider implements InventoryProvider {
 
         this.plugin = plugin;
         this.dao = dao;
+        this.i18n = i18n;
 
-        this.addProviders(i18n);
+        this.addProviders();
         this.addPlaceholders(this.placeholderManager);
         this.loadConfig();
     }
 
     protected abstract Path getInventoryConfigFile();
 
-    protected void addProviders(I18n i18n) {
+    protected void addProviders() {
 
-        ItemParser itemParser = this.getItemParser(i18n);
+        ItemParser itemParser = this.getItemParser();
 
-        this.addProvider(new CommonTitleProvider(i18n));
+        this.addProvider(new CommonTitleProvider());
         this.addProvider(new CommonInventoryTypeProvider());
         this.addProvider(new CommonInventoryItemProvider(itemParser));
         this.addProvider(new CommonPaginationItemProvider(itemParser));
@@ -64,6 +63,7 @@ public abstract class CommonInventoryProvider implements InventoryProvider {
 
     protected void addPlaceholders(PlaceholderManager manager) {
         manager.addPlaceholder(new PlayerNamePlaceholder());
+        manager.addPlaceholder(new PlayerUUIDPlaceholder());
         manager.addPlaceholder(new InventoryTypePlaceholder());
         manager.addPlaceholder(new InventorySizePlaceholder());
         manager.addPlaceholder(new ItemSlotPlaceholder());
@@ -78,16 +78,12 @@ public abstract class CommonInventoryProvider implements InventoryProvider {
         this.providers.put(provider.getName(), provider);
     }
 
-    protected ItemParser getItemParser(I18n i18n) {
-        return new CommonItemStackParser(i18n);
+    protected ItemParser getItemParser() {
+        return new CommonItemStackParser();
     }
 
     protected Plugin getPlugin() {
         return this.plugin;
-    }
-
-    protected InventoryConfigDAO getDao() {
-        return this.dao;
     }
 
     @Override
@@ -145,5 +141,10 @@ public abstract class CommonInventoryProvider implements InventoryProvider {
     @Override
     public InventoryConfig getConfig() {
         return this.config;
+    }
+
+    @Override
+    public Optional<I18n> getI18n() {
+        return Optional.ofNullable(this.i18n);
     }
 }

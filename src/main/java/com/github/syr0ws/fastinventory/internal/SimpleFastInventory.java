@@ -11,7 +11,7 @@ import com.github.syr0ws.fastinventory.api.item.InventoryItem;
 import com.github.syr0ws.fastinventory.api.pagination.Pagination;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
-import com.github.syr0ws.fastinventory.common.CommonContextKeyEnum;
+import com.github.syr0ws.fastinventory.common.CommonContextKey;
 import com.github.syr0ws.fastinventory.common.provider.CommonProviderEnum;
 import com.github.syr0ws.fastinventory.internal.util.SimpleContext;
 import org.bukkit.Bukkit;
@@ -84,7 +84,7 @@ public class SimpleFastInventory implements FastInventory {
                 int slot = (row * type.getColumns()) + col;
 
                 Context context = this.getDefaultContext();
-                context.addData(CommonContextKeyEnum.SLOT.name(), slot, Integer.class);
+                context.addData(CommonContextKey.SLOT.name(), slot, Integer.class);
 
                 InventoryItem item = this.provider.provide(CommonProviderEnum.CONTENT_ITEM.name(), InventoryItem.class, context)
                         .orElse(null);
@@ -175,8 +175,8 @@ public class SimpleFastInventory implements FastInventory {
     public Context getDefaultContext() {
 
         Context context = new SimpleContext();
-        context.addData(CommonContextKeyEnum.VIEWER.name(), this.viewer, Player.class);
-        context.addData(CommonContextKeyEnum.INVENTORY.name(), this, FastInventory.class);
+        context.addData(CommonContextKey.VIEWER.name(), this.viewer, Player.class);
+        context.addData(CommonContextKey.INVENTORY.name(), this, FastInventory.class);
 
         return context;
     }
@@ -184,7 +184,7 @@ public class SimpleFastInventory implements FastInventory {
     private void addPagination(PaginationConfig config) {
 
         Context context = this.getDefaultContext();
-        context.addData(CommonContextKeyEnum.PAGINATION_ID.name(), config.getId(), String.class);
+        context.addData(CommonContextKey.PAGINATION_ID.name(), config.getId(), String.class);
 
         Pagination<?> pagination = this.provider.provide(config.getId(), Pagination.class, context)
                 .orElseThrow(() -> new NullPointerException("No provider found for Pagination"));
