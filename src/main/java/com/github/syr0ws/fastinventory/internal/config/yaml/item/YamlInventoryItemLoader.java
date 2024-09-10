@@ -51,7 +51,8 @@ public class YamlInventoryItemLoader {
         if(section.isItemStack(ITEM_KEY)) {
             item = section.getItemStack(ITEM_KEY);
         } else if(section.isConfigurationSection(ITEM_KEY)) {
-            item = this.itemStackLoader.loadItem(section);
+            ConfigurationSection itemSection = section.getConfigurationSection(ITEM_KEY);
+            item = this.itemStackLoader.loadItem(itemSection);
         } else {
             throw new InventoryConfigException(String.format("Property '%s' missing or invalid at '%s'", ITEM_KEY, section.getCurrentPath()));
         }
