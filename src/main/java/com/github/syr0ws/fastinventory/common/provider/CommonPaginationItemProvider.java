@@ -47,7 +47,7 @@ public class CommonPaginationItemProvider implements Provider<InventoryItem> {
 
     @Override
     public String getName() {
-        return CommonProviderEnum.PAGINATION_ITEM.name();
+        return CommonProviderType.PAGINATION_ITEM.name();
     }
 
     @Override

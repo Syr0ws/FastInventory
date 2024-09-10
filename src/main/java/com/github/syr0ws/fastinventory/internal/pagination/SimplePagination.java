@@ -8,7 +8,7 @@ import com.github.syr0ws.fastinventory.api.pagination.PaginationModel;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.common.CommonContextKey;
-import com.github.syr0ws.fastinventory.common.provider.CommonProviderEnum;
+import com.github.syr0ws.fastinventory.common.provider.CommonProviderType;
 
 import java.util.Collections;
 import java.util.List;
@@ -64,7 +64,7 @@ public class SimplePagination<T> implements Pagination<T> {
                 context.addData(CommonContextKey.SLOT.name(), slot, Integer.class);
                 context.addData(CommonContextKey.PAGINATION_ITEM.name(), items.get(i), this.model.getDataType());
 
-                item = provider.provide(CommonProviderEnum.PAGINATION_ITEM.name(), InventoryItem.class, context).orElse(null);
+                item = provider.provide(CommonProviderType.PAGINATION_ITEM.name(), InventoryItem.class, context).orElse(null);
             }
 
             if(item == null) {

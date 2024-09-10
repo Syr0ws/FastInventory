@@ -43,7 +43,7 @@ public class CommonInventoryItemProvider implements Provider<InventoryItem> {
 
     @Override
     public String getName() {
-        return CommonProviderEnum.CONTENT_ITEM.name();
+        return CommonProviderType.CONTENT_ITEM.name();
     }
 
     @Override

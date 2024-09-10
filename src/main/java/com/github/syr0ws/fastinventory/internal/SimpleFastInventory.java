@@ -12,7 +12,7 @@ import com.github.syr0ws.fastinventory.api.pagination.Pagination;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.common.CommonContextKey;
-import com.github.syr0ws.fastinventory.common.provider.CommonProviderEnum;
+import com.github.syr0ws.fastinventory.common.provider.CommonProviderType;
 import com.github.syr0ws.fastinventory.internal.util.SimpleContext;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -86,7 +86,7 @@ public class SimpleFastInventory implements FastInventory {
                 Context context = this.getDefaultContext();
                 context.addData(CommonContextKey.SLOT.name(), slot, Integer.class);
 
-                InventoryItem item = this.provider.provide(CommonProviderEnum.CONTENT_ITEM.name(), InventoryItem.class, context)
+                InventoryItem item = this.provider.provide(CommonProviderType.CONTENT_ITEM.name(), InventoryItem.class, context)
                         .orElse(null);
 
                 if(item == null) {
@@ -106,13 +106,13 @@ public class SimpleFastInventory implements FastInventory {
 
     @Override
     public String getTitle() {
-        return this.provider.provide(CommonProviderEnum.TITLE.name(), String.class, this.getDefaultContext())
+        return this.provider.provide(CommonProviderType.TITLE.name(), String.class, this.getDefaultContext())
                 .orElse("");
     }
 
     @Override
     public FastInventoryType getType() {
-        return this.provider.provide(CommonProviderEnum.INVENTORY_TYPE.name(), FastInventoryType.class, this.getDefaultContext())
+        return this.provider.provide(CommonProviderType.INVENTORY_TYPE.name(), FastInventoryType.class, this.getDefaultContext())
                 .orElseThrow(() -> new InventoryException("No provider found for FastInventoryType"));
     }
 

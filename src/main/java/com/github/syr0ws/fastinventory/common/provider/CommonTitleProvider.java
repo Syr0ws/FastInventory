@@ -27,7 +27,7 @@ public class CommonTitleProvider implements Provider<String> {
 
     @Override
     public String getName() {
-        return CommonProviderEnum.TITLE.name();
+        return CommonProviderType.TITLE.name();
     }
 
     @Override
