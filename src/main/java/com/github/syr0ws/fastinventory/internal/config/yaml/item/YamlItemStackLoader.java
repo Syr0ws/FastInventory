@@ -46,6 +46,10 @@ public class YamlItemStackLoader {
             // Retrieving the loader for the current property.
             ItemPropertyLoader<ConfigurationSection> loader = loadersMap.get(property);
 
+            if(property.equals(TYPE_KEY)) {
+                continue;
+            }
+
             if(loader == null) {
                 throw new InventoryConfigException(String.format("Cannot load ItemStack at '%s' : unknown property '%s'", section.getCurrentPath(), property));
             }
