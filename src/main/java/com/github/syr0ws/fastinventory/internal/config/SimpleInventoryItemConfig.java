@@ -4,6 +4,7 @@ import com.github.syr0ws.fastinventory.api.action.ClickAction;
 import com.github.syr0ws.fastinventory.api.config.InventoryItemConfig;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class SimpleInventoryItemConfig implements InventoryItemConfig {
 
         this.id = id;
         this.item = item;
-        this.actions = Collections.unmodifiableList(actions);
+        this.actions = actions;
     }
 
     @Override

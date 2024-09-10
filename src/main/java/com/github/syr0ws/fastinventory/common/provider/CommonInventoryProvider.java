@@ -64,6 +64,8 @@ public abstract class CommonInventoryProvider implements InventoryProvider {
         this.addProvider(new CommonInventoryTypeProvider());
         this.addProvider(new CommonInventoryItemProvider(itemParser));
         this.addProvider(new CommonPaginationItemProvider(itemParser));
+        this.addProvider(new CommonPreviousPageItemProvider(itemParser));
+        this.addProvider(new CommonNextPageItemProvider(itemParser));
     }
 
     protected void addPlaceholders(PlaceholderManager manager) {

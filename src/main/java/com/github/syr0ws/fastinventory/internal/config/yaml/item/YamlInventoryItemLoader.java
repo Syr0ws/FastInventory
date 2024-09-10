@@ -65,7 +65,7 @@ public class YamlInventoryItemLoader {
         ConfigurationSection actionsSection = section.getConfigurationSection(ACTIONS_KEY);
 
         if(actionsSection == null) {
-            return Collections.emptyList();
+            return new ArrayList<>();
         }
 
         List<ClickAction> actions = new ArrayList<>();

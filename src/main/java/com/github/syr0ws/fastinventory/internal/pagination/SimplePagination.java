@@ -2,6 +2,7 @@ package com.github.syr0ws.fastinventory.internal.pagination;
 
 import com.github.syr0ws.fastinventory.api.FastInventory;
 import com.github.syr0ws.fastinventory.api.InventoryContent;
+import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
 import com.github.syr0ws.fastinventory.api.item.InventoryItem;
 import com.github.syr0ws.fastinventory.api.pagination.Pagination;
 import com.github.syr0ws.fastinventory.api.pagination.PaginationModel;
@@ -46,6 +47,11 @@ public class SimplePagination<T> implements Pagination<T> {
 
     @Override
     public void update() {
+        this.updatePaginationItems();
+        this.updatePageItems();
+    }
+
+    private void updatePaginationItems() {
 
         InventoryProvider provider = this.inventory.getProvider();
         InventoryContent content = this.inventory.getContent();
@@ -75,6 +81,28 @@ public class SimplePagination<T> implements Pagination<T> {
 
             i++;
         }
+    }
+
+    private void updatePageItems() {
+
+        InventoryProvider provider = this.inventory.getProvider();
+        InventoryContent content = this.inventory.getContent();
+
+        Context context = this.getPaginationContext();
+
+        PaginationConfig paginationConfig = provider.getConfig()
+                .getPaginationConfig(this.id)
+                .orElse(null);
+
+        if(paginationConfig == null) {
+            return; // Should not happen.
+        }
+
+        provider.provide(CommonProviderType.PAGINATION_PREVIOUS_PAGE_ITEM.name(), InventoryItem.class, context)
+                .ifPresent(item -> content.setItem(item, paginationConfig.getPreviousPageItemSlots()));
+
+        provider.provide(CommonProviderType.PAGINATION_NEXT_PAGE_ITEM.name(), InventoryItem.class, context)
+                .ifPresent(item -> content.setItem(item, paginationConfig.getNextPageItemSlots()));
     }
 
     @Override
