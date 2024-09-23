@@ -4,10 +4,7 @@ import com.github.syr0ws.fastinventory.api.mapping.Dto;
 import com.github.syr0ws.fastinventory.api.mapping.Enhancement;
 import com.github.syr0ws.fastinventory.api.mapping.EnhancementManager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SimpleEnhancementManager implements EnhancementManager {
 
@@ -50,8 +47,30 @@ public class SimpleEnhancementManager implements EnhancementManager {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public <T extends Dto> List<Enhancement<T>> getEnhancements(String id, Class<T> type) {
-        return List.of();
+
+        if(id == null || id.trim().isEmpty()) {
+            throw new IllegalArgumentException("id cannot be null or empty");
+        }
+
+        if(type == null) {
+            throw new IllegalArgumentException("type cannot be null");
+        }
+
+        Data<?> data = this.enhancements.get(id);
+
+        if(data == null) {
+            return Collections.emptyList();
+        }
+
+        if(!data.getType().equals(type)) {
+            throw new IllegalArgumentException("Enhancement type mismatch");
+        }
+
+        Data<T> casted = (Data<T>) data;
+
+        return casted.getEnhancements();
     }
 
     private static class Data<T extends Dto> {
