@@ -4,27 +4,19 @@ import com.github.syr0ws.fastinventory.api.config.InventoryConfig;
 import com.github.syr0ws.fastinventory.api.config.InventoryItemConfig;
 import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
 import com.github.syr0ws.fastinventory.api.item.InventoryItem;
-import com.github.syr0ws.fastinventory.api.item.ItemParser;
-import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
+import com.github.syr0ws.fastinventory.api.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.provider.Provider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.common.CommonContextKey;
-import com.github.syr0ws.fastinventory.internal.item.SimpleInventoryItem;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.UUID;
+import com.github.syr0ws.fastinventory.common.mapping.InventoryItemDto;
+import com.github.syr0ws.fastinventory.common.mapping.InventoryItemMapper;
 
 public class CommonPaginationItemProvider implements Provider<InventoryItem> {
 
-    private final ItemParser itemParser;
+    private final InventoryItemMapper mapper;
 
-    public CommonPaginationItemProvider(ItemParser itemParser) {
-
-        if(itemParser == null) {
-            throw new IllegalArgumentException("itemParser cannot be null");
-        }
-
-        this.itemParser = itemParser;
+    public CommonPaginationItemProvider(InventoryItemMapper mapper) {
+        this.mapper = mapper;
     }
 
     @Override
@@ -37,12 +29,13 @@ public class CommonPaginationItemProvider implements Provider<InventoryItem> {
         PaginationConfig paginationConfig = inventoryConfig.getPaginationConfig(paginationId)
                 .orElseThrow(() -> new NullPointerException(String.format("No pagination with id '%s' found", paginationId)));
 
+        // TODO: Change the item id.
         InventoryItemConfig itemConfig = paginationConfig.getItem();
 
-        String itemId = UUID.randomUUID().toString();
-        ItemStack item = this.itemParser.parse(provider, itemConfig.getItemStack(), context);
+        InventoryItemDto dto = this.mapper.toDto(itemConfig, provider, context);
+        dto = this.mapper.enhance(dto, provider, context);
 
-        return new SimpleInventoryItem(itemId, item, itemConfig.getActions());
+        return this.mapper.fromDto(dto, provider, context);
     }
 
     @Override

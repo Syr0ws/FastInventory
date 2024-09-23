@@ -1,7 +1,6 @@
 package com.github.syr0ws.fastinventory.api;
 
 import com.github.syr0ws.fastinventory.api.pagination.Pagination;
-import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;

@@ -2,12 +2,12 @@ package com.github.syr0ws.fastinventory.common.provider;
 
 import com.github.syr0ws.fastinventory.api.config.InventoryItemConfig;
 import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
-import com.github.syr0ws.fastinventory.api.item.ItemParser;
+import com.github.syr0ws.fastinventory.common.mapping.InventoryItemMapper;
 
 public class CommonNextPageItemProvider extends CommonPageItemProvider {
 
-    public CommonNextPageItemProvider(ItemParser parser) {
-        super(parser);
+    protected CommonNextPageItemProvider(InventoryItemMapper mapper) {
+        super(mapper);
     }
 
     @Override

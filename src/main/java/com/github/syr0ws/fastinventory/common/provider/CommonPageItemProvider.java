@@ -4,25 +4,19 @@ import com.github.syr0ws.fastinventory.api.config.InventoryConfig;
 import com.github.syr0ws.fastinventory.api.config.InventoryItemConfig;
 import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
 import com.github.syr0ws.fastinventory.api.item.InventoryItem;
-import com.github.syr0ws.fastinventory.api.item.ItemParser;
-import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
+import com.github.syr0ws.fastinventory.api.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.provider.Provider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.common.CommonContextKey;
-import com.github.syr0ws.fastinventory.internal.item.SimpleInventoryItem;
-import org.bukkit.inventory.ItemStack;
+import com.github.syr0ws.fastinventory.common.mapping.InventoryItemDto;
+import com.github.syr0ws.fastinventory.common.mapping.InventoryItemMapper;
 
 public abstract class CommonPageItemProvider implements Provider<InventoryItem> {
 
-    private final ItemParser parser;
+    private final InventoryItemMapper mapper;
 
-    public CommonPageItemProvider(ItemParser parser) {
-
-        if(parser == null) {
-            throw new IllegalArgumentException("parser cannot be null");
-        }
-
-        this.parser = parser;
+    protected CommonPageItemProvider(InventoryItemMapper mapper) {
+        this.mapper = mapper;
     }
 
     protected abstract InventoryItemConfig getPageItemConfig(PaginationConfig config);
@@ -39,9 +33,11 @@ public abstract class CommonPageItemProvider implements Provider<InventoryItem> 
 
         InventoryItemConfig itemConfig = this.getPageItemConfig(paginationConfig);
 
-        ItemStack item = this.parser.parse(provider, itemConfig.getItemStack(), context);
+        // TODO: Change the id.
+        InventoryItemDto dto = this.mapper.toDto(itemConfig, provider, context);
+        dto = this.mapper.enhance(dto, provider, context);
 
-        return new SimpleInventoryItem(itemConfig.getId(), item, itemConfig.getActions());
+        return this.mapper.fromDto(dto, provider, context);
     }
 
     @Override

@@ -5,7 +5,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public interface InventoryItemConfig {
+public interface InventoryItemConfig extends Configuration {
 
     String getId();
 

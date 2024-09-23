@@ -1,6 +1,5 @@
 package com.github.syr0ws.fastinventory.api;
 
-import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import org.bukkit.entity.Player;
 
 import java.util.Map;

@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public interface InventoryConfig {
+public interface InventoryConfig extends Configuration {
 
     String getId();
 

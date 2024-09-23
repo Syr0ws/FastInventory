@@ -9,7 +9,7 @@ import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
 import com.github.syr0ws.fastinventory.api.exception.InventoryException;
 import com.github.syr0ws.fastinventory.api.item.InventoryItem;
 import com.github.syr0ws.fastinventory.api.pagination.Pagination;
-import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
+import com.github.syr0ws.fastinventory.api.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.common.CommonContextKey;
 import com.github.syr0ws.fastinventory.common.provider.CommonProviderType;
@@ -86,7 +86,7 @@ public class SimpleFastInventory implements FastInventory {
                 Context context = this.getDefaultContext();
                 context.addData(CommonContextKey.SLOT.name(), slot, Integer.class);
 
-                InventoryItem item = this.provider.provide(CommonProviderType.CONTENT_ITEM.name(), InventoryItem.class, context)
+                InventoryItem item = this.provider.getProviderManager().provide(CommonProviderType.CONTENT_ITEM.name(), InventoryItem.class, provider, context)
                         .orElse(null);
 
                 if(item == null) {
@@ -106,13 +106,13 @@ public class SimpleFastInventory implements FastInventory {
 
     @Override
     public String getTitle() {
-        return this.provider.provide(CommonProviderType.TITLE.name(), String.class, this.getDefaultContext())
+        return this.provider.getProviderManager().provide(CommonProviderType.TITLE.name(), String.class, provider, this.getDefaultContext())
                 .orElse("");
     }
 
     @Override
     public FastInventoryType getType() {
-        return this.provider.provide(CommonProviderType.INVENTORY_TYPE.name(), FastInventoryType.class, this.getDefaultContext())
+        return this.provider.getProviderManager().provide(CommonProviderType.INVENTORY_TYPE.name(), FastInventoryType.class, provider, this.getDefaultContext())
                 .orElseThrow(() -> new InventoryException("No provider found for FastInventoryType"));
     }
 
@@ -186,7 +186,7 @@ public class SimpleFastInventory implements FastInventory {
         Context context = this.getDefaultContext();
         context.addData(CommonContextKey.PAGINATION_ID.name(), config.getId(), String.class);
 
-        Pagination<?> pagination = this.provider.provide(config.getId(), Pagination.class, context)
+        Pagination<?> pagination = this.provider.getProviderManager().provide(config.getId(), Pagination.class, provider, context)
                 .orElseThrow(() -> new NullPointerException("No provider found for Pagination"));
 
         this.paginations.put(pagination.getId(), pagination);
