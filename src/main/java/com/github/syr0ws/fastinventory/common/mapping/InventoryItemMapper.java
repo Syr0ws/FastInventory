@@ -25,11 +25,20 @@ public class InventoryItemMapper implements Mapper<InventoryItemConfig, Inventor
 
     @Override
     public InventoryItemDto toDto(InventoryItemConfig config, InventoryProvider provider, Context context) {
+
+        if(config == null) {
+            return null;
+        }
+
         return new InventoryItemDto(config.getId(), config.getItemStack(), config.getActions());
     }
 
     @Override
     public InventoryItemDto enhance(InventoryItemDto dto, InventoryProvider provider, Context context) {
+
+        if(dto == null) {
+            return null;
+        }
 
         List<Enhancement<InventoryItemDto>> enhancements = this.enhancementManager.getEnhancements(
                 dto.getId(),
@@ -43,6 +52,11 @@ public class InventoryItemMapper implements Mapper<InventoryItemConfig, Inventor
 
     @Override
     public InventoryItem fromDto(InventoryItemDto dto, InventoryProvider provider, Context context) {
+
+        if(dto == null) {
+            return null;
+        }
+
         ItemStack stack = this.parser.parse(provider, dto.getItem(), context);
         return new SimpleInventoryItem(dto.getId(), stack, dto.getActions());
     }
