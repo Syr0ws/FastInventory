@@ -4,6 +4,7 @@ import com.github.syr0ws.fastinventory.api.action.ClickAction;
 import com.github.syr0ws.fastinventory.api.config.action.ClickActionLoader;
 import com.github.syr0ws.fastinventory.api.config.action.ClickActionLoaderFactory;
 import com.github.syr0ws.fastinventory.api.config.exception.InventoryConfigException;
+import com.github.syr0ws.fastinventory.common.util.IdUtil;
 import com.github.syr0ws.fastinventory.internal.config.SimpleInventoryItemConfig;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
@@ -44,7 +45,7 @@ public class YamlInventoryItemLoader {
 
     private String loadId(ConfigurationSection section) {
         String id = section.getName();
-        return String.format("item-%s", id);
+        return IdUtil.getItemId(id);
     }
 
     private ItemStack loadItemStack(ConfigurationSection section) throws InventoryConfigException {

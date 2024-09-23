@@ -5,6 +5,7 @@ import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
 import com.github.syr0ws.fastinventory.api.config.exception.InventoryConfigException;
 import com.github.syr0ws.fastinventory.common.action.NextPageAction;
 import com.github.syr0ws.fastinventory.common.action.PreviousPageAction;
+import com.github.syr0ws.fastinventory.common.util.IdUtil;
 import com.github.syr0ws.fastinventory.internal.config.SimpleInventoryItemConfig;
 import com.github.syr0ws.fastinventory.internal.config.SimplePaginationConfig;
 import com.github.syr0ws.fastinventory.internal.config.yaml.item.YamlInventoryItemLoader;
@@ -69,23 +70,26 @@ public class YamlInventoryPaginationLoader {
         List<Integer> slots = this.loadPaginationSlots(section, paginationSymbol, symbolSlots);
         InventoryItemConfig item = this.loadPaginationItem(section, paginationId);
 
-        Pair<SimpleInventoryItemConfig, List<Integer>> previousPageItem = this.loadPageItem(section, PREVIOUS_PAGE_ITEM_KEY, symbolSlots);
-        Pair<SimpleInventoryItemConfig, List<Integer>> nextPageItem = this.loadPageItem(section, NEXT_PAGE_ITEM_KEY, symbolSlots);
+        Pair<SimpleInventoryItemConfig, List<Integer>> previousPage = this.loadPageItem(section, PREVIOUS_PAGE_ITEM_KEY, symbolSlots);
+        Pair<SimpleInventoryItemConfig, List<Integer>> nextPage = this.loadPageItem(section, NEXT_PAGE_ITEM_KEY, symbolSlots);
 
-        previousPageItem.key().setId(String.format("pagination{%s}-%s", paginationId, previousPageItem.key().getId()));
-        previousPageItem.key().getActions().add(new PreviousPageAction(paginationId));
+        SimpleInventoryItemConfig previousPageItem = previousPage.key();
+        SimpleInventoryItemConfig nextPageItem = nextPage.key();
 
-        nextPageItem.key().setId(String.format("pagination{%s}-%s", paginationId, nextPageItem.key().getId()));
-        nextPageItem.key().getActions().add(new NextPageAction(paginationId));
+        previousPageItem.setId(IdUtil.getPaginationPreviousPageItemId(paginationId));
+        previousPageItem.getActions().add(new PreviousPageAction(paginationId));
+
+        nextPageItem.setId(IdUtil.getPaginationNextPageItemId(paginationId));
+        nextPageItem.getActions().add(new NextPageAction(paginationId));
 
         return new SimplePaginationConfig(
                 paginationId,
                 new HashSet<>(slots),
                 item,
-                previousPageItem.key(),
-                nextPageItem.key(),
-                previousPageItem.value(),
-                nextPageItem.value()
+                previousPageItem,
+                nextPageItem,
+                previousPage.value(),
+                nextPage.value()
         );
     }
 
@@ -120,7 +124,7 @@ public class YamlInventoryPaginationLoader {
         }
 
         SimpleInventoryItemConfig config = this.itemLoader.loadItem(paginationItemSection);
-        config.setId(String.format("pagination{%s}-item", paginationId));
+        config.setId(IdUtil.getPaginationItemId(paginationId));
 
         return config;
     }
