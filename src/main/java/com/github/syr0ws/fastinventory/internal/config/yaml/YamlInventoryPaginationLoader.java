@@ -120,7 +120,7 @@ public class YamlInventoryPaginationLoader {
         }
 
         SimpleInventoryItemConfig config = this.itemLoader.loadItem(paginationItemSection);
-        config.setId(String.format("pagination{%s}-%s", paginationId, config.getId()));
+        config.setId(String.format("pagination{%s}-item", paginationId));
 
         return config;
     }
