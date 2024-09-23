@@ -31,17 +31,22 @@ public class YamlInventoryItemLoader {
         this.factory = factory;
     }
 
-    public InventoryItemConfig loadItem(ConfigurationSection section) throws InventoryConfigException {
+    public SimpleInventoryItemConfig loadItem(ConfigurationSection section) throws InventoryConfigException {
 
         if(section == null) {
             throw new IllegalArgumentException("section cannot be null");
         }
 
-        String id = section.getName();
+        String id = this.loadId(section);
         ItemStack item = this.loadItemStack(section);
         List<ClickAction> actions = this.loadActions(section);
 
         return new SimpleInventoryItemConfig(id, item, actions);
+    }
+
+    private String loadId(ConfigurationSection section) {
+        String id = section.getName();
+        return String.format("item-%s", id);
     }
 
     private ItemStack loadItemStack(ConfigurationSection section) throws InventoryConfigException {

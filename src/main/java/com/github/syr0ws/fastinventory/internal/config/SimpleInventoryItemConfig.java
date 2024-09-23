@@ -10,9 +10,9 @@ import java.util.List;
 
 public class SimpleInventoryItemConfig implements InventoryItemConfig {
 
-    private final String id;
     private final ItemStack item;
     private final List<ClickAction> actions;
+    private String id;
 
     public SimpleInventoryItemConfig(String id, ItemStack item, List<ClickAction> actions) {
 
@@ -36,6 +36,10 @@ public class SimpleInventoryItemConfig implements InventoryItemConfig {
     @Override
     public String getId() {
         return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
 import com.github.syr0ws.fastinventory.api.config.exception.InventoryConfigException;
 import com.github.syr0ws.fastinventory.common.action.NextPageAction;
 import com.github.syr0ws.fastinventory.common.action.PreviousPageAction;
+import com.github.syr0ws.fastinventory.internal.config.SimpleInventoryItemConfig;
 import com.github.syr0ws.fastinventory.internal.config.SimplePaginationConfig;
 import com.github.syr0ws.fastinventory.internal.config.yaml.item.YamlInventoryItemLoader;
 import com.github.syr0ws.fastinventory.internal.util.Pair;
@@ -66,12 +67,15 @@ public class YamlInventoryPaginationLoader {
         String paginationId = this.loadPaginationId(section);
         char paginationSymbol = this.loadPaginationSymbol(section);
         List<Integer> slots = this.loadPaginationSlots(section, paginationSymbol, symbolSlots);
-        InventoryItemConfig item = this.loadPaginationItem(section);
+        InventoryItemConfig item = this.loadPaginationItem(section, paginationId);
 
-        Pair<InventoryItemConfig, List<Integer>> previousPageItem = this.loadPageItem(section, PREVIOUS_PAGE_ITEM_KEY, symbolSlots);
-        Pair<InventoryItemConfig, List<Integer>> nextPageItem = this.loadPageItem(section, NEXT_PAGE_ITEM_KEY, symbolSlots);
+        Pair<SimpleInventoryItemConfig, List<Integer>> previousPageItem = this.loadPageItem(section, PREVIOUS_PAGE_ITEM_KEY, symbolSlots);
+        Pair<SimpleInventoryItemConfig, List<Integer>> nextPageItem = this.loadPageItem(section, NEXT_PAGE_ITEM_KEY, symbolSlots);
 
+        previousPageItem.key().setId(String.format("pagination{%s}-%s", paginationId, previousPageItem.key().getId()));
         previousPageItem.key().getActions().add(new PreviousPageAction(paginationId));
+
+        nextPageItem.key().setId(String.format("pagination{%s}-%s", paginationId, nextPageItem.key().getId()));
         nextPageItem.key().getActions().add(new NextPageAction(paginationId));
 
         return new SimplePaginationConfig(
@@ -107,7 +111,7 @@ public class YamlInventoryPaginationLoader {
         return symbol.charAt(0);
     }
 
-    private InventoryItemConfig loadPaginationItem(ConfigurationSection section) throws InventoryConfigException {
+    private InventoryItemConfig loadPaginationItem(ConfigurationSection section, String paginationId) throws InventoryConfigException {
 
         ConfigurationSection paginationItemSection = section.getConfigurationSection(PAGINATION_ITEM_KEY);
 
@@ -115,7 +119,10 @@ public class YamlInventoryPaginationLoader {
             throw new InventoryConfigException(String.format("Property '%s' missing or invalid in pagination at '%s'", PAGINATION_ITEM_KEY, section.getCurrentPath()));
         }
 
-        return this.itemLoader.loadItem(paginationItemSection);
+        SimpleInventoryItemConfig config = this.itemLoader.loadItem(paginationItemSection);
+        config.setId(String.format("pagination{%s}-%s", paginationId, config.getId()));
+
+        return config;
     }
 
     private List<Integer> loadPaginationSlots(ConfigurationSection section, char paginationSymbol, Map<Character, List<Integer>> symbolSlots) throws InventoryConfigException {
@@ -129,7 +136,7 @@ public class YamlInventoryPaginationLoader {
         return slots;
     }
 
-    private Pair<InventoryItemConfig, List<Integer>> loadPageItem(ConfigurationSection section, String key, Map<Character, List<Integer>> symbolSlots) throws InventoryConfigException {
+    private Pair<SimpleInventoryItemConfig, List<Integer>> loadPageItem(ConfigurationSection section, String key, Map<Character, List<Integer>> symbolSlots) throws InventoryConfigException {
 
         ConfigurationSection pageItemSection = section.getConfigurationSection(key);
 
@@ -137,7 +144,7 @@ public class YamlInventoryPaginationLoader {
             throw new InventoryConfigException(String.format("Property '%s' missing or not a section at '%s'", key, section.getCurrentPath()));
         }
 
-        InventoryItemConfig item = this.itemLoader.loadItem(pageItemSection);
+        SimpleInventoryItemConfig item = this.itemLoader.loadItem(pageItemSection);
 
         String symbol = pageItemSection.getString(PAGE_ITEM_SYMBOL_KEY);
 

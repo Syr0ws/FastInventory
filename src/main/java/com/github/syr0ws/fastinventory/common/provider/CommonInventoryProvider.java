@@ -116,6 +116,11 @@ public abstract class CommonInventoryProvider implements InventoryProvider {
     }
 
     @Override
+    public EnhancementManager getEnhancementManager() {
+        return this.enhancementManager;
+    }
+
+    @Override
     public InventoryConfig getConfig() {
         return this.config;
     }

@@ -2,14 +2,12 @@ package com.github.syr0ws.fastinventory.api;
 
 import com.github.syr0ws.fastinventory.api.config.InventoryConfig;
 import com.github.syr0ws.fastinventory.api.i18n.I18n;
+import com.github.syr0ws.fastinventory.api.mapping.EnhancementManager;
 import com.github.syr0ws.fastinventory.api.placeholder.PlaceholderManager;
-import com.github.syr0ws.fastinventory.api.provider.Provider;
 import com.github.syr0ws.fastinventory.api.provider.ProviderManager;
-import com.github.syr0ws.fastinventory.api.util.Context;
 import org.bukkit.entity.Player;
 
 import java.util.Optional;
-import java.util.Set;
 
 public interface InventoryProvider {
 
@@ -22,6 +20,8 @@ public interface InventoryProvider {
     PlaceholderManager getPlaceholderManager();
 
     ProviderManager getProviderManager();
+
+    EnhancementManager getEnhancementManager();
 
     String getId();
 
