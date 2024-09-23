@@ -29,7 +29,6 @@ public class CommonPaginationItemProvider implements Provider<InventoryItem> {
         PaginationConfig paginationConfig = inventoryConfig.getPaginationConfig(paginationId)
                 .orElseThrow(() -> new NullPointerException(String.format("No pagination with id '%s' found", paginationId)));
 
-        // TODO: Change the item id.
         InventoryItemConfig itemConfig = paginationConfig.getItem();
 
         InventoryItemDto dto = this.mapper.toDto(itemConfig, provider, context);

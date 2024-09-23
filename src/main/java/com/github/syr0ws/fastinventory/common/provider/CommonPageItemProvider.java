@@ -33,7 +33,6 @@ public abstract class CommonPageItemProvider implements Provider<InventoryItem> 
 
         InventoryItemConfig itemConfig = this.getPageItemConfig(paginationConfig);
 
-        // TODO: Change the id.
         InventoryItemDto dto = this.mapper.toDto(itemConfig, provider, context);
         dto = this.mapper.enhance(dto, provider, context);
 
