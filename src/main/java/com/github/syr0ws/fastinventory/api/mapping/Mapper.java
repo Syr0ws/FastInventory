@@ -1,6 +1,6 @@
 package com.github.syr0ws.fastinventory.api.mapping;
 
-import com.github.syr0ws.fastinventory.api.InventoryProvider;
+import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.config.Configuration;
 import com.github.syr0ws.fastinventory.api.util.Context;
 

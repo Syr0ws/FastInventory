@@ -1,6 +1,6 @@
 package com.github.syr0ws.fastinventory.internal.provider;
 
-import com.github.syr0ws.fastinventory.api.InventoryProvider;
+import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.provider.Provider;
 import com.github.syr0ws.fastinventory.api.provider.ProviderManager;
 import com.github.syr0ws.fastinventory.api.util.Context;
