@@ -34,15 +34,15 @@ public class SimpleFastInventory implements FastInventory {
 
     public SimpleFastInventory(InventoryProvider provider, InventoryService service, Player viewer) {
 
-        if(provider == null) {
+        if (provider == null) {
             throw new IllegalArgumentException("provider cannot be null");
         }
 
-        if(service == null) {
+        if (service == null) {
             throw new IllegalArgumentException("service cannot be null");
         }
 
-        if(viewer == null) {
+        if (viewer == null) {
             throw new IllegalArgumentException("viewer cannot be null");
         }
 
@@ -77,19 +77,19 @@ public class SimpleFastInventory implements FastInventory {
         FastInventoryType type = this.getType();
 
         // Updating inventory content.
-        for(int row = 0; row < type.getRows(); row++) {
+        for (int row = 0; row < type.getRows(); row++) {
 
-            for(int col = 0; col < type.getColumns(); col++) {
+            for (int col = 0; col < type.getColumns(); col++) {
 
                 int slot = (row * type.getColumns()) + col;
 
                 Context context = this.getDefaultContext();
                 context.addData(CommonContextKey.SLOT.name(), slot, Integer.class);
 
-                InventoryItem item = this.provider.provide(CommonProviderType.CONTENT_ITEM.name(), InventoryItem.class, context)
+                InventoryItem item = this.provider.getProviderManager().provide(CommonProviderType.CONTENT_ITEM.name(), InventoryItem.class, provider, context)
                         .orElse(null);
 
-                if(item == null) {
+                if (item == null) {
                     this.content.removeItem(slot);
                 } else {
                     this.content.setItem(item, slot);
@@ -106,13 +106,13 @@ public class SimpleFastInventory implements FastInventory {
 
     @Override
     public String getTitle() {
-        return this.provider.provide(CommonProviderType.TITLE.name(), String.class, this.getDefaultContext())
+        return this.provider.getProviderManager().provide(CommonProviderType.TITLE.name(), String.class, provider, this.getDefaultContext())
                 .orElse("");
     }
 
     @Override
     public FastInventoryType getType() {
-        return this.provider.provide(CommonProviderType.INVENTORY_TYPE.name(), FastInventoryType.class, this.getDefaultContext())
+        return this.provider.getProviderManager().provide(CommonProviderType.INVENTORY_TYPE.name(), FastInventoryType.class, provider, this.getDefaultContext())
                 .orElseThrow(() -> new InventoryException("No provider found for FastInventoryType"));
     }
 
@@ -157,7 +157,7 @@ public class SimpleFastInventory implements FastInventory {
 
         Pagination<?> pagination = this.paginations.get(id);
 
-        if(pagination == null) {
+        if (pagination == null) {
             return Optional.empty();
         }
 
@@ -186,7 +186,7 @@ public class SimpleFastInventory implements FastInventory {
         Context context = this.getDefaultContext();
         context.addData(CommonContextKey.PAGINATION_ID.name(), config.getId(), String.class);
 
-        Pagination<?> pagination = this.provider.provide(config.getId(), Pagination.class, context)
+        Pagination<?> pagination = this.provider.getProviderManager().provide(config.getId(), Pagination.class, provider, context)
                 .orElseThrow(() -> new NullPointerException("No provider found for Pagination"));
 
         this.paginations.put(pagination.getId(), pagination);
@@ -197,7 +197,7 @@ public class SimpleFastInventory implements FastInventory {
         FastInventoryType type = this.getType();
         InventoryType bukkitType = type.getBukkitType();
 
-        if(bukkitType == InventoryType.CHEST) {
+        if (bukkitType == InventoryType.CHEST) {
             return Bukkit.createInventory(null, this.getSize(), this.getTitle());
         }
 
@@ -206,7 +206,7 @@ public class SimpleFastInventory implements FastInventory {
 
     private void updateBukkitInventory() {
 
-        for(int slot = 0; slot < this.inventory.getSize(); slot++) {
+        for (int slot = 0; slot < this.inventory.getSize(); slot++) {
 
             ItemStack item = this.content.getItem(slot)
                     .map(InventoryItem::getItemStack)

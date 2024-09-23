@@ -15,7 +15,7 @@ public class MessageAction implements ClickAction {
 
     public MessageAction(String message) {
 
-        if(message == null) {
+        if (message == null) {
             throw new IllegalArgumentException("message cannot be null");
         }
 

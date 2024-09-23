@@ -14,13 +14,13 @@ public class YamlGlowPropertyLoader implements ItemPropertyLoader<ConfigurationS
     @Override
     public void loadProperty(ConfigurationSection section, ItemStack item) throws InventoryConfigException {
 
-        if(!section.isBoolean(GLOW_KEY)) {
+        if (!section.isBoolean(GLOW_KEY)) {
             throw new InventoryConfigException(String.format("Property '%s' is not a boolean", GLOW_KEY));
         }
 
         boolean glow = section.getBoolean(GLOW_KEY);
 
-        if(glow) {
+        if (glow) {
             ItemMeta meta = item.getItemMeta();
             meta.addEnchant(Enchantment.DURABILITY, 1, false);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);

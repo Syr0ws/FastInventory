@@ -12,7 +12,7 @@ public class YamlCustomModelDataLoader implements ItemPropertyLoader<Configurati
     @Override
     public void loadProperty(ConfigurationSection section, ItemStack item) throws InventoryConfigException {
 
-        if(!section.isInt(CUSTOM_MODEL_DATA_KEY)) {
+        if (!section.isInt(CUSTOM_MODEL_DATA_KEY)) {
             throw new InventoryConfigException(String.format("Property '%s' is not an int", CUSTOM_MODEL_DATA_KEY));
         }
 

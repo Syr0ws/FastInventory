@@ -4,27 +4,25 @@ import com.github.syr0ws.fastinventory.api.action.ClickAction;
 import com.github.syr0ws.fastinventory.api.config.InventoryItemConfig;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class SimpleInventoryItemConfig implements InventoryItemConfig {
 
-    private final String id;
     private final ItemStack item;
     private final List<ClickAction> actions;
+    private String id;
 
     public SimpleInventoryItemConfig(String id, ItemStack item, List<ClickAction> actions) {
 
-        if(id == null || id.isEmpty()) {
+        if (id == null || id.isEmpty()) {
             throw new IllegalArgumentException("id cannot be null or empty");
         }
 
-        if(item == null) {
+        if (item == null) {
             throw new IllegalArgumentException("item cannot be null");
         }
 
-        if(actions == null) {
+        if (actions == null) {
             throw new IllegalArgumentException("actions cannot be null");
         }
 
@@ -36,6 +34,10 @@ public class SimpleInventoryItemConfig implements InventoryItemConfig {
     @Override
     public String getId() {
         return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override

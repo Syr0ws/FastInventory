@@ -16,11 +16,11 @@ public class SimplePaginationModel<T> implements PaginationModel<T> {
 
     public SimplePaginationModel(Class<T> dataType, int perPage) {
 
-        if(dataType == null) {
+        if (dataType == null) {
             throw new IllegalArgumentException("dataType cannot be null");
         }
 
-        if(perPage <= 0) {
+        if (perPage <= 0) {
             throw new IllegalArgumentException("perPage must be greater than 0");
         }
 
@@ -32,7 +32,7 @@ public class SimplePaginationModel<T> implements PaginationModel<T> {
     @Override
     public void nextPage() {
 
-        if(!this.hasNextPage()) {
+        if (!this.hasNextPage()) {
             throw new IllegalStateException("No next page");
         }
 
@@ -42,7 +42,7 @@ public class SimplePaginationModel<T> implements PaginationModel<T> {
     @Override
     public void previousPage() {
 
-        if(!this.hasPreviousPage()) {
+        if (!this.hasPreviousPage()) {
             throw new IllegalStateException("No previous page");
         }
 

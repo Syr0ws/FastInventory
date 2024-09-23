@@ -15,7 +15,7 @@ public class CommandAction implements ClickAction {
 
     public CommandAction(String command) {
 
-        if(command == null || command.isEmpty()) {
+        if (command == null || command.isEmpty()) {
             throw new IllegalArgumentException("command cannot null or empty");
         }
 

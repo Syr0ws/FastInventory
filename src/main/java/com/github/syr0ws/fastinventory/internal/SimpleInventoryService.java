@@ -15,7 +15,7 @@ public class SimpleInventoryService implements InventoryService {
     @Override
     public void addInventory(FastInventory inventory) {
 
-        if(inventory == null) {
+        if (inventory == null) {
             throw new IllegalArgumentException("inventory cannot be null");
         }
 
@@ -25,7 +25,7 @@ public class SimpleInventoryService implements InventoryService {
     @Override
     public void removeInventory(Player player) {
 
-        if(player == null) {
+        if (player == null) {
             throw new IllegalArgumentException("player cannot be null");
         }
 
@@ -35,7 +35,7 @@ public class SimpleInventoryService implements InventoryService {
     @Override
     public boolean hasInventory(Player player) {
 
-        if(player == null) {
+        if (player == null) {
             throw new IllegalArgumentException("player cannot be null");
         }
 
@@ -45,7 +45,7 @@ public class SimpleInventoryService implements InventoryService {
     @Override
     public Optional<FastInventory> getInventory(Player player) {
 
-        if(player == null) {
+        if (player == null) {
             throw new IllegalArgumentException("player cannot be null");
         }
 
@@ -60,7 +60,7 @@ public class SimpleInventoryService implements InventoryService {
     @Override
     public void addProvider(InventoryProvider provider) {
 
-        if(provider == null) {
+        if (provider == null) {
             throw new IllegalArgumentException("provider cannot be null");
         }
 
@@ -70,7 +70,7 @@ public class SimpleInventoryService implements InventoryService {
     @Override
     public void removeProvider(String providerId) {
 
-        if(providerId == null) {
+        if (providerId == null) {
             throw new IllegalArgumentException("providerId cannot be null");
         }
 
@@ -80,7 +80,7 @@ public class SimpleInventoryService implements InventoryService {
     @Override
     public boolean hasProvider(String providerId) {
 
-        if(providerId == null) {
+        if (providerId == null) {
             throw new IllegalArgumentException("providerId cannot be null");
         }
 
@@ -90,7 +90,7 @@ public class SimpleInventoryService implements InventoryService {
     @Override
     public Optional<InventoryProvider> getProvider(String providerId) {
 
-        if(providerId == null) {
+        if (providerId == null) {
             throw new IllegalArgumentException("providerId cannot be null");
         }
 

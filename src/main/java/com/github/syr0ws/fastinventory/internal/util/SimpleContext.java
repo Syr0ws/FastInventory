@@ -12,11 +12,11 @@ public class SimpleContext implements Context {
     @Override
     public <T> void addData(String key, T data, Class<T> type) {
 
-        if(key == null || key.isEmpty()) {
+        if (key == null || key.isEmpty()) {
             throw new IllegalArgumentException("key cannot be null or empty");
         }
 
-        if(type == null) {
+        if (type == null) {
             throw new IllegalArgumentException("type cannot be null");
         }
 
@@ -26,7 +26,7 @@ public class SimpleContext implements Context {
     @Override
     public boolean hasData(String key) {
 
-        if(key == null) {
+        if (key == null) {
             throw new IllegalArgumentException("key cannot be null");
         }
 
@@ -37,21 +37,21 @@ public class SimpleContext implements Context {
     @SuppressWarnings("unchecked")
     public <T> T getData(String key, Class<T> type) {
 
-        if(key == null) {
+        if (key == null) {
             throw new IllegalArgumentException("key cannot be null");
         }
 
-        if(type == null) {
+        if (type == null) {
             throw new IllegalArgumentException("type cannot be null");
         }
 
         Data<?> data = this.storage.get(key);
 
-        if(data == null) {
+        if (data == null) {
             throw new NullPointerException(String.format("No data found for key %s", key));
         }
 
-        if(!data.type().equals(type)) {
+        if (!data.type().equals(type)) {
             throw new IllegalArgumentException(String.format("Type mismatch ; %s stored abd %s provided", data.type(), type));
         }
 

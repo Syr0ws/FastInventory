@@ -22,23 +22,23 @@ public class SimpleInventoryConfig implements InventoryConfig {
                                  Map<Integer, InventoryItemConfig> content,
                                  Set<PaginationConfig> paginations) {
 
-        if(id == null || id.isEmpty()) {
+        if (id == null || id.isEmpty()) {
             throw new IllegalArgumentException("id cannot be null or empty");
         }
 
-        if(title == null) {
+        if (title == null) {
             throw new IllegalArgumentException("title cannot be null");
         }
 
-        if(type == null) {
+        if (type == null) {
             throw new IllegalArgumentException("type cannot be null");
         }
 
-        if(content == null) {
+        if (content == null) {
             throw new IllegalArgumentException("content cannot be null");
         }
 
-        if(paginations == null) {
+        if (paginations == null) {
             throw new IllegalArgumentException("paginations cannot be null");
         }
 
@@ -72,7 +72,7 @@ public class SimpleInventoryConfig implements InventoryConfig {
     @Override
     public Optional<PaginationConfig> getPaginationConfig(String paginationId) {
 
-        if(paginationId == null) {
+        if (paginationId == null) {
             throw new IllegalArgumentException("paginationId cannot be null");
         }
 

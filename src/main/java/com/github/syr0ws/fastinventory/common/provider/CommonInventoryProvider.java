@@ -7,41 +7,42 @@ import com.github.syr0ws.fastinventory.api.config.dao.InventoryConfigDAO;
 import com.github.syr0ws.fastinventory.api.config.exception.InventoryConfigException;
 import com.github.syr0ws.fastinventory.api.i18n.I18n;
 import com.github.syr0ws.fastinventory.api.item.ItemParser;
+import com.github.syr0ws.fastinventory.api.mapping.EnhancementManager;
 import com.github.syr0ws.fastinventory.api.placeholder.PlaceholderManager;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
-import com.github.syr0ws.fastinventory.api.provider.Provider;
-import com.github.syr0ws.fastinventory.api.util.Context;
+import com.github.syr0ws.fastinventory.api.provider.ProviderManager;
+import com.github.syr0ws.fastinventory.common.mapping.InventoryItemMapper;
 import com.github.syr0ws.fastinventory.common.placeholder.CommonPlaceholder;
-import com.github.syr0ws.fastinventory.common.placeholder.inventory.InventorySizePlaceholder;
-import com.github.syr0ws.fastinventory.common.placeholder.inventory.InventoryTypePlaceholder;
-import com.github.syr0ws.fastinventory.common.placeholder.item.ItemSlotPlaceholder;
-import com.github.syr0ws.fastinventory.common.placeholder.player.PlayerNamePlaceholder;
-import com.github.syr0ws.fastinventory.common.placeholder.player.PlayerUUIDPlaceholder;
 import com.github.syr0ws.fastinventory.internal.SimpleFastInventory;
+import com.github.syr0ws.fastinventory.internal.mapping.SimpleEnhancementManager;
 import com.github.syr0ws.fastinventory.internal.placeholder.SimplePlaceholderManager;
+import com.github.syr0ws.fastinventory.internal.provider.SimpleProviderManager;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.nio.file.Path;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Optional;
 
 public abstract class CommonInventoryProvider implements InventoryProvider {
 
     private final Plugin plugin;
     private final InventoryConfigDAO dao;
     private final I18n i18n;
+
     private final PlaceholderManager placeholderManager = new SimplePlaceholderManager();
-    private final Map<String, Provider<?>> providers = new HashMap<>();
+    private final ProviderManager providerManager = new SimpleProviderManager();
+    private final EnhancementManager enhancementManager = new SimpleEnhancementManager();
 
     private InventoryConfig config;
 
     public CommonInventoryProvider(I18n i18n, Plugin plugin, InventoryConfigDAO dao) {
 
-        if(plugin == null) {
+        if (plugin == null) {
             throw new IllegalArgumentException("plugin cannot be null");
         }
 
-        if(dao == null) {
+        if (dao == null) {
             throw new IllegalArgumentException("dao cannot be null");
         }
 
@@ -49,38 +50,34 @@ public abstract class CommonInventoryProvider implements InventoryProvider {
         this.dao = dao;
         this.i18n = i18n;
 
-        this.addProviders();
+        this.addProviders(this.providerManager);
         this.addPlaceholders(this.placeholderManager);
+        this.addEnhancements(this.enhancementManager);
+
         this.loadConfig();
     }
 
     protected abstract Path getInventoryConfigFile();
 
-    protected void addProviders() {
+    protected abstract void addEnhancements(EnhancementManager manager);
+
+    protected void addProviders(ProviderManager manager) {
 
         ItemParser itemParser = this.getItemParser();
+        InventoryItemMapper mapper = new InventoryItemMapper(this.enhancementManager, itemParser);
 
-        this.addProvider(new CommonTitleProvider());
-        this.addProvider(new CommonInventoryTypeProvider());
-        this.addProvider(new CommonInventoryItemProvider(itemParser));
-        this.addProvider(new CommonPaginationItemProvider(itemParser));
-        this.addProvider(new CommonPreviousPageItemProvider(itemParser));
-        this.addProvider(new CommonNextPageItemProvider(itemParser));
+        manager.addProvider(new CommonTitleProvider());
+        manager.addProvider(new CommonInventoryTypeProvider());
+        manager.addProvider(new CommonInventoryItemProvider(mapper));
+        manager.addProvider(new CommonPaginationItemProvider(mapper));
+        manager.addProvider(new CommonPreviousPageItemProvider(mapper));
+        manager.addProvider(new CommonNextPageItemProvider(mapper));
     }
 
     protected void addPlaceholders(PlaceholderManager manager) {
         Arrays.stream(CommonPlaceholder.values())
                 .map(CommonPlaceholder::getPlaceholder)
                 .forEach(manager::addPlaceholder);
-    }
-
-    protected void addProvider(Provider<?> provider) {
-
-        if(provider == null) {
-            throw new IllegalArgumentException("Provider cannot be null");
-        }
-
-        this.providers.put(provider.getName(), provider);
     }
 
     protected ItemParser getItemParser() {
@@ -109,38 +106,18 @@ public abstract class CommonInventoryProvider implements InventoryProvider {
     }
 
     @Override
-    public <T> Optional<T> provide(String name, Class<T> type, Context context) {
-        return this.getProvider(name, type).map(provider -> provider.provide(this, context));
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> Optional<Provider<T>> getProvider(String name, Class<T> type) {
-
-        if(name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Name cannot be null or empty");
-        }
-
-        if(type == null) {
-            throw new IllegalArgumentException("Type cannot be null");
-        }
-
-        return this.providers.entrySet().stream()
-                .filter(entry -> entry.getKey().equals(name))
-                .map(Map.Entry::getValue)
-                .filter(provider -> provider.getType().equals(type))
-                .map(provider -> (Provider<T>) provider)
-                .findFirst();
-    }
-
-    @Override
-    public Set<Provider<?>> getProviders() {
-        return new HashSet<>(this.providers.values());
-    }
-
-    @Override
     public PlaceholderManager getPlaceholderManager() {
         return this.placeholderManager;
+    }
+
+    @Override
+    public ProviderManager getProviderManager() {
+        return this.providerManager;
+    }
+
+    @Override
+    public EnhancementManager getEnhancementManager() {
+        return this.enhancementManager;
     }
 
     @Override

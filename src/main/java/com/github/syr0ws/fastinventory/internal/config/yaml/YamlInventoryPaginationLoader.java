@@ -5,6 +5,8 @@ import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
 import com.github.syr0ws.fastinventory.api.config.exception.InventoryConfigException;
 import com.github.syr0ws.fastinventory.common.action.NextPageAction;
 import com.github.syr0ws.fastinventory.common.action.PreviousPageAction;
+import com.github.syr0ws.fastinventory.common.util.IdUtil;
+import com.github.syr0ws.fastinventory.internal.config.SimpleInventoryItemConfig;
 import com.github.syr0ws.fastinventory.internal.config.SimplePaginationConfig;
 import com.github.syr0ws.fastinventory.internal.config.yaml.item.YamlInventoryItemLoader;
 import com.github.syr0ws.fastinventory.internal.util.Pair;
@@ -26,7 +28,7 @@ public class YamlInventoryPaginationLoader {
 
     public YamlInventoryPaginationLoader(YamlInventoryItemLoader itemLoader) {
 
-        if(itemLoader == null) {
+        if (itemLoader == null) {
             throw new IllegalArgumentException("itemLoader cannot be null");
         }
 
@@ -38,18 +40,18 @@ public class YamlInventoryPaginationLoader {
         ConfigurationSection paginationsSection = section.getConfigurationSection(PAGINATIONS_KEY);
 
         // No paginations section defined.
-        if(paginationsSection == null) {
+        if (paginationsSection == null) {
             return new HashSet<>();
         }
 
         Set<PaginationConfig> paginations = new HashSet<>();
 
         // Loading all the paginations. If one fails, an exception is thrown.
-        for(String key : paginationsSection.getKeys(false)) {
+        for (String key : paginationsSection.getKeys(false)) {
 
             ConfigurationSection paginationSection = paginationsSection.getConfigurationSection(key);
 
-            if(paginationSection == null) {
+            if (paginationSection == null) {
                 throw new InventoryConfigException(String.format("Key '%s.%s' is not a section", paginationsSection.getCurrentPath(), key));
             }
 
@@ -66,22 +68,28 @@ public class YamlInventoryPaginationLoader {
         String paginationId = this.loadPaginationId(section);
         char paginationSymbol = this.loadPaginationSymbol(section);
         List<Integer> slots = this.loadPaginationSlots(section, paginationSymbol, symbolSlots);
-        InventoryItemConfig item = this.loadPaginationItem(section);
+        InventoryItemConfig item = this.loadPaginationItem(section, paginationId);
 
-        Pair<InventoryItemConfig, List<Integer>> previousPageItem = this.loadPageItem(section, PREVIOUS_PAGE_ITEM_KEY, symbolSlots);
-        Pair<InventoryItemConfig, List<Integer>> nextPageItem = this.loadPageItem(section, NEXT_PAGE_ITEM_KEY, symbolSlots);
+        Pair<SimpleInventoryItemConfig, List<Integer>> previousPage = this.loadPageItem(section, PREVIOUS_PAGE_ITEM_KEY, symbolSlots);
+        Pair<SimpleInventoryItemConfig, List<Integer>> nextPage = this.loadPageItem(section, NEXT_PAGE_ITEM_KEY, symbolSlots);
 
-        previousPageItem.key().getActions().add(new PreviousPageAction(paginationId));
-        nextPageItem.key().getActions().add(new NextPageAction(paginationId));
+        SimpleInventoryItemConfig previousPageItem = previousPage.key();
+        SimpleInventoryItemConfig nextPageItem = nextPage.key();
+
+        previousPageItem.setId(IdUtil.getPaginationPreviousPageItemId(paginationId));
+        previousPageItem.getActions().add(new PreviousPageAction(paginationId));
+
+        nextPageItem.setId(IdUtil.getPaginationNextPageItemId(paginationId));
+        nextPageItem.getActions().add(new NextPageAction(paginationId));
 
         return new SimplePaginationConfig(
                 paginationId,
                 new HashSet<>(slots),
                 item,
-                previousPageItem.key(),
-                nextPageItem.key(),
-                previousPageItem.value(),
-                nextPageItem.value()
+                previousPageItem,
+                nextPageItem,
+                previousPage.value(),
+                nextPage.value()
         );
     }
 
@@ -89,7 +97,7 @@ public class YamlInventoryPaginationLoader {
 
         String paginationId = section.getString(PAGINATION_ID_KEY);
 
-        if(paginationId == null || paginationId.isEmpty()) {
+        if (paginationId == null || paginationId.isEmpty()) {
             throw new InventoryConfigException(String.format("Property '%s' missing or empty in pagination at '%s'", PAGINATION_ID_KEY, section.getCurrentPath()));
         }
 
@@ -107,37 +115,40 @@ public class YamlInventoryPaginationLoader {
         return symbol.charAt(0);
     }
 
-    private InventoryItemConfig loadPaginationItem(ConfigurationSection section) throws InventoryConfigException {
+    private InventoryItemConfig loadPaginationItem(ConfigurationSection section, String paginationId) throws InventoryConfigException {
 
         ConfigurationSection paginationItemSection = section.getConfigurationSection(PAGINATION_ITEM_KEY);
 
-        if(paginationItemSection == null) {
+        if (paginationItemSection == null) {
             throw new InventoryConfigException(String.format("Property '%s' missing or invalid in pagination at '%s'", PAGINATION_ITEM_KEY, section.getCurrentPath()));
         }
 
-        return this.itemLoader.loadItem(paginationItemSection);
+        SimpleInventoryItemConfig config = this.itemLoader.loadItem(paginationItemSection);
+        config.setId(IdUtil.getPaginationItemId(paginationId));
+
+        return config;
     }
 
     private List<Integer> loadPaginationSlots(ConfigurationSection section, char paginationSymbol, Map<Character, List<Integer>> symbolSlots) throws InventoryConfigException {
 
         List<Integer> slots = symbolSlots.getOrDefault(paginationSymbol, Collections.emptyList());
 
-        if(slots.isEmpty()) {
+        if (slots.isEmpty()) {
             throw new InventoryConfigException(String.format("Symbol '%s' not found in pattern for pagination at '%s'", paginationSymbol, section.getCurrentPath()));
         }
 
         return slots;
     }
 
-    private Pair<InventoryItemConfig, List<Integer>> loadPageItem(ConfigurationSection section, String key, Map<Character, List<Integer>> symbolSlots) throws InventoryConfigException {
+    private Pair<SimpleInventoryItemConfig, List<Integer>> loadPageItem(ConfigurationSection section, String key, Map<Character, List<Integer>> symbolSlots) throws InventoryConfigException {
 
         ConfigurationSection pageItemSection = section.getConfigurationSection(key);
 
-        if(pageItemSection == null) {
+        if (pageItemSection == null) {
             throw new InventoryConfigException(String.format("Property '%s' missing or not a section at '%s'", key, section.getCurrentPath()));
         }
 
-        InventoryItemConfig item = this.itemLoader.loadItem(pageItemSection);
+        SimpleInventoryItemConfig item = this.itemLoader.loadItem(pageItemSection);
 
         String symbol = pageItemSection.getString(PAGE_ITEM_SYMBOL_KEY);
 
@@ -147,7 +158,7 @@ public class YamlInventoryPaginationLoader {
 
         List<Integer> slots = symbolSlots.getOrDefault(symbol.charAt(0), Collections.emptyList());
 
-        if(slots.isEmpty()) {
+        if (slots.isEmpty()) {
             throw new InventoryConfigException(String.format("Symbol '%s' not found in pattern for pagination at '%s'", symbol, section.getCurrentPath()));
         }
 

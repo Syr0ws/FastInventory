@@ -13,13 +13,13 @@ public class CommandActionLoader implements ClickActionLoader<ConfigurationSecti
     @Override
     public ClickAction load(ConfigurationSection section) throws InventoryConfigException {
 
-        if(!section.isString(COMMAND_KEY)) {
+        if (!section.isString(COMMAND_KEY)) {
             throw new InventoryConfigException(String.format("Property '%s' not found or not a string at '%s'", COMMAND_KEY, section.getCurrentPath()));
         }
 
         String command = section.getString(COMMAND_KEY);
 
-        if(command.startsWith("/")) {
+        if (command.startsWith("/")) {
             command = command.substring(1);
         }
 

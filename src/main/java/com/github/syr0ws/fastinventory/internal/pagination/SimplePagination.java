@@ -23,19 +23,19 @@ public class SimplePagination<T> implements Pagination<T> {
 
     public SimplePagination(String id, FastInventory inventory, PaginationModel<T> model, List<Integer> slots) {
 
-        if(id == null || id.isEmpty()) {
+        if (id == null || id.isEmpty()) {
             throw new IllegalArgumentException("id cannot be null or empty");
         }
 
-        if(inventory == null) {
+        if (inventory == null) {
             throw new IllegalArgumentException("inventory cannot be null");
         }
 
-        if(model == null) {
+        if (model == null) {
             throw new IllegalArgumentException("model cannot be null");
         }
 
-        if(slots == null) {
+        if (slots == null) {
             throw new IllegalArgumentException("slots cannot be null");
         }
 
@@ -60,20 +60,20 @@ public class SimplePagination<T> implements Pagination<T> {
 
         int i = 0;
 
-        for(int slot : this.slots) {
+        for (int slot : this.slots) {
 
             InventoryItem item = null;
 
-            if(i < items.size()) {
+            if (i < items.size()) {
 
                 Context context = this.getPaginationContext();
                 context.addData(CommonContextKey.SLOT.name(), slot, Integer.class);
                 context.addData(CommonContextKey.PAGINATION_ITEM.name(), items.get(i), this.model.getDataType());
 
-                item = provider.provide(CommonProviderType.PAGINATION_ITEM.name(), InventoryItem.class, context).orElse(null);
+                item = provider.getProviderManager().provide(CommonProviderType.PAGINATION_ITEM.name(), InventoryItem.class, provider, context).orElse(null);
             }
 
-            if(item == null) {
+            if (item == null) {
                 content.removeItem(slot);
             } else {
                 content.setItem(item, slot);
@@ -94,18 +94,18 @@ public class SimplePagination<T> implements Pagination<T> {
                 .getPaginationConfig(this.id)
                 .orElseThrow(() -> new NullPointerException("Pagination not found"));
 
-        if(this.model.hasPreviousPage()) {
+        if (this.model.hasPreviousPage()) {
 
-            provider.provide(CommonProviderType.PAGINATION_PREVIOUS_PAGE_ITEM.name(), InventoryItem.class, context)
+            provider.getProviderManager().provide(CommonProviderType.PAGINATION_PREVIOUS_PAGE_ITEM.name(), InventoryItem.class, provider, context)
                     .ifPresent(item -> content.setItem(item, paginationConfig.getPreviousPageItemSlots()));
 
         } else {
             content.removeItems(paginationConfig.getPreviousPageItemSlots());
         }
 
-        if(this.model.hasNextPage()) {
+        if (this.model.hasNextPage()) {
 
-            provider.provide(CommonProviderType.PAGINATION_NEXT_PAGE_ITEM.name(), InventoryItem.class, context)
+            provider.getProviderManager().provide(CommonProviderType.PAGINATION_NEXT_PAGE_ITEM.name(), InventoryItem.class, provider, context)
                     .ifPresent(item -> content.setItem(item, paginationConfig.getNextPageItemSlots()));
         } else {
             content.removeItems(paginationConfig.getNextPageItemSlots());
@@ -115,7 +115,7 @@ public class SimplePagination<T> implements Pagination<T> {
     @Override
     public void previousPage() {
 
-        if(this.model.hasPreviousPage()) {
+        if (this.model.hasPreviousPage()) {
             this.model.previousPage();
             this.update();
         }
@@ -124,7 +124,7 @@ public class SimplePagination<T> implements Pagination<T> {
     @Override
     public void nextPage() {
 
-        if(this.model.hasNextPage()) {
+        if (this.model.hasNextPage()) {
             this.model.nextPage();
             this.update();
         }
