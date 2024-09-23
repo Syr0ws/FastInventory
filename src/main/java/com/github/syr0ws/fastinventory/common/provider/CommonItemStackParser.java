@@ -1,8 +1,8 @@
 package com.github.syr0ws.fastinventory.common.provider;
 
+import com.github.syr0ws.fastinventory.api.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.item.ItemParser;
 import com.github.syr0ws.fastinventory.api.placeholder.PlaceholderManager;
-import com.github.syr0ws.fastinventory.api.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.common.CommonContextKey;
 import org.bukkit.entity.Player;

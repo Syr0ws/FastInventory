@@ -1,7 +1,6 @@
 package com.github.syr0ws.fastinventory.internal.config.yaml.item;
 
 import com.github.syr0ws.fastinventory.api.action.ClickAction;
-import com.github.syr0ws.fastinventory.api.config.InventoryItemConfig;
 import com.github.syr0ws.fastinventory.api.config.action.ClickActionLoader;
 import com.github.syr0ws.fastinventory.api.config.action.ClickActionLoaderFactory;
 import com.github.syr0ws.fastinventory.api.config.exception.InventoryConfigException;
@@ -10,7 +9,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class YamlInventoryItemLoader {

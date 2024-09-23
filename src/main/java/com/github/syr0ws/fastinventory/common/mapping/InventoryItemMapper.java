@@ -1,12 +1,12 @@
 package com.github.syr0ws.fastinventory.common.mapping;
 
+import com.github.syr0ws.fastinventory.api.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.config.InventoryItemConfig;
 import com.github.syr0ws.fastinventory.api.item.InventoryItem;
 import com.github.syr0ws.fastinventory.api.item.ItemParser;
 import com.github.syr0ws.fastinventory.api.mapping.Enhancement;
 import com.github.syr0ws.fastinventory.api.mapping.EnhancementManager;
 import com.github.syr0ws.fastinventory.api.mapping.Mapper;
-import com.github.syr0ws.fastinventory.api.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.internal.item.SimpleInventoryItem;
 import org.bukkit.inventory.ItemStack;

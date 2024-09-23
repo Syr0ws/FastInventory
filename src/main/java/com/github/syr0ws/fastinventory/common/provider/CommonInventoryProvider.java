@@ -1,6 +1,7 @@
 package com.github.syr0ws.fastinventory.common.provider;
 
 import com.github.syr0ws.fastinventory.api.FastInventory;
+import com.github.syr0ws.fastinventory.api.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.InventoryService;
 import com.github.syr0ws.fastinventory.api.config.InventoryConfig;
 import com.github.syr0ws.fastinventory.api.config.dao.InventoryConfigDAO;
@@ -9,10 +10,7 @@ import com.github.syr0ws.fastinventory.api.i18n.I18n;
 import com.github.syr0ws.fastinventory.api.item.ItemParser;
 import com.github.syr0ws.fastinventory.api.mapping.EnhancementManager;
 import com.github.syr0ws.fastinventory.api.placeholder.PlaceholderManager;
-import com.github.syr0ws.fastinventory.api.InventoryProvider;
-import com.github.syr0ws.fastinventory.api.provider.Provider;
 import com.github.syr0ws.fastinventory.api.provider.ProviderManager;
-import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.common.mapping.InventoryItemMapper;
 import com.github.syr0ws.fastinventory.common.placeholder.CommonPlaceholder;
 import com.github.syr0ws.fastinventory.internal.SimpleFastInventory;
@@ -23,7 +21,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.nio.file.Path;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Optional;
 
 public abstract class CommonInventoryProvider implements InventoryProvider {
 
