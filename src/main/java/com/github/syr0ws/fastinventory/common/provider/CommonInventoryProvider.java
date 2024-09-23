@@ -52,6 +52,7 @@ public abstract class CommonInventoryProvider implements InventoryProvider {
 
         this.addProviders(this.providerManager);
         this.addPlaceholders(this.placeholderManager);
+        this.addEnhancements(this.enhancementManager);
 
         this.loadConfig();
     }
