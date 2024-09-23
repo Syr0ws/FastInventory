@@ -14,15 +14,15 @@ public class SimpleInventoryItemConfig implements InventoryItemConfig {
 
     public SimpleInventoryItemConfig(String id, ItemStack item, List<ClickAction> actions) {
 
-        if(id == null || id.isEmpty()) {
+        if (id == null || id.isEmpty()) {
             throw new IllegalArgumentException("id cannot be null or empty");
         }
 
-        if(item == null) {
+        if (item == null) {
             throw new IllegalArgumentException("item cannot be null");
         }
 
-        if(actions == null) {
+        if (actions == null) {
             throw new IllegalArgumentException("actions cannot be null");
         }
 

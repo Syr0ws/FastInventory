@@ -18,11 +18,15 @@ public class FastInventoryClickEvent extends InventoryClickEvent {
     public FastInventoryClickEvent(FastInventory fastInventory, InventoryView view, InventoryType.SlotType type, int slot, ClickType click, InventoryAction action) {
         super(view, type, slot, click, action);
 
-        if(fastInventory == null) {
+        if (fastInventory == null) {
             throw new IllegalArgumentException("fastInventory cannot be null");
         }
 
         this.fastInventory = fastInventory;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 
     public FastInventory getFastInventory() {
@@ -35,10 +39,6 @@ public class FastInventoryClickEvent extends InventoryClickEvent {
 
     @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 }

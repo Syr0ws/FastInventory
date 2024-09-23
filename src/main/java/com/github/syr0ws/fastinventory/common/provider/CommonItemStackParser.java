@@ -1,8 +1,8 @@
 package com.github.syr0ws.fastinventory.common.provider;
 
-import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.item.ItemParser;
 import com.github.syr0ws.fastinventory.api.placeholder.PlaceholderManager;
+import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.common.CommonContextKey;
 import org.bukkit.entity.Player;
@@ -20,7 +20,7 @@ public class CommonItemStackParser implements ItemParser {
 
         ItemMeta meta = item.getItemMeta();
 
-        if(meta == null) {
+        if (meta == null) {
             return item;
         }
 
@@ -34,7 +34,7 @@ public class CommonItemStackParser implements ItemParser {
 
     private void parseName(InventoryProvider provider, PlaceholderManager manager, ItemMeta meta, Context context) {
 
-        if(!meta.hasDisplayName()) {
+        if (!meta.hasDisplayName()) {
             return;
         }
 
@@ -51,7 +51,7 @@ public class CommonItemStackParser implements ItemParser {
 
     private void parseLore(InventoryProvider provider, PlaceholderManager manager, ItemMeta meta, Context context) {
 
-        if(!meta.hasLore()) {
+        if (!meta.hasLore()) {
             return;
         }
 

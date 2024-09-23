@@ -23,7 +23,7 @@ public class YamlInventoryItemLoader {
 
     public YamlInventoryItemLoader(ClickActionLoaderFactory<ConfigurationSection> factory) {
 
-        if(factory == null) {
+        if (factory == null) {
             throw new IllegalArgumentException("factory cannot be null");
         }
 
@@ -32,7 +32,7 @@ public class YamlInventoryItemLoader {
 
     public SimpleInventoryItemConfig loadItem(ConfigurationSection section) throws InventoryConfigException {
 
-        if(section == null) {
+        if (section == null) {
             throw new IllegalArgumentException("section cannot be null");
         }
 
@@ -52,9 +52,9 @@ public class YamlInventoryItemLoader {
 
         ItemStack item;
 
-        if(section.isItemStack(ITEM_KEY)) {
+        if (section.isItemStack(ITEM_KEY)) {
             item = section.getItemStack(ITEM_KEY);
-        } else if(section.isConfigurationSection(ITEM_KEY)) {
+        } else if (section.isConfigurationSection(ITEM_KEY)) {
             ConfigurationSection itemSection = section.getConfigurationSection(ITEM_KEY);
             item = this.itemStackLoader.loadItem(itemSection);
         } else {
@@ -68,28 +68,28 @@ public class YamlInventoryItemLoader {
 
         ConfigurationSection actionsSection = section.getConfigurationSection(ACTIONS_KEY);
 
-        if(actionsSection == null) {
+        if (actionsSection == null) {
             return new ArrayList<>();
         }
 
         List<ClickAction> actions = new ArrayList<>();
 
-        for(String key : actionsSection.getKeys(false)) {
+        for (String key : actionsSection.getKeys(false)) {
 
             ConfigurationSection actionSection = actionsSection.getConfigurationSection(key);
 
-            if(actionSection == null) {
+            if (actionSection == null) {
                 throw new InventoryConfigException(String.format("Key '%s.%s' is not a section", actionsSection.getCurrentPath(), key));
             }
 
-            if(!actionSection.isString(ACTION_TYPE_KEY)) {
+            if (!actionSection.isString(ACTION_TYPE_KEY)) {
                 throw new InventoryConfigException(String.format("Property '%s' missing at '%s'", ACTION_TYPE_KEY, actionSection.getCurrentPath()));
             }
 
             String clickActionType = actionSection.getString(ACTION_TYPE_KEY);
             ClickActionLoader<ConfigurationSection> loader = this.factory.getLoader(clickActionType);
 
-            if(loader == null) {
+            if (loader == null) {
                 throw new InventoryConfigException(String.format("Invalid action type '%s' at '%s'", clickActionType, actionSection.getCurrentPath()));
             }
 

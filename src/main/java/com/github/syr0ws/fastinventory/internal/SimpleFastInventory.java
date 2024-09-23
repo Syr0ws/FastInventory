@@ -1,6 +1,9 @@
 package com.github.syr0ws.fastinventory.internal;
 
-import com.github.syr0ws.fastinventory.api.*;
+import com.github.syr0ws.fastinventory.api.FastInventory;
+import com.github.syr0ws.fastinventory.api.FastInventoryType;
+import com.github.syr0ws.fastinventory.api.InventoryContent;
+import com.github.syr0ws.fastinventory.api.InventoryService;
 import com.github.syr0ws.fastinventory.api.config.InventoryConfig;
 import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
 import com.github.syr0ws.fastinventory.api.exception.InventoryException;
@@ -31,15 +34,15 @@ public class SimpleFastInventory implements FastInventory {
 
     public SimpleFastInventory(InventoryProvider provider, InventoryService service, Player viewer) {
 
-        if(provider == null) {
+        if (provider == null) {
             throw new IllegalArgumentException("provider cannot be null");
         }
 
-        if(service == null) {
+        if (service == null) {
             throw new IllegalArgumentException("service cannot be null");
         }
 
-        if(viewer == null) {
+        if (viewer == null) {
             throw new IllegalArgumentException("viewer cannot be null");
         }
 
@@ -74,9 +77,9 @@ public class SimpleFastInventory implements FastInventory {
         FastInventoryType type = this.getType();
 
         // Updating inventory content.
-        for(int row = 0; row < type.getRows(); row++) {
+        for (int row = 0; row < type.getRows(); row++) {
 
-            for(int col = 0; col < type.getColumns(); col++) {
+            for (int col = 0; col < type.getColumns(); col++) {
 
                 int slot = (row * type.getColumns()) + col;
 
@@ -86,7 +89,7 @@ public class SimpleFastInventory implements FastInventory {
                 InventoryItem item = this.provider.getProviderManager().provide(CommonProviderType.CONTENT_ITEM.name(), InventoryItem.class, provider, context)
                         .orElse(null);
 
-                if(item == null) {
+                if (item == null) {
                     this.content.removeItem(slot);
                 } else {
                     this.content.setItem(item, slot);
@@ -154,7 +157,7 @@ public class SimpleFastInventory implements FastInventory {
 
         Pagination<?> pagination = this.paginations.get(id);
 
-        if(pagination == null) {
+        if (pagination == null) {
             return Optional.empty();
         }
 
@@ -194,7 +197,7 @@ public class SimpleFastInventory implements FastInventory {
         FastInventoryType type = this.getType();
         InventoryType bukkitType = type.getBukkitType();
 
-        if(bukkitType == InventoryType.CHEST) {
+        if (bukkitType == InventoryType.CHEST) {
             return Bukkit.createInventory(null, this.getSize(), this.getTitle());
         }
 
@@ -203,7 +206,7 @@ public class SimpleFastInventory implements FastInventory {
 
     private void updateBukkitInventory() {
 
-        for(int slot = 0; slot < this.inventory.getSize(); slot++) {
+        for (int slot = 0; slot < this.inventory.getSize(); slot++) {
 
             ItemStack item = this.content.getItem(slot)
                     .map(InventoryItem::getItemStack)

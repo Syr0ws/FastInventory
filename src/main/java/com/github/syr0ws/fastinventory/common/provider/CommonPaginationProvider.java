@@ -1,10 +1,10 @@
 package com.github.syr0ws.fastinventory.common.provider;
 
 import com.github.syr0ws.fastinventory.api.FastInventory;
-import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.config.InventoryConfig;
 import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
 import com.github.syr0ws.fastinventory.api.pagination.Pagination;
+import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.provider.Provider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.common.CommonContextKey;
@@ -22,15 +22,15 @@ public class CommonPaginationProvider<T> implements Provider<Pagination> {
 
     public CommonPaginationProvider(String paginationId, Class<T> dataType, Supplier<List<T>> supplier, InventoryItemMapper mapper) {
 
-        if(paginationId == null || paginationId.isEmpty()) {
+        if (paginationId == null || paginationId.isEmpty()) {
             throw new IllegalArgumentException("paginationId cannot be null or empty");
         }
 
-        if(dataType == null) {
+        if (dataType == null) {
             throw new IllegalArgumentException("dataType cannot be null");
         }
 
-        if(supplier == null) {
+        if (supplier == null) {
             throw new IllegalArgumentException("supplier cannot be null");
         }
 

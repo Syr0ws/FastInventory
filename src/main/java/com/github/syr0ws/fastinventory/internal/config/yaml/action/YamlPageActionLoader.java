@@ -10,7 +10,7 @@ public abstract class YamlPageActionLoader implements ClickActionLoader<Configur
 
     protected String getPaginationId(ConfigurationSection section) throws InventoryConfigException {
 
-        if(!section.isString(PAGINATION_ID_KEY)) {
+        if (!section.isString(PAGINATION_ID_KEY)) {
             throw new InventoryConfigException(String.format("Property '%s' missing at '%s'", PAGINATION_ID_KEY, section.getCurrentPath()));
         }
 

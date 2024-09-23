@@ -41,11 +41,11 @@ public class YamlInventoryConfigDAO implements InventoryConfigDAO {
     @Override
     public InventoryConfig loadConfig(Path file) throws InventoryConfigException {
 
-        if(file == null) {
+        if (file == null) {
             throw new IllegalArgumentException("file cannot be null");
         }
 
-        if(!Files.exists(file)) {
+        if (!Files.exists(file)) {
             throw new InventoryConfigException(String.format("File %s does not exist", file));
         }
 
@@ -57,17 +57,17 @@ public class YamlInventoryConfigDAO implements InventoryConfigDAO {
     @Override
     public Set<InventoryConfig> loadConfigs(Path folder) throws InventoryConfigException {
 
-        if(folder == null) {
+        if (folder == null) {
             throw new IllegalArgumentException("folder cannot be null");
         }
 
-        if(!Files.isDirectory(folder)) {
+        if (!Files.isDirectory(folder)) {
             throw new InventoryConfigException(String.format("Folder %s is not a directory or does not exist", folder));
         }
 
         Set<InventoryConfig> configs;
 
-        try(Stream<Path> files = Files.list(folder)) {
+        try (Stream<Path> files = Files.list(folder)) {
 
             configs = files.map(file -> {
                 try {
@@ -111,7 +111,7 @@ public class YamlInventoryConfigDAO implements InventoryConfigDAO {
 
         String id = section.getString(INVENTORY_ID_KEY);
 
-        if(id == null || id.isEmpty()) {
+        if (id == null || id.isEmpty()) {
             throw new InventoryConfigException(String.format("Property '%s' missing or empty at '%s'", INVENTORY_ID_KEY, section.getCurrentPath()));
         }
 
@@ -122,7 +122,7 @@ public class YamlInventoryConfigDAO implements InventoryConfigDAO {
 
         String typeAsString = section.getString(INVENTORY_TYPE_KEY);
 
-        if(typeAsString == null) {
+        if (typeAsString == null) {
             throw new InventoryConfigException(String.format("Property '%s' missing at '%s'", INVENTORY_TYPE_KEY, section.getCurrentPath()));
         }
 
@@ -136,21 +136,21 @@ public class YamlInventoryConfigDAO implements InventoryConfigDAO {
     private List<String> loadPattern(ConfigurationSection section, FastInventoryType type) throws InventoryConfigException {
 
         // Existence and type checks.
-        if(!section.isList(INVENTORY_PATTERN_KEY)) {
+        if (!section.isList(INVENTORY_PATTERN_KEY)) {
             throw new InventoryConfigException(String.format("Property '%s' missing or not a list at '%s'", INVENTORY_PATTERN_KEY, section.getCurrentPath()));
         }
 
         List<String> pattern = section.getStringList(INVENTORY_PATTERN_KEY);
 
         // Pattern validation.
-        if(pattern.size() != type.getRows()) {
+        if (pattern.size() != type.getRows()) {
             throw new InventoryConfigException(String.format("Invalid property '%s' at '%s' : number of rows must be %d", INVENTORY_PATTERN_KEY, section.getCurrentPath(), type.getRows()));
         }
 
         boolean hasInvalidRow = pattern.stream()
                 .anyMatch(line -> line.length() != type.getColumns());
 
-        if(hasInvalidRow) {
+        if (hasInvalidRow) {
             throw new InventoryConfigException(String.format("Invalid property '%s' at '%s' : some lines do not have %d characters", INVENTORY_PATTERN_KEY, section.getCurrentPath(), type.getColumns()));
         }
 
@@ -161,16 +161,16 @@ public class YamlInventoryConfigDAO implements InventoryConfigDAO {
 
         Map<Character, List<Integer>> symbolsSlots = new HashMap<>();
 
-        for(int row = 0; row < pattern.size(); row++) {
+        for (int row = 0; row < pattern.size(); row++) {
 
             String line = pattern.get(row);
 
-            for(int column = 0; column < line.length(); column++) {
+            for (int column = 0; column < line.length(); column++) {
 
                 char symbol = line.charAt(column);
                 int slot = (row * type.getColumns()) + column;
 
-                if(!symbolsSlots.containsKey(symbol)) {
+                if (!symbolsSlots.containsKey(symbol)) {
                     symbolsSlots.put(symbol, new ArrayList<>());
                 }
 

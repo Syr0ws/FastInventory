@@ -15,7 +15,7 @@ public class YamlLoreLoader implements ItemPropertyLoader<ConfigurationSection> 
     @Override
     public void loadProperty(ConfigurationSection section, ItemStack item) throws InventoryConfigException {
 
-        if(!section.isList(LORE_KEY)) {
+        if (!section.isList(LORE_KEY)) {
             throw new InventoryConfigException(String.format("Property '%s' is not a list", LORE_KEY));
         }
 

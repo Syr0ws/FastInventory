@@ -1,7 +1,6 @@
 package com.github.syr0ws.fastinventory.common.provider;
 
 import com.github.syr0ws.fastinventory.api.FastInventory;
-import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.InventoryService;
 import com.github.syr0ws.fastinventory.api.config.InventoryConfig;
 import com.github.syr0ws.fastinventory.api.config.dao.InventoryConfigDAO;
@@ -10,6 +9,7 @@ import com.github.syr0ws.fastinventory.api.i18n.I18n;
 import com.github.syr0ws.fastinventory.api.item.ItemParser;
 import com.github.syr0ws.fastinventory.api.mapping.EnhancementManager;
 import com.github.syr0ws.fastinventory.api.placeholder.PlaceholderManager;
+import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.provider.ProviderManager;
 import com.github.syr0ws.fastinventory.common.mapping.InventoryItemMapper;
 import com.github.syr0ws.fastinventory.common.placeholder.CommonPlaceholder;
@@ -38,11 +38,11 @@ public abstract class CommonInventoryProvider implements InventoryProvider {
 
     public CommonInventoryProvider(I18n i18n, Plugin plugin, InventoryConfigDAO dao) {
 
-        if(plugin == null) {
+        if (plugin == null) {
             throw new IllegalArgumentException("plugin cannot be null");
         }
 
-        if(dao == null) {
+        if (dao == null) {
             throw new IllegalArgumentException("dao cannot be null");
         }
 

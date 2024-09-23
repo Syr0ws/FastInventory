@@ -19,7 +19,7 @@ public class SimpleProviderManager implements ProviderManager {
     @Override
     public void addProvider(Provider<?> provider) {
 
-        if(provider == null) {
+        if (provider == null) {
             throw new IllegalArgumentException("Provider cannot be null");
         }
 
@@ -30,11 +30,11 @@ public class SimpleProviderManager implements ProviderManager {
     @SuppressWarnings("unchecked")
     public <T> Optional<Provider<T>> getProvider(String name, Class<T> type) {
 
-        if(name == null || name.isEmpty()) {
+        if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Name cannot be null or empty");
         }
 
-        if(type == null) {
+        if (type == null) {
             throw new IllegalArgumentException("Type cannot be null");
         }
 

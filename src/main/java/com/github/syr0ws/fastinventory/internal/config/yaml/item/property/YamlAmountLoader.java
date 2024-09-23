@@ -11,7 +11,7 @@ public class YamlAmountLoader implements ItemPropertyLoader<ConfigurationSection
     @Override
     public void loadProperty(ConfigurationSection section, ItemStack item) throws InventoryConfigException {
 
-        if(!section.isInt(AMOUNT_KEY)) {
+        if (!section.isInt(AMOUNT_KEY)) {
             throw new InventoryConfigException(String.format("Property '%s' is not an int", AMOUNT_KEY));
         }
 

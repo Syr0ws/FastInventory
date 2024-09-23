@@ -28,7 +28,7 @@ public class InventoryItemDto implements Dto {
 
     public void setItem(ItemStack item) {
 
-        if(item == null) {
+        if (item == null) {
             throw new IllegalArgumentException("item cannot be null");
         }
 

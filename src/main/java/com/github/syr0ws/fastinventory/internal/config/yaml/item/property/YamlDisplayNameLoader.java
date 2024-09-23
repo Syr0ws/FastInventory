@@ -13,7 +13,7 @@ public class YamlDisplayNameLoader implements ItemPropertyLoader<ConfigurationSe
     @Override
     public void loadProperty(ConfigurationSection section, ItemStack item) throws InventoryConfigException {
 
-        if(!section.isString(DISPLAY_NAME_KEY)) {
+        if (!section.isString(DISPLAY_NAME_KEY)) {
             throw new InventoryConfigException(String.format("Property '%s' is not a string", DISPLAY_NAME_KEY));
         }
 

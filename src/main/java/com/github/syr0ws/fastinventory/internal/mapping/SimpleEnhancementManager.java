@@ -14,23 +14,23 @@ public class SimpleEnhancementManager implements EnhancementManager {
     @SuppressWarnings("unchecked")
     public <T extends Dto> void addEnhancement(String id, Enhancement<T> enhancement, Class<T> type) {
 
-        if(id == null || id.trim().isEmpty()) {
+        if (id == null || id.trim().isEmpty()) {
             throw new IllegalArgumentException("id cannot be null or empty");
         }
 
-        if(enhancement == null) {
+        if (enhancement == null) {
             throw new IllegalArgumentException("enhancement cannot be null");
         }
 
-        if(type == null) {
+        if (type == null) {
             throw new IllegalArgumentException("type cannot be null");
         }
 
-        if(this.enhancements.containsKey(id)) {
+        if (this.enhancements.containsKey(id)) {
 
             Data<?> data = this.enhancements.get(id);
 
-            if(!data.getType().equals(type)) {
+            if (!data.getType().equals(type)) {
                 throw new IllegalArgumentException("Enhancement type mismatch");
             }
 
@@ -50,21 +50,21 @@ public class SimpleEnhancementManager implements EnhancementManager {
     @SuppressWarnings("unchecked")
     public <T extends Dto> List<Enhancement<T>> getEnhancements(String id, Class<T> type) {
 
-        if(id == null || id.trim().isEmpty()) {
+        if (id == null || id.trim().isEmpty()) {
             throw new IllegalArgumentException("id cannot be null or empty");
         }
 
-        if(type == null) {
+        if (type == null) {
             throw new IllegalArgumentException("type cannot be null");
         }
 
         Data<?> data = this.enhancements.get(id);
 
-        if(data == null) {
+        if (data == null) {
             return Collections.emptyList();
         }
 
-        if(!data.getType().equals(type)) {
+        if (!data.getType().equals(type)) {
             throw new IllegalArgumentException("Enhancement type mismatch");
         }
 

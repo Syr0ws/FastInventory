@@ -28,7 +28,7 @@ public class YamlInventoryPaginationLoader {
 
     public YamlInventoryPaginationLoader(YamlInventoryItemLoader itemLoader) {
 
-        if(itemLoader == null) {
+        if (itemLoader == null) {
             throw new IllegalArgumentException("itemLoader cannot be null");
         }
 
@@ -40,18 +40,18 @@ public class YamlInventoryPaginationLoader {
         ConfigurationSection paginationsSection = section.getConfigurationSection(PAGINATIONS_KEY);
 
         // No paginations section defined.
-        if(paginationsSection == null) {
+        if (paginationsSection == null) {
             return new HashSet<>();
         }
 
         Set<PaginationConfig> paginations = new HashSet<>();
 
         // Loading all the paginations. If one fails, an exception is thrown.
-        for(String key : paginationsSection.getKeys(false)) {
+        for (String key : paginationsSection.getKeys(false)) {
 
             ConfigurationSection paginationSection = paginationsSection.getConfigurationSection(key);
 
-            if(paginationSection == null) {
+            if (paginationSection == null) {
                 throw new InventoryConfigException(String.format("Key '%s.%s' is not a section", paginationsSection.getCurrentPath(), key));
             }
 
@@ -97,7 +97,7 @@ public class YamlInventoryPaginationLoader {
 
         String paginationId = section.getString(PAGINATION_ID_KEY);
 
-        if(paginationId == null || paginationId.isEmpty()) {
+        if (paginationId == null || paginationId.isEmpty()) {
             throw new InventoryConfigException(String.format("Property '%s' missing or empty in pagination at '%s'", PAGINATION_ID_KEY, section.getCurrentPath()));
         }
 
@@ -119,7 +119,7 @@ public class YamlInventoryPaginationLoader {
 
         ConfigurationSection paginationItemSection = section.getConfigurationSection(PAGINATION_ITEM_KEY);
 
-        if(paginationItemSection == null) {
+        if (paginationItemSection == null) {
             throw new InventoryConfigException(String.format("Property '%s' missing or invalid in pagination at '%s'", PAGINATION_ITEM_KEY, section.getCurrentPath()));
         }
 
@@ -133,7 +133,7 @@ public class YamlInventoryPaginationLoader {
 
         List<Integer> slots = symbolSlots.getOrDefault(paginationSymbol, Collections.emptyList());
 
-        if(slots.isEmpty()) {
+        if (slots.isEmpty()) {
             throw new InventoryConfigException(String.format("Symbol '%s' not found in pattern for pagination at '%s'", paginationSymbol, section.getCurrentPath()));
         }
 
@@ -144,7 +144,7 @@ public class YamlInventoryPaginationLoader {
 
         ConfigurationSection pageItemSection = section.getConfigurationSection(key);
 
-        if(pageItemSection == null) {
+        if (pageItemSection == null) {
             throw new InventoryConfigException(String.format("Property '%s' missing or not a section at '%s'", key, section.getCurrentPath()));
         }
 
@@ -158,7 +158,7 @@ public class YamlInventoryPaginationLoader {
 
         List<Integer> slots = symbolSlots.getOrDefault(symbol.charAt(0), Collections.emptyList());
 
-        if(slots.isEmpty()) {
+        if (slots.isEmpty()) {
             throw new InventoryConfigException(String.format("Symbol '%s' not found in pattern for pagination at '%s'", symbol, section.getCurrentPath()));
         }
 

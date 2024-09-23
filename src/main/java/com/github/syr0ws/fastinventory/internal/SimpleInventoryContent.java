@@ -13,7 +13,7 @@ public class SimpleInventoryContent implements InventoryContent {
 
     public SimpleInventoryContent(FastInventory inventory) {
 
-        if(inventory == null) {
+        if (inventory == null) {
             throw new IllegalArgumentException("inventory cannot be null");
         }
 
@@ -23,7 +23,7 @@ public class SimpleInventoryContent implements InventoryContent {
     @Override
     public void setItem(InventoryItem item, int slot) {
 
-        if(item == null) {
+        if (item == null) {
             throw new IllegalArgumentException("item cannot be null");
         }
 
@@ -34,24 +34,13 @@ public class SimpleInventoryContent implements InventoryContent {
     @Override
     public void setItem(InventoryItem item, Set<Integer> slots) {
 
-        if(item == null) {
+        if (item == null) {
             throw new IllegalArgumentException("item cannot be null");
         }
 
         slots.forEach(slot -> {
             try {
                 this.setItem(item, slot);
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-        });
-    }
-
-    @Override
-    public void setItems(Map<InventoryItem, Set<Integer>> items) {
-        items.forEach((item, slots) -> {
-            try {
-                this.setItem(item, slots);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
@@ -96,9 +85,20 @@ public class SimpleInventoryContent implements InventoryContent {
         return Collections.unmodifiableMap(this.items);
     }
 
+    @Override
+    public void setItems(Map<InventoryItem, Set<Integer>> items) {
+        items.forEach((item, slots) -> {
+            try {
+                this.setItem(item, slots);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
+    }
+
     private void checkSlot(int slot) {
 
-        if(!this.isValidSlot(slot)) {
+        if (!this.isValidSlot(slot)) {
             throw new IllegalArgumentException(String.format("Invalid slot %d", slot));
         }
     }

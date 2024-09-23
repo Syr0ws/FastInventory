@@ -26,7 +26,7 @@ public class SimplePaginationConfig implements PaginationConfig {
             throw new IllegalArgumentException("slots cannot be null or empty");
         }
 
-        if(item == null) {
+        if (item == null) {
             throw new IllegalArgumentException("item cannot be null");
         }
 

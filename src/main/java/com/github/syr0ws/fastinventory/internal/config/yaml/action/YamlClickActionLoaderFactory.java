@@ -16,7 +16,7 @@ public class YamlClickActionLoaderFactory implements ClickActionLoaderFactory<Co
     @Override
     public ClickActionLoader<ConfigurationSection> getLoader(String name) {
 
-        if(name == null) {
+        if (name == null) {
             throw new IllegalArgumentException("type cannot be null");
         }
 
@@ -26,7 +26,7 @@ public class YamlClickActionLoaderFactory implements ClickActionLoaderFactory<Co
     @Override
     public void addLoader(ClickActionLoader<ConfigurationSection> loader) {
 
-        if(loader == null) {
+        if (loader == null) {
             throw new IllegalArgumentException("loader cannot be null");
         }
 

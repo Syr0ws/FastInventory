@@ -15,13 +15,13 @@ public class SimplePlaceholderManager implements PlaceholderManager {
     @Override
     public String parse(String text, Context context) {
 
-        if(text == null) {
+        if (text == null) {
             throw new IllegalArgumentException("text cannot be null");
         }
 
         List<Placeholder> placeholders = this.getPlaceholders(context);
 
-        for(Placeholder placeholder : placeholders) {
+        for (Placeholder placeholder : placeholders) {
             text = text.replace(placeholder.getName(), placeholder.getValue(context));
         }
 
@@ -31,7 +31,7 @@ public class SimplePlaceholderManager implements PlaceholderManager {
     @Override
     public void addPlaceholder(Placeholder placeholder) {
 
-        if(placeholder == null) {
+        if (placeholder == null) {
             throw new IllegalArgumentException("placeholder cannot be null");
         }
 

@@ -1,12 +1,12 @@
 package com.github.syr0ws.fastinventory.common.mapping;
 
-import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.config.InventoryItemConfig;
 import com.github.syr0ws.fastinventory.api.item.InventoryItem;
 import com.github.syr0ws.fastinventory.api.item.ItemParser;
 import com.github.syr0ws.fastinventory.api.mapping.Enhancement;
 import com.github.syr0ws.fastinventory.api.mapping.EnhancementManager;
 import com.github.syr0ws.fastinventory.api.mapping.Mapper;
+import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.internal.item.SimpleInventoryItem;
 import org.bukkit.inventory.ItemStack;
@@ -26,7 +26,7 @@ public class InventoryItemMapper implements Mapper<InventoryItemConfig, Inventor
     @Override
     public InventoryItemDto toDto(InventoryItemConfig config, InventoryProvider provider, Context context) {
 
-        if(config == null) {
+        if (config == null) {
             return null;
         }
 
@@ -36,7 +36,7 @@ public class InventoryItemMapper implements Mapper<InventoryItemConfig, Inventor
     @Override
     public InventoryItemDto enhance(InventoryItemDto dto, InventoryProvider provider, Context context) {
 
-        if(dto == null) {
+        if (dto == null) {
             return null;
         }
 
@@ -53,7 +53,7 @@ public class InventoryItemMapper implements Mapper<InventoryItemConfig, Inventor
     @Override
     public InventoryItem fromDto(InventoryItemDto dto, InventoryProvider provider, Context context) {
 
-        if(dto == null) {
+        if (dto == null) {
             return null;
         }
 

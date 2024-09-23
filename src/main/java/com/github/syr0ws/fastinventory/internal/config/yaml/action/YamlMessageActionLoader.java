@@ -13,7 +13,7 @@ public class YamlMessageActionLoader implements ClickActionLoader<ConfigurationS
     @Override
     public ClickAction load(ConfigurationSection section) throws InventoryConfigException {
 
-        if(!section.isString(MESSAGE_KEY)) {
+        if (!section.isString(MESSAGE_KEY)) {
             throw new InventoryConfigException(String.format("Property '%s' missing at '%s'", MESSAGE_KEY, section.getCurrentPath()));
         }
 

@@ -12,8 +12,6 @@ public interface InventoryContent {
 
     void setItem(InventoryItem item, Set<Integer> slots);
 
-    void setItems(Map<InventoryItem, Set<Integer>> slots);
-
     void removeItem(int slot);
 
     void removeItems(Set<Integer> slots);
@@ -25,4 +23,6 @@ public interface InventoryContent {
     Optional<InventoryItem> getItem(int slot);
 
     Map<Integer, InventoryItem> getItems();
+
+    void setItems(Map<InventoryItem, Set<Integer>> slots);
 }

@@ -2,11 +2,11 @@ package com.github.syr0ws.fastinventory.internal.pagination;
 
 import com.github.syr0ws.fastinventory.api.FastInventory;
 import com.github.syr0ws.fastinventory.api.InventoryContent;
-import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
 import com.github.syr0ws.fastinventory.api.item.InventoryItem;
 import com.github.syr0ws.fastinventory.api.pagination.Pagination;
 import com.github.syr0ws.fastinventory.api.pagination.PaginationModel;
+import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.common.CommonContextKey;
 import com.github.syr0ws.fastinventory.common.provider.CommonProviderType;
@@ -23,19 +23,19 @@ public class SimplePagination<T> implements Pagination<T> {
 
     public SimplePagination(String id, FastInventory inventory, PaginationModel<T> model, List<Integer> slots) {
 
-        if(id == null || id.isEmpty()) {
+        if (id == null || id.isEmpty()) {
             throw new IllegalArgumentException("id cannot be null or empty");
         }
 
-        if(inventory == null) {
+        if (inventory == null) {
             throw new IllegalArgumentException("inventory cannot be null");
         }
 
-        if(model == null) {
+        if (model == null) {
             throw new IllegalArgumentException("model cannot be null");
         }
 
-        if(slots == null) {
+        if (slots == null) {
             throw new IllegalArgumentException("slots cannot be null");
         }
 
@@ -60,11 +60,11 @@ public class SimplePagination<T> implements Pagination<T> {
 
         int i = 0;
 
-        for(int slot : this.slots) {
+        for (int slot : this.slots) {
 
             InventoryItem item = null;
 
-            if(i < items.size()) {
+            if (i < items.size()) {
 
                 Context context = this.getPaginationContext();
                 context.addData(CommonContextKey.SLOT.name(), slot, Integer.class);
@@ -73,7 +73,7 @@ public class SimplePagination<T> implements Pagination<T> {
                 item = provider.getProviderManager().provide(CommonProviderType.PAGINATION_ITEM.name(), InventoryItem.class, provider, context).orElse(null);
             }
 
-            if(item == null) {
+            if (item == null) {
                 content.removeItem(slot);
             } else {
                 content.setItem(item, slot);
@@ -94,7 +94,7 @@ public class SimplePagination<T> implements Pagination<T> {
                 .getPaginationConfig(this.id)
                 .orElseThrow(() -> new NullPointerException("Pagination not found"));
 
-        if(this.model.hasPreviousPage()) {
+        if (this.model.hasPreviousPage()) {
 
             provider.getProviderManager().provide(CommonProviderType.PAGINATION_PREVIOUS_PAGE_ITEM.name(), InventoryItem.class, provider, context)
                     .ifPresent(item -> content.setItem(item, paginationConfig.getPreviousPageItemSlots()));
@@ -103,7 +103,7 @@ public class SimplePagination<T> implements Pagination<T> {
             content.removeItems(paginationConfig.getPreviousPageItemSlots());
         }
 
-        if(this.model.hasNextPage()) {
+        if (this.model.hasNextPage()) {
 
             provider.getProviderManager().provide(CommonProviderType.PAGINATION_NEXT_PAGE_ITEM.name(), InventoryItem.class, provider, context)
                     .ifPresent(item -> content.setItem(item, paginationConfig.getNextPageItemSlots()));
@@ -115,7 +115,7 @@ public class SimplePagination<T> implements Pagination<T> {
     @Override
     public void previousPage() {
 
-        if(this.model.hasPreviousPage()) {
+        if (this.model.hasPreviousPage()) {
             this.model.previousPage();
             this.update();
         }
@@ -124,7 +124,7 @@ public class SimplePagination<T> implements Pagination<T> {
     @Override
     public void nextPage() {
 
-        if(this.model.hasNextPage()) {
+        if (this.model.hasNextPage()) {
             this.model.nextPage();
             this.update();
         }

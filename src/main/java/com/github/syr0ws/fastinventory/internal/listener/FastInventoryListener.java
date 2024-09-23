@@ -28,11 +28,11 @@ public class FastInventoryListener implements Listener {
 
     public FastInventoryListener(Plugin plugin, InventoryService service) {
 
-        if(plugin == null) {
+        if (plugin == null) {
             throw new IllegalArgumentException("plugin cannot be null");
         }
 
-        if(service == null) {
+        if (service == null) {
             throw new IllegalArgumentException("service cannot be null");
         }
 
@@ -47,7 +47,7 @@ public class FastInventoryListener implements Listener {
         FastInventory inventory = this.getFastInventory(player, event.getInventory());
 
         // Player doesn't have a FastInventory open.
-        if(inventory == null) {
+        if (inventory == null) {
             return;
         }
 
@@ -60,7 +60,7 @@ public class FastInventoryListener implements Listener {
         Player player = (Player) event.getWhoClicked();
         FastInventory inventory = this.getFastInventory(player, event.getClickedInventory());
 
-        if(inventory == null) {
+        if (inventory == null) {
             return;
         }
 
@@ -80,7 +80,7 @@ public class FastInventoryListener implements Listener {
         Bukkit.getPluginManager().callEvent(fastInventoryClickEvent);
 
         // Do not go further if the event has been cancelled.
-        if(fastInventoryClickEvent.isCancelled()) {
+        if (fastInventoryClickEvent.isCancelled()) {
             return;
         }
 
@@ -88,7 +88,7 @@ public class FastInventoryListener implements Listener {
         InventoryContent content = inventory.getContent();
         Optional<InventoryItem> itemOptional = content.getItem(event.getSlot());
 
-        if(itemOptional.isEmpty()) {
+        if (itemOptional.isEmpty()) {
             return;
         }
 
@@ -102,7 +102,7 @@ public class FastInventoryListener implements Listener {
         Player player = (Player) event.getWhoClicked();
         FastInventory inventory = this.getFastInventory(player, event.getInventory());
 
-        if(inventory != null) {
+        if (inventory != null) {
 
             // Cancelling the event by default.
             event.setCancelled(true);
@@ -112,7 +112,7 @@ public class FastInventoryListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerInventoryMove(InventoryClickEvent event) {
 
-        if(event.isCancelled()) {
+        if (event.isCancelled()) {
             return;
         }
 
@@ -122,21 +122,21 @@ public class FastInventoryListener implements Listener {
         Inventory clickedInventory = event.getClickedInventory();
 
         // Checking that the clicked inventory is the player's inventory.
-        if(!player.getInventory().equals(clickedInventory)) {
+        if (!player.getInventory().equals(clickedInventory)) {
             return;
         }
 
         FastInventory inventory = this.getFastInventory(player, topInventory);
 
         // Top inventory is not a FastInventory.
-        if(inventory == null) {
+        if (inventory == null) {
             return;
         }
 
         InventoryAction action = event.getAction();
 
         // Prevent shift move from another inventory.
-        if(action == InventoryAction.COLLECT_TO_CURSOR || action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
+        if (action == InventoryAction.COLLECT_TO_CURSOR || action == InventoryAction.MOVE_TO_OTHER_INVENTORY) {
             event.setCancelled(true);
         }
     }
@@ -148,7 +148,7 @@ public class FastInventoryListener implements Listener {
 
         // Checking that the disabled plugin is the same as the one
         // that registered this listener.
-        if(disabled.equals(this.plugin)) {
+        if (disabled.equals(this.plugin)) {
             return;
         }
 
@@ -162,7 +162,7 @@ public class FastInventoryListener implements Listener {
         Optional<FastInventory> inventoryOptional = this.service.getInventory(player);
 
         // Inventory is not a FastInventory.
-        if(inventoryOptional.isEmpty()) {
+        if (inventoryOptional.isEmpty()) {
             return null;
         }
 

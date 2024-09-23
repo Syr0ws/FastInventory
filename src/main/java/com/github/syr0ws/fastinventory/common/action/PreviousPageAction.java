@@ -13,7 +13,7 @@ public class PreviousPageAction implements ClickAction {
 
     public PreviousPageAction(String paginationId) {
 
-        if(paginationId == null || paginationId.isEmpty()) {
+        if (paginationId == null || paginationId.isEmpty()) {
             throw new IllegalArgumentException("paginationId cannot be null or empty");
         }
 

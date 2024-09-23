@@ -19,7 +19,7 @@ public class YamlInventoryContentLoader {
 
     public YamlInventoryContentLoader(YamlInventoryItemLoader itemLoader) {
 
-        if(itemLoader == null) {
+        if (itemLoader == null) {
             throw new IllegalArgumentException("itemLoader cannot be null");
         }
 
