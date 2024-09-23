@@ -42,7 +42,9 @@ public class PaginationMapper<T> implements Mapper<PaginationConfig, PaginationD
     @Override
     public PaginationDto enhance(PaginationDto dto, InventoryProvider provider, Context context) {
 
-        this.itemMapper.enhance(dto.getPaginationItem(), provider, context);
+        // Pagination item should not be enhanced here because this is called when building the
+        // pagination for the first time. That means that the context does not contain any pagination
+        // item data.
         this.itemMapper.enhance(dto.getPreviousPageItem(), provider, context);
         this.itemMapper.enhance(dto.getNextPageItem(), provider, context);
 
