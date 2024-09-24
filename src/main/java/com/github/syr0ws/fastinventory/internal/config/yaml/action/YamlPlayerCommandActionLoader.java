@@ -3,10 +3,10 @@ package com.github.syr0ws.fastinventory.internal.config.yaml.action;
 import com.github.syr0ws.fastinventory.api.action.ClickAction;
 import com.github.syr0ws.fastinventory.api.config.action.ClickActionLoader;
 import com.github.syr0ws.fastinventory.api.config.exception.InventoryConfigException;
-import com.github.syr0ws.fastinventory.common.action.CommandAction;
+import com.github.syr0ws.fastinventory.common.action.PlayerCommandAction;
 import org.bukkit.configuration.ConfigurationSection;
 
-public class CommandActionLoader implements ClickActionLoader<ConfigurationSection> {
+public class YamlPlayerCommandActionLoader implements ClickActionLoader<ConfigurationSection> {
 
     private static final String COMMAND_KEY = "command";
 
@@ -23,11 +23,11 @@ public class CommandActionLoader implements ClickActionLoader<ConfigurationSecti
             command = command.substring(1);
         }
 
-        return new CommandAction(command);
+        return new PlayerCommandAction(command);
     }
 
     @Override
     public String getName() {
-        return CommandAction.ACTION_NAME;
+        return PlayerCommandAction.ACTION_NAME;
     }
 }

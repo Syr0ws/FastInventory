@@ -7,13 +7,13 @@ import com.github.syr0ws.fastinventory.api.placeholder.PlaceholderManager;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import org.bukkit.entity.Player;
 
-public class CommandAction implements ClickAction {
+public class PlayerCommandAction implements ClickAction {
 
-    public static final String ACTION_NAME = "EXECUTE_COMMAND";
+    public static final String ACTION_NAME = "PLAYER_COMMAND";
 
     private final String command;
 
-    public CommandAction(String command) {
+    public PlayerCommandAction(String command) {
 
         if (command == null || command.isEmpty()) {
             throw new IllegalArgumentException("command cannot null or empty");
