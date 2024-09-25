@@ -22,7 +22,9 @@ import org.bukkit.plugin.Plugin;
 
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public abstract class CommonInventoryProvider implements InventoryProvider {
 
@@ -59,7 +61,18 @@ public abstract class CommonInventoryProvider implements InventoryProvider {
 
     protected abstract Path getInventoryConfigFile();
 
+    protected abstract void addPaginationProviders();
+
     protected abstract void addEnhancements(EnhancementManager manager);
+
+    protected <T> void addPaginationProvider(String paginationId, Class<T> dataType, Supplier<List<T>> supplier) {
+        this.providerManager.addProvider(new CommonPaginationProvider<>(
+                paginationId,
+                dataType,
+                supplier,
+                new InventoryItemMapper(this.enhancementManager, this.getItemParser()))
+        );
+    }
 
     protected void addProviders(ProviderManager manager) {
 
@@ -72,6 +85,8 @@ public abstract class CommonInventoryProvider implements InventoryProvider {
         manager.addProvider(new CommonPaginationItemProvider(mapper));
         manager.addProvider(new CommonPreviousPageItemProvider(mapper));
         manager.addProvider(new CommonNextPageItemProvider(mapper));
+
+        this.addPaginationProviders();
     }
 
     protected void addPlaceholders(PlaceholderManager manager) {
