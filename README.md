@@ -2,11 +2,13 @@
 
 ![link](https://img.shields.io/badge/API-Spigot-blue) ![link](https://img.shields.io/badge/Version-1.17+-yellow)
 
-**FastInventory** is a Java **library** that enables developers to define fully customizable Minecraft inventories in 
-**configuration files** and provide them with **Java code**.
+**FastInventory** is a **Java** / **Spigot** library that facilitates the development of **Minecraft inventories**. 
+It enables **developers** to define **fully configurable** inventories in **configuration files** and provide them with **Java code**.
 
-It has been designed to be included in **Spigot** plugins and to facilitate the development of complex inventories that 
-must be customized from configuration files. Therefore, it includes a strong bridge between configuration and Java code.
+This library was developed to facilitate the development of in-game inventories. Indeed, making them **fully configurable** 
+is an important feature for **server administrators** but this process is very tedious without an appropriate tool. 
+FastInventory solves this problem by providing a lot of **built-in features** to help **developers** implement fully 
+**customizable** inventories very easily.
 
 ## Features
 
