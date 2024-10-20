@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class ServerCommandAction extends CommonAction {
+public class ConsoleCommandAction extends CommonAction {
 
-    public static final String ACTION_NAME = "SERVER_COMMAND";
+    public static final String ACTION_NAME = "CONSOLE_COMMAND";
 
     private final List<String> commands = new ArrayList<>();
 
-    public ServerCommandAction(Set<ClickType> clickTypes, List<String> commands) {
+    public ConsoleCommandAction(Set<ClickType> clickTypes, List<String> commands) {
         super(clickTypes);
 
         if (commands == null || commands.isEmpty()) {

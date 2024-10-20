@@ -3,14 +3,14 @@ package com.github.syr0ws.fastinventory.internal.config.yaml.action;
 import com.github.syr0ws.fastinventory.api.action.ClickAction;
 import com.github.syr0ws.fastinventory.api.action.ClickType;
 import com.github.syr0ws.fastinventory.api.config.exception.InventoryConfigException;
-import com.github.syr0ws.fastinventory.common.action.ServerCommandAction;
+import com.github.syr0ws.fastinventory.common.action.ConsoleCommandAction;
 import com.github.syr0ws.fastinventory.common.config.yaml.YamlCommonActionLoader;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.List;
 import java.util.Set;
 
-public class YamlServerCommandActionLoader extends YamlCommonActionLoader {
+public class YamlConsoleCommandActionLoader extends YamlCommonActionLoader {
 
     private static final String COMMANDS_KEY = "commands";
 
@@ -27,11 +27,11 @@ public class YamlServerCommandActionLoader extends YamlCommonActionLoader {
                 .map(command -> command.startsWith("/") ? command.substring(1) : command)
                 .toList();
 
-        return new ServerCommandAction(clickTypes, commands);
+        return new ConsoleCommandAction(clickTypes, commands);
     }
 
     @Override
     public String getName() {
-        return ServerCommandAction.ACTION_NAME;
+        return ConsoleCommandAction.ACTION_NAME;
     }
 }
