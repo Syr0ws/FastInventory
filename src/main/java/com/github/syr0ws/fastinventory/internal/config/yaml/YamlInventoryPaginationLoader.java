@@ -1,5 +1,6 @@
 package com.github.syr0ws.fastinventory.internal.config.yaml;
 
+import com.github.syr0ws.fastinventory.api.action.ClickType;
 import com.github.syr0ws.fastinventory.api.config.InventoryItemConfig;
 import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
 import com.github.syr0ws.fastinventory.api.config.exception.InventoryConfigException;
@@ -77,10 +78,10 @@ public class YamlInventoryPaginationLoader {
         SimpleInventoryItemConfig nextPageItem = nextPage.key();
 
         previousPageItem.setId(IdUtil.getPaginationPreviousPageItemId(paginationId));
-        previousPageItem.getActions().add(new PreviousPageAction(paginationId));
+        previousPageItem.getActions().add(new PreviousPageAction(Collections.singleton(ClickType.ALL), paginationId));
 
         nextPageItem.setId(IdUtil.getPaginationNextPageItemId(paginationId));
-        nextPageItem.getActions().add(new NextPageAction(paginationId));
+        nextPageItem.getActions().add(new NextPageAction(Collections.singleton(ClickType.ALL), paginationId));
 
         return new SimplePaginationConfig(
                 paginationId,
