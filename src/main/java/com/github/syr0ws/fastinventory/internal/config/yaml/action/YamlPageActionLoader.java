@@ -1,10 +1,10 @@
 package com.github.syr0ws.fastinventory.internal.config.yaml.action;
 
-import com.github.syr0ws.fastinventory.api.config.action.ClickActionLoader;
 import com.github.syr0ws.fastinventory.api.config.exception.InventoryConfigException;
+import com.github.syr0ws.fastinventory.common.config.yaml.YamlCommonActionLoader;
 import org.bukkit.configuration.ConfigurationSection;
 
-public abstract class YamlPageActionLoader implements ClickActionLoader<ConfigurationSection> {
+public abstract class YamlPageActionLoader extends YamlCommonActionLoader {
 
     private static final String PAGINATION_ID_KEY = "pagination-id";
 
