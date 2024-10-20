@@ -7,12 +7,22 @@ import com.github.syr0ws.fastinventory.api.placeholder.PlaceholderManager;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public abstract class CommonMessageAction extends CommonAction {
 
-    public CommonMessageAction(Set<ClickType> clickTypes) {
+    private final List<String> messages = new ArrayList<>();
+
+    public CommonMessageAction(Set<ClickType> clickTypes, List<String> messages) {
         super(clickTypes);
+
+        if (messages == null) {
+            throw new IllegalArgumentException("message cannot be null");
+        }
+
+        this.messages.addAll(messages);
     }
 
     protected String parseMessage(String message, FastInventoryClickEvent event) {
@@ -28,5 +38,9 @@ public abstract class CommonMessageAction extends CommonAction {
                 .orElse(message);
 
         return placeholderManager.parse(parsed, context);
+    }
+
+    public List<String> getMessages() {
+        return this.messages;
     }
 }
