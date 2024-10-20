@@ -1,17 +1,20 @@
 package com.github.syr0ws.fastinventory.common.action;
 
 import com.github.syr0ws.fastinventory.api.FastInventory;
-import com.github.syr0ws.fastinventory.api.action.ClickAction;
+import com.github.syr0ws.fastinventory.api.action.ClickType;
 import com.github.syr0ws.fastinventory.api.event.FastInventoryClickEvent;
 import com.github.syr0ws.fastinventory.api.pagination.Pagination;
 
-public class PreviousPageAction implements ClickAction {
+import java.util.Set;
+
+public class PreviousPageAction extends CommonAction {
 
     public static final String ACTION_NAME = "PREVIOUS_PAGE";
 
     private final String paginationId;
 
-    public PreviousPageAction(String paginationId) {
+    public PreviousPageAction(Set<ClickType> clickTypes, String paginationId) {
+        super(clickTypes);
 
         if (paginationId == null || paginationId.isEmpty()) {
             throw new IllegalArgumentException("paginationId cannot be null or empty");

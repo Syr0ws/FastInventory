@@ -3,6 +3,8 @@ package com.github.syr0ws.fastinventory.internal.listener;
 import com.github.syr0ws.fastinventory.api.FastInventory;
 import com.github.syr0ws.fastinventory.api.InventoryContent;
 import com.github.syr0ws.fastinventory.api.InventoryService;
+import com.github.syr0ws.fastinventory.api.action.ClickAction;
+import com.github.syr0ws.fastinventory.api.action.ClickType;
 import com.github.syr0ws.fastinventory.api.event.FastInventoryClickEvent;
 import com.github.syr0ws.fastinventory.api.item.InventoryItem;
 import org.bukkit.Bukkit;
@@ -20,6 +22,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 public class FastInventoryListener implements Listener {
 
@@ -93,7 +96,10 @@ public class FastInventoryListener implements Listener {
         }
 
         InventoryItem item = itemOptional.get();
-        item.getActions().forEach(action -> action.execute(fastInventoryClickEvent));
+
+        item.getActions().stream()
+                .filter(action -> this.hasClickType(action, event.getClick()))
+                .forEach(action -> action.execute(fastInventoryClickEvent));
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -170,5 +176,21 @@ public class FastInventoryListener implements Listener {
         Inventory bukkitInventory = fastInventory.getBukkitInventory();
 
         return bukkitInventory.equals(inventory) ? fastInventory : null;
+    }
+
+    private boolean hasClickType(ClickAction action, org.bukkit.event.inventory.ClickType type) {
+
+        Set<ClickType> clickTypes = action.getClickTypes();
+
+        if(clickTypes.contains(ClickType.ALL)) {
+            return true;
+        }
+
+        return switch (type) {
+            case LEFT -> clickTypes.contains(ClickType.LEFT);
+            case RIGHT -> clickTypes.contains(ClickType.RIGHT);
+            case MIDDLE -> clickTypes.contains(ClickType.MIDDLE);
+            default -> false;
+        };
     }
 }

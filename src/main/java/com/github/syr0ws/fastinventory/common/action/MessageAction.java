@@ -1,19 +1,22 @@
 package com.github.syr0ws.fastinventory.common.action;
 
 import com.github.syr0ws.fastinventory.api.FastInventory;
-import com.github.syr0ws.fastinventory.api.action.ClickAction;
+import com.github.syr0ws.fastinventory.api.action.ClickType;
 import com.github.syr0ws.fastinventory.api.event.FastInventoryClickEvent;
 import com.github.syr0ws.fastinventory.api.placeholder.PlaceholderManager;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import org.bukkit.entity.Player;
 
-public class MessageAction implements ClickAction {
+import java.util.Set;
+
+public class MessageAction extends CommonAction {
 
     public static final String ACTION_NAME = "MESSAGE";
 
     private final String message;
 
-    public MessageAction(String message) {
+    public MessageAction(Set<ClickType> clickTypes, String message) {
+        super(clickTypes);
 
         if (message == null) {
             throw new IllegalArgumentException("message cannot be null");
