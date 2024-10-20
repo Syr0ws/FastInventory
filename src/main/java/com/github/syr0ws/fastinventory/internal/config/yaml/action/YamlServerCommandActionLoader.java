@@ -7,28 +7,27 @@ import com.github.syr0ws.fastinventory.common.action.ServerCommandAction;
 import com.github.syr0ws.fastinventory.common.config.yaml.YamlCommonActionLoader;
 import org.bukkit.configuration.ConfigurationSection;
 
+import java.util.List;
 import java.util.Set;
 
 public class YamlServerCommandActionLoader extends YamlCommonActionLoader {
 
-    private static final String COMMAND_KEY = "command";
+    private static final String COMMANDS_KEY = "commands";
 
     @Override
     public ClickAction load(ConfigurationSection section) throws InventoryConfigException {
 
         Set<ClickType> clickTypes = super.loadClickTypes(section);
 
-        if (!section.isString(COMMAND_KEY)) {
-            throw new InventoryConfigException(String.format("Property '%s' not found or not a string at '%s'", COMMAND_KEY, section.getCurrentPath()));
+        if (!section.isList(COMMANDS_KEY)) {
+            throw new InventoryConfigException(String.format("Property '%s.%s' not found or is not a list", COMMANDS_KEY, section.getCurrentPath()));
         }
 
-        String command = section.getString(COMMAND_KEY);
+        List<String> commands = section.getStringList(COMMANDS_KEY).stream()
+                .map(command -> command.startsWith("/") ? command.substring(1) : command)
+                .toList();
 
-        if (command.startsWith("/")) {
-            command = command.substring(1);
-        }
-
-        return new ServerCommandAction(clickTypes, command);
+        return new ServerCommandAction(clickTypes, commands);
     }
 
     @Override
