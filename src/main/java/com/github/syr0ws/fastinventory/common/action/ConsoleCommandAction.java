@@ -5,24 +5,27 @@ import com.github.syr0ws.fastinventory.api.action.ClickType;
 import com.github.syr0ws.fastinventory.api.event.FastInventoryClickEvent;
 import com.github.syr0ws.fastinventory.api.placeholder.PlaceholderManager;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
+import com.github.syr0ws.fastinventory.api.util.Context;
 import org.bukkit.Bukkit;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
-public class ServerCommandAction extends CommonAction {
+public class ConsoleCommandAction extends CommonAction {
 
-    public static final String ACTION_NAME = "SERVER_COMMAND";
+    public static final String ACTION_NAME = "CONSOLE_COMMAND";
 
-    private final String command;
+    private final List<String> commands = new ArrayList<>();
 
-    public ServerCommandAction(Set<ClickType> clickTypes, String command) {
+    public ConsoleCommandAction(Set<ClickType> clickTypes, List<String> commands) {
         super(clickTypes);
 
-        if (command == null || command.isEmpty()) {
-            throw new IllegalArgumentException("command cannot null or empty");
+        if (commands == null || commands.isEmpty()) {
+            throw new IllegalArgumentException("commands cannot null or empty");
         }
 
-        this.command = command;
+        this.commands.addAll(commands);
     }
 
     @Override
@@ -32,9 +35,11 @@ public class ServerCommandAction extends CommonAction {
         InventoryProvider provider = inventory.getProvider();
         PlaceholderManager placeholderManager = provider.getPlaceholderManager();
 
-        String command = placeholderManager.parse(this.command, inventory.getDefaultContext());
+        Context context = inventory.getDefaultContext();
 
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+        this.commands.stream()
+                .map(command -> placeholderManager.parse(command, context))
+                .forEach(command -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command));
     }
 
     @Override

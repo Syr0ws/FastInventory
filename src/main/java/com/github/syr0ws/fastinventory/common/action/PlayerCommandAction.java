@@ -5,24 +5,27 @@ import com.github.syr0ws.fastinventory.api.action.ClickType;
 import com.github.syr0ws.fastinventory.api.event.FastInventoryClickEvent;
 import com.github.syr0ws.fastinventory.api.placeholder.PlaceholderManager;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
+import com.github.syr0ws.fastinventory.api.util.Context;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class PlayerCommandAction extends CommonAction {
 
     public static final String ACTION_NAME = "PLAYER_COMMAND";
 
-    private final String command;
+    private final List<String> commands = new ArrayList<>();
 
-    public PlayerCommandAction(Set<ClickType> clickTypes, String command) {
+    public PlayerCommandAction(Set<ClickType> clickTypes, List<String> commands) {
         super(clickTypes);
 
-        if (command == null || command.isEmpty()) {
-            throw new IllegalArgumentException("command cannot null or empty");
+        if (commands == null || commands.isEmpty()) {
+            throw new IllegalArgumentException("commands cannot null or empty");
         }
 
-        this.command = command;
+        this.commands.addAll(commands);
     }
 
     @Override
@@ -32,10 +35,12 @@ public class PlayerCommandAction extends CommonAction {
         InventoryProvider provider = inventory.getProvider();
         PlaceholderManager placeholderManager = provider.getPlaceholderManager();
 
-        String command = placeholderManager.parse(this.command, inventory.getDefaultContext());
-
+        Context context = inventory.getDefaultContext();
         Player player = event.getPlayer();
-        player.performCommand(command);
+
+        this.commands.stream()
+                .map(command -> placeholderManager.parse(command, context))
+                .forEach(player::performCommand);
     }
 
     @Override

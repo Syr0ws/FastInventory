@@ -1,50 +1,42 @@
 package com.github.syr0ws.fastinventory.common.action;
 
-import com.github.syr0ws.fastinventory.api.FastInventory;
 import com.github.syr0ws.fastinventory.api.action.ClickType;
 import com.github.syr0ws.fastinventory.api.event.FastInventoryClickEvent;
-import com.github.syr0ws.fastinventory.api.placeholder.PlaceholderManager;
-import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
-public class MessageAction extends CommonAction {
+public class MessageAction extends CommonMessageAction {
 
     public static final String ACTION_NAME = "MESSAGE";
 
-    private final String message;
+    private final List<String> messages = new ArrayList<>();
 
-    public MessageAction(Set<ClickType> clickTypes, String message) {
+    public MessageAction(Set<ClickType> clickTypes, List<String> messages) {
         super(clickTypes);
 
-        if (message == null) {
+        if (messages == null) {
             throw new IllegalArgumentException("message cannot be null");
         }
 
-        this.message = message;
+        this.messages.addAll(messages);
     }
 
     @Override
     public void execute(FastInventoryClickEvent event) {
 
-        FastInventory inventory = event.getFastInventory();
-        InventoryProvider provider = inventory.getProvider();
-        PlaceholderManager placeholderManager = provider.getPlaceholderManager();
-
-        String message = provider.getI18n()
-                .map(i18n -> i18n.getText(event.getPlayer(), this.message))
-                .orElse(this.message);
-
-        message = placeholderManager.parse(message, inventory.getDefaultContext());
+        String[] messages = this.messages.stream()
+                .map(message -> super.parseMessage(message, event))
+                .toArray(String[]::new);
 
         Player player = event.getPlayer();
-        player.sendMessage(message);
+        player.sendMessage(messages);
     }
 
     @Override
     public String getName() {
         return ACTION_NAME;
     }
-
 }
