@@ -6,6 +6,7 @@ import com.github.syr0ws.fastinventory.api.event.FastInventoryClickEvent;
 import com.github.syr0ws.fastinventory.api.placeholder.PlaceholderManager;
 import com.github.syr0ws.fastinventory.api.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
+import com.github.syr0ws.fastinventory.internal.util.TextUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,9 @@ public abstract class CommonMessageAction extends CommonAction {
                 .map(i18n -> i18n.getText(event.getPlayer(), message))
                 .orElse(message);
 
-        return placeholderManager.parse(parsed, context);
+        parsed = placeholderManager.parse(parsed, context);
+
+        return TextUtil.parseColors(parsed);
     }
 
     public List<String> getMessages() {
