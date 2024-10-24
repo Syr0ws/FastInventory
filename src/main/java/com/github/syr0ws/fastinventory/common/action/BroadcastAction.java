@@ -2,16 +2,16 @@ package com.github.syr0ws.fastinventory.common.action;
 
 import com.github.syr0ws.fastinventory.api.action.ClickType;
 import com.github.syr0ws.fastinventory.api.event.FastInventoryClickEvent;
-import org.bukkit.entity.Player;
+import org.bukkit.Bukkit;
 
 import java.util.List;
 import java.util.Set;
 
-public class MessageAction extends CommonMessageAction {
+public class BroadcastAction extends CommonMessageAction {
 
-    public static final String ACTION_NAME = "MESSAGE";
+    public static final String ACTION_NAME = "BROADCAST";
 
-    public MessageAction(Set<ClickType> clickTypes, List<String> messages) {
+    public BroadcastAction(Set<ClickType> clickTypes, List<String> messages) {
         super(clickTypes, messages);
     }
 
@@ -22,8 +22,9 @@ public class MessageAction extends CommonMessageAction {
                 .map(message -> super.parseMessage(message, event))
                 .toArray(String[]::new);
 
-        Player player = event.getPlayer();
-        player.sendMessage(messages);
+        String message = String.join("\n", messages);
+
+        Bukkit.broadcastMessage(message);
     }
 
     @Override
