@@ -1,6 +1,6 @@
 package com.github.syr0ws.fastinventory.api.config;
 
-import com.github.syr0ws.fastinventory.api.action.ClickAction;
+import com.github.syr0ws.fastinventory.api.inventory.action.ClickAction;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;

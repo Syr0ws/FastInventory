@@ -1,6 +1,6 @@
 package com.github.syr0ws.fastinventory.api.config;
 
-import com.github.syr0ws.fastinventory.api.FastInventoryType;
+import com.github.syr0ws.fastinventory.api.inventory.FastInventoryType;
 
 import java.util.Map;
 import java.util.Optional;

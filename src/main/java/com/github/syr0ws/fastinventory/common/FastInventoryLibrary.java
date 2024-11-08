@@ -6,7 +6,7 @@ import com.github.syr0ws.fastinventory.api.config.dao.InventoryConfigDAO;
 import com.github.syr0ws.fastinventory.internal.SimpleInventoryService;
 import com.github.syr0ws.fastinventory.internal.config.yaml.YamlInventoryConfigDAO;
 import com.github.syr0ws.fastinventory.internal.config.yaml.action.*;
-import com.github.syr0ws.fastinventory.internal.listener.FastInventoryListener;
+import com.github.syr0ws.fastinventory.internal.inventory.listener.FastInventoryListener;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;

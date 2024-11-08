@@ -1,6 +1,6 @@
 package com.github.syr0ws.fastinventory.internal.config.yaml.item;
 
-import com.github.syr0ws.fastinventory.api.action.ClickAction;
+import com.github.syr0ws.fastinventory.api.inventory.action.ClickAction;
 import com.github.syr0ws.fastinventory.api.config.action.ClickActionLoader;
 import com.github.syr0ws.fastinventory.api.config.action.ClickActionLoaderFactory;
 import com.github.syr0ws.fastinventory.api.config.exception.InventoryConfigException;

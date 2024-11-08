@@ -1,6 +1,6 @@
 package com.github.syr0ws.fastinventory.common.config.yaml;
 
-import com.github.syr0ws.fastinventory.api.action.ClickType;
+import com.github.syr0ws.fastinventory.api.inventory.action.ClickType;
 import com.github.syr0ws.fastinventory.api.config.action.ClickActionLoader;
 import com.github.syr0ws.fastinventory.api.config.exception.InventoryConfigException;
 import org.bukkit.configuration.ConfigurationSection;

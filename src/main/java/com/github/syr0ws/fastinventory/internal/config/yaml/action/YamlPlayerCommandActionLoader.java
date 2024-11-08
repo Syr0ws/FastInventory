@@ -1,9 +1,9 @@
 package com.github.syr0ws.fastinventory.internal.config.yaml.action;
 
-import com.github.syr0ws.fastinventory.api.action.ClickAction;
-import com.github.syr0ws.fastinventory.api.action.ClickType;
+import com.github.syr0ws.fastinventory.api.inventory.action.ClickAction;
+import com.github.syr0ws.fastinventory.api.inventory.action.ClickType;
 import com.github.syr0ws.fastinventory.api.config.exception.InventoryConfigException;
-import com.github.syr0ws.fastinventory.common.action.PlayerCommandAction;
+import com.github.syr0ws.fastinventory.common.inventory.action.PlayerCommandAction;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.List;
