@@ -7,9 +7,9 @@ import com.github.syr0ws.fastinventory.api.inventory.item.InventoryItem;
 import com.github.syr0ws.fastinventory.api.transform.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.transform.provider.Provider;
 import com.github.syr0ws.fastinventory.api.util.Context;
-import com.github.syr0ws.fastinventory.common.util.CommonContextKey;
 import com.github.syr0ws.fastinventory.common.transform.mapping.InventoryItemDto;
 import com.github.syr0ws.fastinventory.common.transform.mapping.InventoryItemMapper;
+import com.github.syr0ws.fastinventory.common.util.CommonContextKey;
 
 public class CommonPaginationItemProvider implements Provider<InventoryItem> {
 

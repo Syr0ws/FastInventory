@@ -1,12 +1,12 @@
 package com.github.syr0ws.fastinventory.internal.config.yaml;
 
-import com.github.syr0ws.fastinventory.api.inventory.FastInventoryType;
 import com.github.syr0ws.fastinventory.api.config.InventoryConfig;
 import com.github.syr0ws.fastinventory.api.config.InventoryItemConfig;
 import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
 import com.github.syr0ws.fastinventory.api.config.action.ClickActionLoaderFactory;
 import com.github.syr0ws.fastinventory.api.config.dao.InventoryConfigDAO;
 import com.github.syr0ws.fastinventory.api.config.exception.InventoryConfigException;
+import com.github.syr0ws.fastinventory.api.inventory.FastInventoryType;
 import com.github.syr0ws.fastinventory.internal.config.SimpleInventoryConfig;
 import com.github.syr0ws.fastinventory.internal.config.yaml.item.YamlInventoryItemLoader;
 import com.github.syr0ws.fastinventory.internal.util.TextUtil;

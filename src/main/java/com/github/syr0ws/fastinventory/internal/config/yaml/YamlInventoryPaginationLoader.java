@@ -1,9 +1,9 @@
 package com.github.syr0ws.fastinventory.internal.config.yaml;
 
-import com.github.syr0ws.fastinventory.api.inventory.action.ClickType;
 import com.github.syr0ws.fastinventory.api.config.InventoryItemConfig;
 import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
 import com.github.syr0ws.fastinventory.api.config.exception.InventoryConfigException;
+import com.github.syr0ws.fastinventory.api.inventory.action.ClickType;
 import com.github.syr0ws.fastinventory.common.inventory.action.NextPageAction;
 import com.github.syr0ws.fastinventory.common.inventory.action.PreviousPageAction;
 import com.github.syr0ws.fastinventory.common.util.IdUtil;

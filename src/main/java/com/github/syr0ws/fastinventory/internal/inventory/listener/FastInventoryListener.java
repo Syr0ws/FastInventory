@@ -1,8 +1,8 @@
 package com.github.syr0ws.fastinventory.internal.inventory.listener;
 
+import com.github.syr0ws.fastinventory.api.InventoryService;
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
 import com.github.syr0ws.fastinventory.api.inventory.InventoryContent;
-import com.github.syr0ws.fastinventory.api.InventoryService;
 import com.github.syr0ws.fastinventory.api.inventory.action.ClickAction;
 import com.github.syr0ws.fastinventory.api.inventory.action.ClickType;
 import com.github.syr0ws.fastinventory.api.inventory.event.FastInventoryClickEvent;
@@ -182,7 +182,7 @@ public class FastInventoryListener implements Listener {
 
         Set<ClickType> clickTypes = action.getClickTypes();
 
-        if(clickTypes.contains(ClickType.ALL)) {
+        if (clickTypes.contains(ClickType.ALL)) {
             return true;
         }
 

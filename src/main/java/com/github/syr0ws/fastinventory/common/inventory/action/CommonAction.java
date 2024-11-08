@@ -12,7 +12,7 @@ public abstract class CommonAction implements ClickAction {
 
     public CommonAction(Set<ClickType> clickTypes) {
 
-        if(clickTypes == null) {
+        if (clickTypes == null) {
             throw new IllegalArgumentException("clickTypes cannot be null");
         }
 

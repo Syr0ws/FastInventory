@@ -1,15 +1,15 @@
 package com.github.syr0ws.fastinventory.internal.inventory.pagination;
 
+import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
 import com.github.syr0ws.fastinventory.api.inventory.InventoryContent;
-import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
 import com.github.syr0ws.fastinventory.api.inventory.item.InventoryItem;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.Pagination;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.PaginationModel;
 import com.github.syr0ws.fastinventory.api.transform.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
-import com.github.syr0ws.fastinventory.common.util.CommonContextKey;
 import com.github.syr0ws.fastinventory.common.transform.provider.CommonProviderType;
+import com.github.syr0ws.fastinventory.common.util.CommonContextKey;
 
 import java.util.Collections;
 import java.util.List;

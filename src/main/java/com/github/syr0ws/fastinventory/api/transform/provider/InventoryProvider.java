@@ -1,8 +1,8 @@
 package com.github.syr0ws.fastinventory.api.transform.provider;
 
-import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
 import com.github.syr0ws.fastinventory.api.InventoryService;
 import com.github.syr0ws.fastinventory.api.config.InventoryConfig;
+import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
 import com.github.syr0ws.fastinventory.api.transform.i18n.I18n;
 import com.github.syr0ws.fastinventory.api.transform.mapping.EnhancementManager;
 import com.github.syr0ws.fastinventory.api.transform.placeholder.PlaceholderManager;

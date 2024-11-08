@@ -1,8 +1,8 @@
 package com.github.syr0ws.fastinventory.common.config.yaml;
 
-import com.github.syr0ws.fastinventory.api.inventory.action.ClickType;
 import com.github.syr0ws.fastinventory.api.config.action.ClickActionLoader;
 import com.github.syr0ws.fastinventory.api.config.exception.InventoryConfigException;
+import com.github.syr0ws.fastinventory.api.inventory.action.ClickType;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.HashSet;
@@ -18,23 +18,23 @@ public abstract class YamlCommonActionLoader implements ClickActionLoader<Config
         Set<ClickType> clickTypes = new HashSet<>();
 
         // If the property is not set, all clicks are handled by default.
-        if(!section.isSet(CLICK_TYPES_KEY)) {
+        if (!section.isSet(CLICK_TYPES_KEY)) {
             clickTypes.add(ClickType.ALL);
             return clickTypes;
         }
 
         // When the property is set, checking that it is a list.
-        if(!section.isList(CLICK_TYPES_KEY)) {
+        if (!section.isList(CLICK_TYPES_KEY)) {
             throw new InventoryConfigException(String.format("Property '%s.%s' must be a list", section.getCurrentPath(), CLICK_TYPES_KEY));
         }
 
         List<String> clickTypeNames = section.getStringList(CLICK_TYPES_KEY);
 
-        for(String clickTypeName : clickTypeNames) {
+        for (String clickTypeName : clickTypeNames) {
 
             String parsedName = clickTypeName.toUpperCase();
 
-            if(!ClickType.isClickType(parsedName)) {
+            if (!ClickType.isClickType(parsedName)) {
                 throw new InventoryConfigException(String.format("Invalid click type '%s' at '%s.%s'", clickTypeName, section.getCurrentPath(), CLICK_TYPES_KEY));
             }
 

@@ -18,15 +18,15 @@ public class SoundAction extends CommonAction {
     public SoundAction(Set<ClickType> clickTypes, Sound sound, float volume, float pitch) {
         super(clickTypes);
 
-        if(sound == null) {
+        if (sound == null) {
             throw new IllegalArgumentException("Sound cannot be null");
         }
 
-        if(volume < 0f) {
+        if (volume < 0f) {
             throw new IllegalArgumentException("Volume cannot be negative");
         }
 
-        if(pitch < 0f || pitch > 2f) {
+        if (pitch < 0f || pitch > 2f) {
             throw new IllegalArgumentException("Pitch cannot be negative or greater than 2");
         }
 

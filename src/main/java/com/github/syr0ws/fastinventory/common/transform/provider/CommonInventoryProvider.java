@@ -1,12 +1,12 @@
 package com.github.syr0ws.fastinventory.common.transform.provider;
 
-import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
 import com.github.syr0ws.fastinventory.api.InventoryService;
 import com.github.syr0ws.fastinventory.api.config.InventoryConfig;
 import com.github.syr0ws.fastinventory.api.config.dao.InventoryConfigDAO;
 import com.github.syr0ws.fastinventory.api.config.exception.InventoryConfigException;
-import com.github.syr0ws.fastinventory.api.transform.i18n.I18n;
+import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
 import com.github.syr0ws.fastinventory.api.inventory.item.ItemParser;
+import com.github.syr0ws.fastinventory.api.transform.i18n.I18n;
 import com.github.syr0ws.fastinventory.api.transform.mapping.EnhancementManager;
 import com.github.syr0ws.fastinventory.api.transform.placeholder.PlaceholderManager;
 import com.github.syr0ws.fastinventory.api.transform.provider.InventoryProvider;
