@@ -28,7 +28,8 @@ public class PreviousPageAction extends CommonAction {
 
         FastInventory inventory = event.getFastInventory();
 
-        Pagination<?> pagination = inventory.getPagination(this.paginationId)
+        Pagination<?> pagination = inventory.getPaginationManager()
+                .getPagination(this.paginationId)
                 .orElseThrow(() -> new NullPointerException(String.format("No pagination found with id %s", this.paginationId)));
 
         pagination.previousPage();

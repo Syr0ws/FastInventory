@@ -2,6 +2,7 @@ package com.github.syr0ws.fastinventory.api.inventory;
 
 import com.github.syr0ws.fastinventory.api.InventoryService;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.Pagination;
+import com.github.syr0ws.fastinventory.api.inventory.pagination.PaginationManager;
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import org.bukkit.entity.Player;
@@ -30,15 +31,11 @@ public interface FastInventory {
 
     InventoryService getService();
 
+    PaginationManager getPaginationManager();
+
     Player getViewer();
 
     Inventory getBukkitInventory();
-
-    Optional<Pagination<?>> getPagination(String id);
-
-    <T> Optional<Pagination<T>> getPagination(String id, Class<T> type);
-
-    List<Pagination<?>> getPaginations();
 
     Context getDefaultContext();
 }

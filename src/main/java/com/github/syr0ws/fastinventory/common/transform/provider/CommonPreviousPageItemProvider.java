@@ -6,7 +6,7 @@ import com.github.syr0ws.fastinventory.common.transform.mapping.InventoryItemMap
 
 public class CommonPreviousPageItemProvider extends CommonPageItemProvider {
 
-    protected CommonPreviousPageItemProvider(InventoryItemMapper mapper) {
+    public CommonPreviousPageItemProvider(InventoryItemMapper mapper) {
         super(mapper);
     }
 
