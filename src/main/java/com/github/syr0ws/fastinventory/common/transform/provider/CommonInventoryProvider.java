@@ -5,14 +5,17 @@ import com.github.syr0ws.fastinventory.api.config.InventoryConfig;
 import com.github.syr0ws.fastinventory.api.config.dao.InventoryConfigDAO;
 import com.github.syr0ws.fastinventory.api.config.exception.InventoryConfigException;
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
-import com.github.syr0ws.fastinventory.api.transform.item.ItemParser;
+import com.github.syr0ws.fastinventory.api.inventory.pagination.Pagination;
+import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.transform.i18n.I18n;
+import com.github.syr0ws.fastinventory.api.transform.item.ItemParser;
 import com.github.syr0ws.fastinventory.api.transform.mapping.EnhancementManager;
 import com.github.syr0ws.fastinventory.api.transform.placeholder.PlaceholderManager;
-import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.transform.provider.ProviderManager;
+import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.common.transform.mapping.InventoryItemMapper;
 import com.github.syr0ws.fastinventory.common.transform.placeholder.CommonPlaceholder;
+import com.github.syr0ws.fastinventory.common.util.CommonContextKey;
 import com.github.syr0ws.fastinventory.internal.inventory.SimpleFastInventory;
 import com.github.syr0ws.fastinventory.internal.transform.mapping.SimpleEnhancementManager;
 import com.github.syr0ws.fastinventory.internal.transform.placeholder.SimplePlaceholderManager;
@@ -64,6 +67,21 @@ public abstract class CommonInventoryProvider implements InventoryProvider {
     protected abstract void addPaginationProviders();
 
     protected abstract void addEnhancements(EnhancementManager manager);
+
+    private void registerPaginations(FastInventory inventory) {
+
+        this.config.getPaginationConfigs().forEach(paginationConfig -> {
+
+            Context context = inventory.getDefaultContext();
+            context.addData(CommonContextKey.PAGINATION_ID.name(), config.getId(), String.class);
+
+            Pagination<?> pagination = this.getProviderManager()
+                    .provide(config.getId(), Pagination.class, this, context)
+                    .orElseThrow(() -> new NullPointerException(String.format("No provider found for pagination '%s'", config.getId())));
+
+            inventory.getPaginationManager().addPagination(pagination);
+        });
+    }
 
     protected <T> void addPaginationProvider(String paginationId, Class<T> dataType, Supplier<List<T>> supplier) {
         this.providerManager.addProvider(new CommonPaginationProvider<>(
@@ -117,7 +135,11 @@ public abstract class CommonInventoryProvider implements InventoryProvider {
 
     @Override
     public FastInventory createInventory(InventoryService service, Player player) {
-        return new SimpleFastInventory(this, service, player);
+
+        FastInventory inventory = new SimpleFastInventory(this, service, player);
+        this.registerPaginations(inventory);
+
+        return inventory;
     }
 
     @Override

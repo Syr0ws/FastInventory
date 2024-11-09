@@ -1,13 +1,11 @@
 package com.github.syr0ws.fastinventory.internal.inventory;
 
 import com.github.syr0ws.fastinventory.api.InventoryService;
-import com.github.syr0ws.fastinventory.api.config.InventoryConfig;
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
 import com.github.syr0ws.fastinventory.api.inventory.FastInventoryType;
 import com.github.syr0ws.fastinventory.api.inventory.InventoryContent;
 import com.github.syr0ws.fastinventory.api.inventory.exception.InventoryException;
 import com.github.syr0ws.fastinventory.api.inventory.item.InventoryItem;
-import com.github.syr0ws.fastinventory.api.inventory.pagination.Pagination;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.PaginationManager;
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
@@ -54,9 +52,6 @@ public class SimpleFastInventory implements FastInventory {
 
     @Override
     public void open() {
-
-        InventoryConfig config = this.provider.getConfig();
-        this.registerPaginations(config);
 
         this.inventory = this.createBukkitInventory();
 
@@ -161,21 +156,6 @@ public class SimpleFastInventory implements FastInventory {
         context.addData(CommonContextKey.INVENTORY.name(), this, FastInventory.class);
 
         return context;
-    }
-
-    private void registerPaginations(InventoryConfig config) {
-
-        config.getPaginationConfigs().forEach(paginationConfig -> {
-
-            Context context = this.getDefaultContext();
-            context.addData(CommonContextKey.PAGINATION_ID.name(), config.getId(), String.class);
-
-            Pagination<?> pagination = this.provider.getProviderManager()
-                    .provide(config.getId(), Pagination.class, this.provider, context)
-                    .orElseThrow(() -> new NullPointerException(String.format("No provider found for pagination '%s'", config.getId())));
-
-            this.paginationManager.addPagination(pagination);
-        });
     }
 
     private Inventory createBukkitInventory() {
