@@ -1,10 +1,10 @@
 package com.github.syr0ws.fastinventory.internal.config.yaml.action;
 
-import com.github.syr0ws.fastinventory.api.action.ClickAction;
-import com.github.syr0ws.fastinventory.api.action.ClickType;
 import com.github.syr0ws.fastinventory.api.config.exception.InventoryConfigException;
-import com.github.syr0ws.fastinventory.common.action.SoundAction;
+import com.github.syr0ws.fastinventory.api.inventory.action.ClickAction;
+import com.github.syr0ws.fastinventory.api.inventory.action.ClickType;
 import com.github.syr0ws.fastinventory.common.config.yaml.YamlCommonActionLoader;
+import com.github.syr0ws.fastinventory.common.inventory.action.SoundAction;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -29,7 +29,7 @@ public class YamlSoundActionLoader extends YamlCommonActionLoader {
 
     private Sound loadSound(ConfigurationSection section) throws InventoryConfigException {
 
-        if(!section.isString(SOUND_KEY)) {
+        if (!section.isString(SOUND_KEY)) {
             throw new InventoryConfigException(String.format("Property '%s.%s' missing or is not a string", section.getCurrentPath(), VOLUME_KEY));
         }
 
@@ -44,13 +44,13 @@ public class YamlSoundActionLoader extends YamlCommonActionLoader {
 
     private float loadVolume(ConfigurationSection section) throws InventoryConfigException {
 
-        if(!section.isDouble(VOLUME_KEY)) {
+        if (!section.isDouble(VOLUME_KEY)) {
             throw new InventoryConfigException(String.format("Property '%s.%s' missing or is not a float", section.getCurrentPath(), VOLUME_KEY));
         }
 
         float volume = (float) section.getDouble(VOLUME_KEY);
 
-        if(volume < 0f) {
+        if (volume < 0f) {
             throw new InventoryConfigException(String.format("Volume at '%s.%s' cannot be negative", section.getCurrentPath(), VOLUME_KEY));
         }
 
@@ -59,13 +59,13 @@ public class YamlSoundActionLoader extends YamlCommonActionLoader {
 
     private float loadPitch(ConfigurationSection section) throws InventoryConfigException {
 
-        if(!section.isDouble(PITCH_KEY)) {
+        if (!section.isDouble(PITCH_KEY)) {
             throw new InventoryConfigException(String.format("Property '%s.%s' missing or is not a float", section.getCurrentPath(), VOLUME_KEY));
         }
 
         float pitch = (float) section.getDouble(PITCH_KEY);
 
-        if(pitch < 0f || pitch > 2f) {
+        if (pitch < 0f || pitch > 2f) {
             throw new InventoryConfigException(String.format("Pitch at '%s.%s' cannot be negative or greater than 2", section.getCurrentPath(), VOLUME_KEY));
         }
 
