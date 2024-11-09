@@ -1,4 +1,4 @@
-package com.github.syr0ws.fastinventory.api.inventory.item;
+package com.github.syr0ws.fastinventory.api.transform.item;
 
 import com.github.syr0ws.fastinventory.api.transform.provider.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;

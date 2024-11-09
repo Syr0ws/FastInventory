@@ -2,7 +2,7 @@ package com.github.syr0ws.fastinventory.common.transform.mapping;
 
 import com.github.syr0ws.fastinventory.api.config.InventoryItemConfig;
 import com.github.syr0ws.fastinventory.api.inventory.item.InventoryItem;
-import com.github.syr0ws.fastinventory.api.inventory.item.ItemParser;
+import com.github.syr0ws.fastinventory.api.transform.item.ItemParser;
 import com.github.syr0ws.fastinventory.api.transform.mapping.Enhancement;
 import com.github.syr0ws.fastinventory.api.transform.mapping.EnhancementManager;
 import com.github.syr0ws.fastinventory.api.transform.mapping.Mapper;
