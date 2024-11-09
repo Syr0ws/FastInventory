@@ -2,17 +2,18 @@ package com.github.syr0ws.fastinventory.internal.inventory;
 
 import com.github.syr0ws.fastinventory.api.InventoryService;
 import com.github.syr0ws.fastinventory.api.config.InventoryConfig;
-import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
 import com.github.syr0ws.fastinventory.api.inventory.FastInventoryType;
 import com.github.syr0ws.fastinventory.api.inventory.InventoryContent;
 import com.github.syr0ws.fastinventory.api.inventory.exception.InventoryException;
 import com.github.syr0ws.fastinventory.api.inventory.item.InventoryItem;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.Pagination;
+import com.github.syr0ws.fastinventory.api.inventory.pagination.PaginationManager;
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.common.transform.provider.CommonProviderType;
 import com.github.syr0ws.fastinventory.common.util.CommonContextKey;
+import com.github.syr0ws.fastinventory.internal.inventory.pagination.SimplePaginationManager;
 import com.github.syr0ws.fastinventory.internal.util.SimpleContext;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -20,15 +21,13 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
-
 public class SimpleFastInventory implements FastInventory {
 
     private final InventoryProvider provider;
     private final InventoryContent content;
     private final InventoryService service;
+    private final SimplePaginationManager paginationManager;
     private final Player viewer;
-    private final Map<String, Pagination<?>> paginations = new HashMap<>();
 
     private Inventory inventory;
 
@@ -50,13 +49,14 @@ public class SimpleFastInventory implements FastInventory {
         this.service = service;
         this.viewer = viewer;
         this.content = new SimpleInventoryContent(this);
+        this.paginationManager = new SimplePaginationManager();
     }
 
     @Override
     public void open() {
 
         InventoryConfig config = this.provider.getConfig();
-        config.getPaginationConfigs().forEach(this::addPagination);
+        this.registerPaginations(config);
 
         this.inventory = this.createBukkitInventory();
 
@@ -98,7 +98,7 @@ public class SimpleFastInventory implements FastInventory {
         }
 
         // Updating pagination contents.
-        this.paginations.values().forEach(Pagination::update);
+        this.paginationManager.updatePaginations();
 
         // Updating viewer inventory.
         this.updateBukkitInventory();
@@ -106,13 +106,15 @@ public class SimpleFastInventory implements FastInventory {
 
     @Override
     public String getTitle() {
-        return this.provider.getProviderManager().provide(CommonProviderType.TITLE.name(), String.class, provider, this.getDefaultContext())
+        return this.provider.getProviderManager()
+                .provide(CommonProviderType.TITLE.name(), String.class, provider, this.getDefaultContext())
                 .orElse("");
     }
 
     @Override
     public FastInventoryType getType() {
-        return this.provider.getProviderManager().provide(CommonProviderType.INVENTORY_TYPE.name(), FastInventoryType.class, provider, this.getDefaultContext())
+        return this.provider.getProviderManager()
+                .provide(CommonProviderType.INVENTORY_TYPE.name(), FastInventoryType.class, provider, this.getDefaultContext())
                 .orElseThrow(() -> new InventoryException("No provider found for FastInventoryType"));
     }
 
@@ -133,7 +135,12 @@ public class SimpleFastInventory implements FastInventory {
 
     @Override
     public InventoryService getService() {
-        return null;
+        return this.service;
+    }
+
+    @Override
+    public PaginationManager getPaginationManager() {
+        return this.paginationManager;
     }
 
     @Override
@@ -147,31 +154,6 @@ public class SimpleFastInventory implements FastInventory {
     }
 
     @Override
-    public Optional<Pagination<?>> getPagination(String id) {
-        return Optional.ofNullable(this.paginations.get(id));
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T> Optional<Pagination<T>> getPagination(String id, Class<T> type) {
-
-        Pagination<?> pagination = this.paginations.get(id);
-
-        if (pagination == null) {
-            return Optional.empty();
-        }
-
-        Class<?> dataType = pagination.getModel().getDataType();
-
-        return dataType.equals(type) ? Optional.of((Pagination<T>) pagination) : Optional.empty();
-    }
-
-    @Override
-    public List<Pagination<?>> getPaginations() {
-        return new ArrayList<>(this.paginations.values());
-    }
-
-    @Override
     public Context getDefaultContext() {
 
         Context context = new SimpleContext();
@@ -181,15 +163,19 @@ public class SimpleFastInventory implements FastInventory {
         return context;
     }
 
-    private void addPagination(PaginationConfig config) {
+    private void registerPaginations(InventoryConfig config) {
 
-        Context context = this.getDefaultContext();
-        context.addData(CommonContextKey.PAGINATION_ID.name(), config.getId(), String.class);
+        config.getPaginationConfigs().forEach(paginationConfig -> {
 
-        Pagination<?> pagination = this.provider.getProviderManager().provide(config.getId(), Pagination.class, provider, context)
-                .orElseThrow(() -> new NullPointerException("No provider found for Pagination"));
+            Context context = this.getDefaultContext();
+            context.addData(CommonContextKey.PAGINATION_ID.name(), config.getId(), String.class);
 
-        this.paginations.put(pagination.getId(), pagination);
+            Pagination<?> pagination = this.provider.getProviderManager()
+                    .provide(config.getId(), Pagination.class, this.provider, context)
+                    .orElseThrow(() -> new NullPointerException(String.format("No provider found for pagination '%s'", config.getId())));
+
+            this.paginationManager.addPagination(pagination);
+        });
     }
 
     private Inventory createBukkitInventory() {
