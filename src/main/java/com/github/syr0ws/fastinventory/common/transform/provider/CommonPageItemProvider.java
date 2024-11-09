@@ -15,7 +15,7 @@ public abstract class CommonPageItemProvider implements Provider<InventoryItem> 
 
     private final InventoryItemMapper mapper;
 
-    protected CommonPageItemProvider(InventoryItemMapper mapper) {
+    public CommonPageItemProvider(InventoryItemMapper mapper) {
         this.mapper = mapper;
     }
 
