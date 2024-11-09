@@ -9,7 +9,7 @@ import com.github.syr0ws.fastinventory.api.transform.item.ItemParser;
 import com.github.syr0ws.fastinventory.api.transform.i18n.I18n;
 import com.github.syr0ws.fastinventory.api.transform.mapping.EnhancementManager;
 import com.github.syr0ws.fastinventory.api.transform.placeholder.PlaceholderManager;
-import com.github.syr0ws.fastinventory.api.transform.provider.InventoryProvider;
+import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.transform.provider.ProviderManager;
 import com.github.syr0ws.fastinventory.common.transform.mapping.InventoryItemMapper;
 import com.github.syr0ws.fastinventory.common.transform.placeholder.CommonPlaceholder;

@@ -6,7 +6,7 @@ import com.github.syr0ws.fastinventory.api.transform.item.ItemParser;
 import com.github.syr0ws.fastinventory.api.transform.mapping.Enhancement;
 import com.github.syr0ws.fastinventory.api.transform.mapping.EnhancementManager;
 import com.github.syr0ws.fastinventory.api.transform.mapping.Mapper;
-import com.github.syr0ws.fastinventory.api.transform.provider.InventoryProvider;
+import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.internal.inventory.item.SimpleInventoryItem;
 import org.bukkit.inventory.ItemStack;

@@ -2,7 +2,7 @@ package com.github.syr0ws.fastinventory.common.transform.provider;
 
 import com.github.syr0ws.fastinventory.api.config.InventoryConfig;
 import com.github.syr0ws.fastinventory.api.transform.placeholder.PlaceholderManager;
-import com.github.syr0ws.fastinventory.api.transform.provider.InventoryProvider;
+import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.transform.provider.Provider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.common.util.CommonContextKey;

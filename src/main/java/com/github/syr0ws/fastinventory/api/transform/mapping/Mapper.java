@@ -1,7 +1,7 @@
 package com.github.syr0ws.fastinventory.api.transform.mapping;
 
 import com.github.syr0ws.fastinventory.api.config.Configuration;
-import com.github.syr0ws.fastinventory.api.transform.provider.InventoryProvider;
+import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 
 public interface Mapper<C extends Configuration, D extends Dto, T> {

@@ -1,7 +1,7 @@
 package com.github.syr0ws.fastinventory.api;
 
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
-import com.github.syr0ws.fastinventory.api.transform.provider.InventoryProvider;
+import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import org.bukkit.entity.Player;
 
 import java.util.Map;

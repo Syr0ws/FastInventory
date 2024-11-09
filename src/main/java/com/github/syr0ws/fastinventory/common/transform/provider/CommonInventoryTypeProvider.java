@@ -1,7 +1,7 @@
 package com.github.syr0ws.fastinventory.common.transform.provider;
 
 import com.github.syr0ws.fastinventory.api.inventory.FastInventoryType;
-import com.github.syr0ws.fastinventory.api.transform.provider.InventoryProvider;
+import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.transform.provider.Provider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 
