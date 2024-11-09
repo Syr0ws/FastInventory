@@ -14,7 +14,8 @@ public abstract class PaginationPlaceholder implements Placeholder {
         FastInventory inventory = context.getData(CommonContextKey.INVENTORY.name(), FastInventory.class);
         String paginationId = context.getData(CommonContextKey.PAGINATION_ID.name(), String.class);
 
-        Pagination<?> pagination = inventory.getPagination(paginationId)
+        Pagination<?> pagination = inventory.getPaginationManager()
+                .getPagination(paginationId)
                 .orElseThrow(() -> new IllegalStateException(String.format("No pagination with id %s found", paginationId)));
 
         return pagination.getModel();
