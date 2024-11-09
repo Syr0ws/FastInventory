@@ -89,7 +89,7 @@ public class YamlInventoryConfigDAO implements InventoryConfigDAO {
 
         // Loading inventory properties.
         String id = this.loadId(section);
-        String title = TextUtil.parseColors(section.getString(INVENTORY_TITLE_KEY, ""));
+        String title = section.getString(INVENTORY_TITLE_KEY, "");
         FastInventoryType type = this.loadInventoryType(section);
 
         // Pattern.
