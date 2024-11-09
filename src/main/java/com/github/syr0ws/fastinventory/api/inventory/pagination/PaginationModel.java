@@ -19,6 +19,8 @@ public interface PaginationModel<T> {
 
     int getCurrentPage();
 
+    void setCurrentPage(int page);
+
     List<T> getCurrentItems();
 
     int getPerPage();
