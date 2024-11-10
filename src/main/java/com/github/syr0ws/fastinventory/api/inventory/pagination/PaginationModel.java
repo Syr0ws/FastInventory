@@ -5,6 +5,8 @@ import java.util.List;
 
 public interface PaginationModel<T> {
 
+    void update();
+
     void nextPage();
 
     void previousPage();
@@ -14,8 +16,6 @@ public interface PaginationModel<T> {
     int countPages();
 
     Collection<T> getItems();
-
-    void setItems(Collection<T> items);
 
     int getCurrentPage();
 

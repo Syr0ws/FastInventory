@@ -99,8 +99,11 @@ public abstract class CommonInventoryProvider implements InventoryProvider {
 
     private <T> Pagination<T> createPagination(PaginationDto<T> dto, FastInventory inventory) {
 
-        SimplePaginationModel<T> model = new SimplePaginationModel<>(dto.paginationDataType(), dto.slots().size());
-        model.setItems(dto.dataSupplier().get());
+        SimplePaginationModel<T> model = new SimplePaginationModel<>(
+                dto.paginationDataType(),
+                dto.dataSupplier(),
+                dto.slots().size()
+        );
 
         return new SimplePagination<>(dto.paginationId(), inventory, model, dto.slots());
     }

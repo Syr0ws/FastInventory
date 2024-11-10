@@ -21,7 +21,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 public class SimpleFastInventory implements FastInventory {
 
@@ -61,7 +60,7 @@ public class SimpleFastInventory implements FastInventory {
 
         this.viewer.openInventory(this.inventory);
         this.service.addInventory(this);
-        this.update();
+        this.updateContent();
     }
 
     @Override
@@ -71,10 +70,26 @@ public class SimpleFastInventory implements FastInventory {
     }
 
     @Override
-    public void update() {
+    public void updateContent() {
         this.updateInventoryContent();
         this.paginationManager.updatePaginations();
-        this.updateBukkitInventory();
+        this.updateView();
+    }
+
+    @Override
+    public void updatePagination(String paginationId) {
+
+        if(paginationId == null) {
+            throw new IllegalArgumentException("paginationId cannot be null");
+        }
+
+        this.paginationManager.updatePagination(paginationId);
+        this.updateView();
+    }
+
+    @Override
+    public void updateView() {
+        this.viewer.updateInventory();
     }
 
     @Override
@@ -178,19 +193,5 @@ public class SimpleFastInventory implements FastInventory {
                 }
             }
         }
-    }
-
-    private void updateBukkitInventory() {
-
-        for (int slot = 0; slot < this.inventory.getSize(); slot++) {
-
-            ItemStack item = this.content.getItem(slot)
-                    .map(InventoryItem::getItemStack)
-                    .orElse(null);
-
-            this.inventory.setItem(slot, item);
-        }
-
-        this.viewer.updateInventory();
     }
 }

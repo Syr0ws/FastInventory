@@ -29,6 +29,7 @@ public class SimpleInventoryContent implements InventoryContent {
 
         this.checkSlot(slot);
         this.items.put(slot, item);
+        this.inventory.getBukkitInventory().setItem(slot, item.getItemStack());
     }
 
     @Override
@@ -51,6 +52,7 @@ public class SimpleInventoryContent implements InventoryContent {
     public void removeItem(int slot) {
         this.checkSlot(slot);
         this.items.remove(slot);
+        this.inventory.getBukkitInventory().setItem(slot, null);
     }
 
     @Override

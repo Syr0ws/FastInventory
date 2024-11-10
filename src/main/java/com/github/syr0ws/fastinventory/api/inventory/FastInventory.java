@@ -13,7 +13,11 @@ public interface FastInventory {
 
     void close();
 
-    void update();
+    void updateContent();
+
+    void updatePagination(String paginationId);
+
+    void updateView();
 
     String getTitle();
 

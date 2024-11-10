@@ -6,18 +6,24 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class SimplePaginationModel<T> implements PaginationModel<T> {
 
     private final Class<T> dataType;
+    private final Supplier<List<T>> dataSupplier;
     private final int perPage;
     private final List<T> items = new ArrayList<>();
     private int currentPage;
 
-    public SimplePaginationModel(Class<T> dataType, int perPage) {
+    public SimplePaginationModel(Class<T> dataType, Supplier<List<T>> dataSupplier, int perPage) {
 
         if (dataType == null) {
             throw new IllegalArgumentException("dataType cannot be null");
+        }
+
+        if(dataSupplier == null) {
+            throw new IllegalArgumentException("dataSupplier cannot be null");
         }
 
         if (perPage <= 0) {
@@ -25,8 +31,15 @@ public class SimplePaginationModel<T> implements PaginationModel<T> {
         }
 
         this.dataType = dataType;
+        this.dataSupplier = dataSupplier;
         this.perPage = perPage;
         this.currentPage = 1;
+    }
+
+    @Override
+    public void update() {
+        this.items.clear();
+        this.items.addAll(this.dataSupplier.get());
     }
 
     @Override
@@ -62,12 +75,6 @@ public class SimplePaginationModel<T> implements PaginationModel<T> {
     @Override
     public Collection<T> getItems() {
         return Collections.unmodifiableList(this.items);
-    }
-
-    @Override
-    public void setItems(Collection<T> items) {
-        this.items.clear();
-        this.items.addAll(items);
     }
 
     @Override

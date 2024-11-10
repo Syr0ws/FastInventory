@@ -9,6 +9,8 @@ public interface PaginationManager {
 
     boolean removePagination(String paginationId);
 
+    void updatePagination(String paginationId);
+
     void updatePaginations();
 
     Optional<Pagination<?>> getPagination(String id);
