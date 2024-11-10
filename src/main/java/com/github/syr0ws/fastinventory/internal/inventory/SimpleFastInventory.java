@@ -21,7 +21,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 public class SimpleFastInventory implements FastInventory {
 
@@ -74,7 +73,7 @@ public class SimpleFastInventory implements FastInventory {
     public void updateContent() {
         this.updateInventoryContent();
         this.paginationManager.updatePaginations();
-        this.updateBukkitInventory();
+        this.viewer.updateInventory();
     }
 
     @Override
@@ -178,19 +177,5 @@ public class SimpleFastInventory implements FastInventory {
                 }
             }
         }
-    }
-
-    private void updateBukkitInventory() {
-
-        for (int slot = 0; slot < this.inventory.getSize(); slot++) {
-
-            ItemStack item = this.content.getItem(slot)
-                    .map(InventoryItem::getItemStack)
-                    .orElse(null);
-
-            this.inventory.setItem(slot, item);
-        }
-
-        this.viewer.updateInventory();
     }
 }
