@@ -82,12 +82,14 @@ public abstract class CommonInventoryProvider implements InventoryProvider {
 
         this.config.getPaginationConfigs().forEach(paginationConfig -> {
 
+            String paginationId = paginationConfig.getId();
+
             Context context = inventory.getDefaultContext();
-            context.addData(CommonContextKey.PAGINATION_ID.name(), paginationConfig.getId(), String.class);
+            context.addData(CommonContextKey.PAGINATION_ID.name(), paginationId, String.class);
 
             PaginationDto<?> dto = this.getProviderManager()
-                    .provide(paginationConfig.getId(), PaginationDto.class, this, context)
-                    .orElseThrow(() -> new NullPointerException(String.format("No provider found for pagination '%s'. Check that one has been registered", config.getId())));
+                    .provide(paginationId, PaginationDto.class, this, context)
+                    .orElseThrow(() -> new NullPointerException(String.format("No provider found for pagination '%s'. Check that one has been registered", paginationId)));
 
             Pagination<?> pagination = this.createPagination(dto, inventory);
 
