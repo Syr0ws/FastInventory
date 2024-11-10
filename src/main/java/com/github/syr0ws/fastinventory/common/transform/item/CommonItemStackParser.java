@@ -16,6 +16,10 @@ public class CommonItemStackParser implements ItemParser {
     @Override
     public ItemStack parse(InventoryProvider provider, ItemStack item, Context context) {
 
+        if(item == null) {
+            return null;
+        }
+
         PlaceholderManager manager = provider.getPlaceholderManager();
 
         ItemMeta meta = item.getItemMeta();
