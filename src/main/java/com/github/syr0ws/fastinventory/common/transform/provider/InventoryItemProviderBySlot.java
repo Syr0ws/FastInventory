@@ -22,7 +22,7 @@ public class InventoryItemProviderBySlot extends AbstractItemProvider<InventoryI
         // Data retrieval from configuration
         InventoryConfig config = provider.getConfig();
 
-        if(!context.hasData(CommonContextKey.SLOT.name())) {
+        if (!context.hasData(CommonContextKey.SLOT.name())) {
             throw new IllegalStateException("Cannot find any item because no slot has been provided");
         }
 
@@ -30,7 +30,7 @@ public class InventoryItemProviderBySlot extends AbstractItemProvider<InventoryI
         InventoryItemConfig itemConfig = config.getContent().get(slot);
 
         // Case in which there is not item at the specified slot
-        if(itemConfig == null) {
+        if (itemConfig == null) {
             return null;
         }
 

@@ -1,9 +1,9 @@
 package com.github.syr0ws.fastinventory.common.transform.provider;
 
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
-import com.github.syr0ws.fastinventory.api.transform.item.ItemParser;
 import com.github.syr0ws.fastinventory.api.transform.dto.DTO;
 import com.github.syr0ws.fastinventory.api.transform.enhancement.EnhancementManager;
+import com.github.syr0ws.fastinventory.api.transform.item.ItemParser;
 import com.github.syr0ws.fastinventory.api.transform.provider.Provider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.common.transform.dto.InventoryItemDto;
@@ -15,7 +15,7 @@ public abstract class AbstractItemProvider<T extends DTO> implements Provider<T>
 
     public AbstractItemProvider(ItemParser itemParser) {
 
-        if(itemParser == null) {
+        if (itemParser == null) {
             throw new IllegalArgumentException("itemParser cannot be null");
         }
 

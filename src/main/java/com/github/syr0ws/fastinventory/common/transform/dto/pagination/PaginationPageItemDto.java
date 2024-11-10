@@ -11,7 +11,7 @@ import java.util.Set;
 public class PaginationPageItemDto extends InventoryItemDto {
 
     private final String dtoId;
-    
+
     public PaginationPageItemDto(String itemId, ItemStack item, List<ClickAction> actions, Set<Integer> slots,
                                  String paginationId, PageItemType pageItemType) {
         super(itemId, item, actions, slots);
@@ -28,6 +28,6 @@ public class PaginationPageItemDto extends InventoryItemDto {
     }
 
     public enum PageItemType {
-         PREVIOUS_PAGE, NEXT_PAGE
+        PREVIOUS_PAGE, NEXT_PAGE
     }
 }

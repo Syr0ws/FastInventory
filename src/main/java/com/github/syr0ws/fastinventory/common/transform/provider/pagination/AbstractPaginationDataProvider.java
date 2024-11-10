@@ -14,7 +14,7 @@ public abstract class AbstractPaginationDataProvider<T extends DTO> implements P
 
         InventoryConfig config = provider.getConfig();
 
-        if(!context.hasData(CommonContextKey.PAGINATION_ID.name())) {
+        if (!context.hasData(CommonContextKey.PAGINATION_ID.name())) {
             throw new IllegalStateException("Cannot find the pagination because no pagination id has been provided in the context");
         }
 

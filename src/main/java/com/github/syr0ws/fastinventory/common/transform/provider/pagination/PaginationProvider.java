@@ -5,7 +5,6 @@ import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.transform.enhancement.EnhancementManager;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.common.transform.dto.pagination.PaginationDto;
-import com.github.syr0ws.fastinventory.common.transform.provider.ProviderNameEnum;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -19,15 +18,15 @@ public class PaginationProvider<T> extends AbstractPaginationDataProvider<Pagina
 
     public PaginationProvider(String paginationId, Class<T> paginationDataType, Supplier<List<T>> dataSupplier) {
 
-        if(paginationId == null || paginationId.isEmpty()) {
+        if (paginationId == null || paginationId.isEmpty()) {
             throw new IllegalArgumentException("paginationId cannot be null or empty");
         }
 
-        if(paginationDataType == null) {
+        if (paginationDataType == null) {
             throw new IllegalArgumentException("paginationDataType cannot be null");
         }
 
-        if(dataSupplier == null) {
+        if (dataSupplier == null) {
             throw new IllegalArgumentException("dataSupplier cannot be null");
         }
 

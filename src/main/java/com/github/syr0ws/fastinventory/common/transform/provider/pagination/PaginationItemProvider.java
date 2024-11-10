@@ -3,11 +3,11 @@ package com.github.syr0ws.fastinventory.common.transform.provider.pagination;
 import com.github.syr0ws.fastinventory.api.config.InventoryItemConfig;
 import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
-import com.github.syr0ws.fastinventory.api.transform.item.ItemParser;
 import com.github.syr0ws.fastinventory.api.transform.enhancement.EnhancementManager;
+import com.github.syr0ws.fastinventory.api.transform.item.ItemParser;
 import com.github.syr0ws.fastinventory.api.util.Context;
-import com.github.syr0ws.fastinventory.common.transform.provider.ProviderNameEnum;
 import com.github.syr0ws.fastinventory.common.transform.dto.pagination.PaginationItemDto;
+import com.github.syr0ws.fastinventory.common.transform.provider.ProviderNameEnum;
 import org.bukkit.inventory.ItemStack;
 
 public class PaginationItemProvider extends AbstractPaginationDataProvider<PaginationItemDto> {
@@ -16,7 +16,7 @@ public class PaginationItemProvider extends AbstractPaginationDataProvider<Pagin
 
     public PaginationItemProvider(ItemParser itemParser) {
 
-        if(itemParser == null) {
+        if (itemParser == null) {
             throw new IllegalArgumentException("itemParser cannot be null");
         }
 

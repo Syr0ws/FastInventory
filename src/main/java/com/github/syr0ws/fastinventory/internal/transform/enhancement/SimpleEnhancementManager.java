@@ -6,7 +6,9 @@ import com.github.syr0ws.fastinventory.api.transform.enhancement.EnhancementMana
 import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.internal.util.Pair;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SimpleEnhancementManager implements EnhancementManager {
 
@@ -36,7 +38,7 @@ public class SimpleEnhancementManager implements EnhancementManager {
     @Override
     public boolean removeEnhancement(String enhancementId) {
 
-        if(enhancementId == null) {
+        if (enhancementId == null) {
             throw new IllegalArgumentException("enhancementId cannot be null");
         }
 
@@ -47,11 +49,11 @@ public class SimpleEnhancementManager implements EnhancementManager {
     @SuppressWarnings("unchecked")
     public <T extends DTO> List<Enhancement<T>> getEnhancements(String dtoId, Class<T> dtoClass) {
 
-        if(dtoId == null) {
+        if (dtoId == null) {
             throw new IllegalArgumentException("dtoId cannot be null");
         }
 
-        if(dtoClass == null) {
+        if (dtoClass == null) {
             throw new IllegalArgumentException("dtoClass cannot be null");
         }
 

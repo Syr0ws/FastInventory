@@ -45,7 +45,7 @@ public class TitleProvider implements Provider<TitleDto> {
 
     private String parseTitle(String title, InventoryProvider provider, Context context) {
 
-        if(!context.hasData(CommonContextKey.VIEWER.name())) {
+        if (!context.hasData(CommonContextKey.VIEWER.name())) {
             return TextUtil.parseColors(title);
         }
 

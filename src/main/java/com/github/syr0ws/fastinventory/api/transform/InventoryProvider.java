@@ -3,10 +3,10 @@ package com.github.syr0ws.fastinventory.api.transform;
 import com.github.syr0ws.fastinventory.api.InventoryService;
 import com.github.syr0ws.fastinventory.api.config.InventoryConfig;
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
+import com.github.syr0ws.fastinventory.api.transform.enhancement.EnhancementManager;
 import com.github.syr0ws.fastinventory.api.transform.i18n.I18n;
 import com.github.syr0ws.fastinventory.api.transform.placeholder.PlaceholderManager;
 import com.github.syr0ws.fastinventory.api.transform.provider.ProviderManager;
-import com.github.syr0ws.fastinventory.api.transform.enhancement.EnhancementManager;
 import org.bukkit.entity.Player;
 
 import java.util.Optional;

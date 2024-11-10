@@ -1,15 +1,11 @@
 package com.github.syr0ws.fastinventory.api.inventory;
 
 import com.github.syr0ws.fastinventory.api.InventoryService;
-import com.github.syr0ws.fastinventory.api.inventory.pagination.Pagination;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.PaginationManager;
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-
-import java.util.List;
-import java.util.Optional;
 
 public interface FastInventory {
 

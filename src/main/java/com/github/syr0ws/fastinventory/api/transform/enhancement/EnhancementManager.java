@@ -9,21 +9,24 @@ public interface EnhancementManager {
 
     /**
      * Enhance a DTO by applying modifications on its properties.
-     * @param dto The DTO to enhance.
+     *
+     * @param dto      The DTO to enhance.
      * @param dtoClass The Java class type of the DTO the provider handles.
-     * @param context A Context instance that contains additional data.
+     * @param context  A Context instance that contains additional data.
      */
     <T extends DTO> void enhance(T dto, Class<T> dtoClass, Context context);
 
     /**
      * Add a new enhancement.
-     * @param dtoId The id of the DTO the enhancement will be applied on.
+     *
+     * @param dtoId       The id of the DTO the enhancement will be applied on.
      * @param enhancement The enhancement to register.
      */
     void addEnhancement(String dtoId, Enhancement<?> enhancement);
 
     /**
      * Remove an existing enhancement.
+     *
      * @param enhancementId The enhancement to unregister.
      * @return true if an enhancement that matches the given id has been removed or else false
      */
@@ -31,7 +34,8 @@ public interface EnhancementManager {
 
     /**
      * Get the enhancements that apply on a specific DTO.
-     * @param dtoId The id of the DTO.
+     *
+     * @param dtoId    The id of the DTO.
      * @param dtoClass The Java class type of the DTO.
      * @return A list of enhancements.
      */
