@@ -40,6 +40,7 @@ public class FastInventoryLibrary {
         factory.addLoader(new YamlNextPageActionLoader());
         factory.addLoader(new YamlBroadcastActionLoader());
         factory.addLoader(new YamlSoundActionLoader());
+        factory.addLoader(new YamlUpdateContentActionLoader());
 
         return factory;
     }
