@@ -73,6 +73,22 @@ public class SimpleFastInventory implements FastInventory {
     public void updateContent() {
         this.updateInventoryContent();
         this.paginationManager.updatePaginations();
+        this.updateView();
+    }
+
+    @Override
+    public void updatePagination(String paginationId) {
+
+        if(paginationId == null) {
+            throw new IllegalArgumentException("paginationId cannot be null");
+        }
+
+        this.paginationManager.updatePagination(paginationId);
+        this.updateView();
+    }
+
+    @Override
+    public void updateView() {
         this.viewer.updateInventory();
     }
 

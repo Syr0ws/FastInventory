@@ -15,6 +15,10 @@ public interface FastInventory {
 
     void updateContent();
 
+    void updatePagination(String paginationId);
+
+    void updateView();
+
     String getTitle();
 
     FastInventoryType getType();

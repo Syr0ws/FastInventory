@@ -1,5 +1,6 @@
 package com.github.syr0ws.fastinventory.internal.inventory.pagination;
 
+import com.github.syr0ws.fastinventory.api.inventory.exception.InventoryException;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.Pagination;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.PaginationManager;
 
@@ -30,6 +31,18 @@ public class SimplePaginationManager implements PaginationManager {
         }
 
         return this.paginations.remove(paginationId) != null;
+    }
+
+    @Override
+    public void updatePagination(String paginationId) {
+
+        if(paginationId == null) {
+            throw new IllegalArgumentException("paginationId cannot be null");
+        }
+
+        this.getPagination(paginationId)
+                .orElseThrow(() -> new InventoryException(String.format("No pagination found with id '%s'", paginationId)))
+                .update();
     }
 
     @Override
