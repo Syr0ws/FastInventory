@@ -1,10 +1,10 @@
-package com.github.syr0ws.fastinventory.common.transform.provider;
+package com.github.syr0ws.fastinventory.common.transform.dto;
 
-public enum CommonProviderType {
+public enum DtoNameEnum {
 
     TITLE,
     INVENTORY_TYPE,
-    CONTENT_ITEM,
+    INVENTORY_ITEM,
     PAGINATION,
     PAGINATION_ITEM,
     PAGINATION_PREVIOUS_PAGE_ITEM,

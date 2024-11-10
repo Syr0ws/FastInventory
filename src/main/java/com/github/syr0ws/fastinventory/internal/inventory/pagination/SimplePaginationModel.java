@@ -78,7 +78,7 @@ public class SimplePaginationModel<T> implements PaginationModel<T> {
     @Override
     public void setCurrentPage(int page) {
 
-        if(page < this.getFirstPage() || page > this.getLastPage()) {
+        if (page < this.getFirstPage() || page > this.getLastPage()) {
             throw new IllegalArgumentException(String.format("Invalid page number: %d", page));
         }
 

@@ -3,8 +3,8 @@ package com.github.syr0ws.fastinventory.common.inventory.action;
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
 import com.github.syr0ws.fastinventory.api.inventory.action.ClickType;
 import com.github.syr0ws.fastinventory.api.inventory.event.FastInventoryClickEvent;
-import com.github.syr0ws.fastinventory.api.transform.placeholder.PlaceholderManager;
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
+import com.github.syr0ws.fastinventory.api.transform.placeholder.PlaceholderManager;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import org.bukkit.Bukkit;
 

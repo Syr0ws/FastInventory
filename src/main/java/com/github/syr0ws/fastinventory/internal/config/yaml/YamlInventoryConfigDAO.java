@@ -9,7 +9,6 @@ import com.github.syr0ws.fastinventory.api.config.exception.InventoryConfigExcep
 import com.github.syr0ws.fastinventory.api.inventory.FastInventoryType;
 import com.github.syr0ws.fastinventory.internal.config.SimpleInventoryConfig;
 import com.github.syr0ws.fastinventory.internal.config.yaml.item.YamlInventoryItemLoader;
-import com.github.syr0ws.fastinventory.internal.util.TextUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -89,7 +88,7 @@ public class YamlInventoryConfigDAO implements InventoryConfigDAO {
 
         // Loading inventory properties.
         String id = this.loadId(section);
-        String title = TextUtil.parseColors(section.getString(INVENTORY_TITLE_KEY, ""));
+        String title = section.getString(INVENTORY_TITLE_KEY, "");
         FastInventoryType type = this.loadInventoryType(section);
 
         // Pattern.

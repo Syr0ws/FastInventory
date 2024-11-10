@@ -52,7 +52,7 @@ public class SimpleContext implements Context {
         }
 
         if (!data.type().equals(type)) {
-            throw new IllegalArgumentException(String.format("Type mismatch ; %s stored abd %s provided", data.type(), type));
+            throw new IllegalArgumentException(String.format("Type mismatch: %s stored and %s provided", data.type(), type));
         }
 
         return (T) data.value();

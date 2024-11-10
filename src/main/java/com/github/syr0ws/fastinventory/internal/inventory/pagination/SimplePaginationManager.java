@@ -3,7 +3,10 @@ package com.github.syr0ws.fastinventory.internal.inventory.pagination;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.Pagination;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.PaginationManager;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class SimplePaginationManager implements PaginationManager {
 
@@ -12,7 +15,7 @@ public class SimplePaginationManager implements PaginationManager {
     @Override
     public void addPagination(Pagination<?> pagination) {
 
-        if(pagination == null) {
+        if (pagination == null) {
             throw new IllegalArgumentException("pagination cannot be null");
         }
 
@@ -22,7 +25,7 @@ public class SimplePaginationManager implements PaginationManager {
     @Override
     public boolean removePagination(String paginationId) {
 
-        if(paginationId == null || paginationId.isEmpty()) {
+        if (paginationId == null || paginationId.isEmpty()) {
             throw new IllegalArgumentException("id cannot be null or empty");
         }
 
@@ -37,7 +40,7 @@ public class SimplePaginationManager implements PaginationManager {
     @Override
     public Optional<Pagination<?>> getPagination(String paginationId) {
 
-        if(paginationId == null || paginationId.isEmpty()) {
+        if (paginationId == null || paginationId.isEmpty()) {
             throw new IllegalArgumentException("paginationId cannot be null or empty");
         }
 
@@ -48,11 +51,11 @@ public class SimplePaginationManager implements PaginationManager {
     @SuppressWarnings("unchecked")
     public <T> Optional<Pagination<T>> getPagination(String paginationId, Class<T> type) {
 
-        if(paginationId == null || paginationId.isEmpty()) {
+        if (paginationId == null || paginationId.isEmpty()) {
             throw new IllegalArgumentException("paginationId cannot be null or empty");
         }
 
-        if(type == null) {
+        if (type == null) {
             throw new IllegalArgumentException("type cannot be null");
         }
 

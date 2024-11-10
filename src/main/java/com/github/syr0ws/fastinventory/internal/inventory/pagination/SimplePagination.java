@@ -3,13 +3,17 @@ package com.github.syr0ws.fastinventory.internal.inventory.pagination;
 import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
 import com.github.syr0ws.fastinventory.api.inventory.InventoryContent;
+import com.github.syr0ws.fastinventory.api.inventory.exception.InventoryException;
 import com.github.syr0ws.fastinventory.api.inventory.item.InventoryItem;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.Pagination;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.PaginationModel;
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
-import com.github.syr0ws.fastinventory.common.transform.provider.CommonProviderType;
+import com.github.syr0ws.fastinventory.common.transform.dto.InventoryItemDto;
+import com.github.syr0ws.fastinventory.common.transform.dto.pagination.PaginationItemDto;
+import com.github.syr0ws.fastinventory.common.transform.provider.ProviderNameEnum;
 import com.github.syr0ws.fastinventory.common.util.CommonContextKey;
+import com.github.syr0ws.fastinventory.internal.inventory.item.SimpleInventoryItem;
 
 import java.util.Collections;
 import java.util.List;
@@ -70,7 +74,11 @@ public class SimplePagination<T> implements Pagination<T> {
                 context.addData(CommonContextKey.SLOT.name(), slot, Integer.class);
                 context.addData(CommonContextKey.PAGINATION_ITEM.name(), items.get(i), this.model.getDataType());
 
-                item = provider.getProviderManager().provide(CommonProviderType.PAGINATION_ITEM.name(), InventoryItem.class, provider, context).orElse(null);
+                PaginationItemDto dto = provider.getProviderManager()
+                        .provide(ProviderNameEnum.PAGINATION_ITEM.name(), PaginationItemDto.class, provider, context)
+                        .orElseThrow(() -> new InventoryException(String.format("Cannot provide pagination item for pagination '%s'", this.id)));
+
+                item = new SimpleInventoryItem(dto.getId(), dto.getItem(), dto.getActions());
             }
 
             if (item == null) {
@@ -92,21 +100,33 @@ public class SimplePagination<T> implements Pagination<T> {
 
         PaginationConfig paginationConfig = provider.getConfig()
                 .getPaginationConfig(this.id)
-                .orElseThrow(() -> new NullPointerException("Pagination not found"));
+                .orElseThrow(() -> new InventoryException(String.format("Cannot update page items: no pagination with id '%s' found in the configuration", this.id)));
 
+        // Previous page item handling.
         if (this.model.hasPreviousPage()) {
 
-            provider.getProviderManager().provide(CommonProviderType.PAGINATION_PREVIOUS_PAGE_ITEM.name(), InventoryItem.class, provider, context)
-                    .ifPresent(item -> content.setItem(item, paginationConfig.getPreviousPageItemSlots()));
+            provider.getProviderManager()
+                    .provide(ProviderNameEnum.PAGINATION_PREVIOUS_PAGE_ITEM.name(), InventoryItemDto.class, provider, context)
+                    .filter(dto -> dto.getItemId() != null && dto.getItem() != null)
+                    .ifPresent(dto -> {
+                        InventoryItem item = new SimpleInventoryItem(dto.getItemId(), dto.getItem(), dto.getActions());
+                        content.setItem(item, dto.getSlots());
+                    });
 
         } else {
             content.removeItems(paginationConfig.getPreviousPageItemSlots());
         }
 
+        // Next page item handling.
         if (this.model.hasNextPage()) {
 
-            provider.getProviderManager().provide(CommonProviderType.PAGINATION_NEXT_PAGE_ITEM.name(), InventoryItem.class, provider, context)
-                    .ifPresent(item -> content.setItem(item, paginationConfig.getNextPageItemSlots()));
+            provider.getProviderManager()
+                    .provide(ProviderNameEnum.PAGINATION_NEXT_PAGE_ITEM.name(), InventoryItemDto.class, provider, context)
+                    .filter(dto -> dto.getItemId() != null && dto.getItem() != null)
+                    .ifPresent(dto -> {
+                        InventoryItem item = new SimpleInventoryItem(dto.getItemId(), dto.getItem(), dto.getActions());
+                        content.setItem(item, dto.getSlots());
+                    });
         } else {
             content.removeItems(paginationConfig.getNextPageItemSlots());
         }

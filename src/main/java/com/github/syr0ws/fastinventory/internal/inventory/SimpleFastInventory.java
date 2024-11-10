@@ -9,8 +9,12 @@ import com.github.syr0ws.fastinventory.api.inventory.item.InventoryItem;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.PaginationManager;
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
-import com.github.syr0ws.fastinventory.common.transform.provider.CommonProviderType;
+import com.github.syr0ws.fastinventory.common.transform.dto.InventoryItemDto;
+import com.github.syr0ws.fastinventory.common.transform.dto.InventoryTypeDto;
+import com.github.syr0ws.fastinventory.common.transform.dto.TitleDto;
+import com.github.syr0ws.fastinventory.common.transform.provider.ProviderNameEnum;
 import com.github.syr0ws.fastinventory.common.util.CommonContextKey;
+import com.github.syr0ws.fastinventory.internal.inventory.item.SimpleInventoryItem;
 import com.github.syr0ws.fastinventory.internal.inventory.pagination.SimplePaginationManager;
 import com.github.syr0ws.fastinventory.internal.util.SimpleContext;
 import org.bukkit.Bukkit;
@@ -68,48 +72,24 @@ public class SimpleFastInventory implements FastInventory {
 
     @Override
     public void update() {
-
-        FastInventoryType type = this.getType();
-
-        // Updating inventory content.
-        for (int row = 0; row < type.getRows(); row++) {
-
-            for (int col = 0; col < type.getColumns(); col++) {
-
-                int slot = (row * type.getColumns()) + col;
-
-                Context context = this.getDefaultContext();
-                context.addData(CommonContextKey.SLOT.name(), slot, Integer.class);
-
-                InventoryItem item = this.provider.getProviderManager().provide(CommonProviderType.CONTENT_ITEM.name(), InventoryItem.class, provider, context)
-                        .orElse(null);
-
-                if (item == null) {
-                    this.content.removeItem(slot);
-                } else {
-                    this.content.setItem(item, slot);
-                }
-            }
-        }
-
-        // Updating pagination contents.
+        this.updateInventoryContent();
         this.paginationManager.updatePaginations();
-
-        // Updating viewer inventory.
         this.updateBukkitInventory();
     }
 
     @Override
     public String getTitle() {
         return this.provider.getProviderManager()
-                .provide(CommonProviderType.TITLE.name(), String.class, provider, this.getDefaultContext())
+                .provide(ProviderNameEnum.TITLE.name(), TitleDto.class, provider, this.getDefaultContext())
+                .map(TitleDto::getTitle)
                 .orElse("");
     }
 
     @Override
     public FastInventoryType getType() {
         return this.provider.getProviderManager()
-                .provide(CommonProviderType.INVENTORY_TYPE.name(), FastInventoryType.class, provider, this.getDefaultContext())
+                .provide(ProviderNameEnum.INVENTORY_TYPE.name(), InventoryTypeDto.class, provider, this.getDefaultContext())
+                .map(InventoryTypeDto::getType)
                 .orElseThrow(() -> new InventoryException("No provider found for FastInventoryType"));
     }
 
@@ -168,6 +148,36 @@ public class SimpleFastInventory implements FastInventory {
         }
 
         return this.inventory = Bukkit.createInventory(null, bukkitType, this.getTitle());
+    }
+
+    private void updateInventoryContent() {
+
+        FastInventoryType type = this.getType();
+
+        for (int row = 0; row < type.getRows(); row++) {
+
+            for (int col = 0; col < type.getColumns(); col++) {
+
+                int slot = (row * type.getColumns()) + col;
+
+                Context context = this.getDefaultContext();
+                context.addData(CommonContextKey.SLOT.name(), slot, Integer.class);
+
+                InventoryItem item = this.provider.getProviderManager()
+                        .provide(ProviderNameEnum.INVENTORY_ITEM_BY_SLOT.name(), InventoryItemDto.class, this.provider, context)
+                        // A non-existing item can be enhanced.
+                        // This is to prevent a non-existing item to be considered as an InventoryItem.
+                        .filter(dto -> dto.getItemId() != null && dto.getItem() != null)
+                        .map(dto -> new SimpleInventoryItem(dto.getItemId(), dto.getItem(), dto.getActions()))
+                        .orElse(null);
+
+                if (item == null) {
+                    this.content.removeItem(slot);
+                } else {
+                    this.content.setItem(item, slot);
+                }
+            }
+        }
     }
 
     private void updateBukkitInventory() {

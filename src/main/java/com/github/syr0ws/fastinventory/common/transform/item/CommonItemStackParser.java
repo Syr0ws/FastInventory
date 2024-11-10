@@ -1,8 +1,8 @@
-package com.github.syr0ws.fastinventory.common.transform.provider;
+package com.github.syr0ws.fastinventory.common.transform.item;
 
+import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.transform.item.ItemParser;
 import com.github.syr0ws.fastinventory.api.transform.placeholder.PlaceholderManager;
-import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.common.util.CommonContextKey;
 import org.bukkit.entity.Player;
@@ -15,6 +15,10 @@ public class CommonItemStackParser implements ItemParser {
 
     @Override
     public ItemStack parse(InventoryProvider provider, ItemStack item, Context context) {
+
+        if(item == null) {
+            return null;
+        }
 
         PlaceholderManager manager = provider.getPlaceholderManager();
 
