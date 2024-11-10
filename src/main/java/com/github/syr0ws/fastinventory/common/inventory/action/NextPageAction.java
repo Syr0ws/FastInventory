@@ -34,7 +34,7 @@ public class NextPageAction extends CommonAction {
 
         pagination.nextPage();
 
-        inventory.update();
+        inventory.updateContent();
     }
 
     @Override

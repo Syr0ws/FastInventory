@@ -61,7 +61,7 @@ public class SimpleFastInventory implements FastInventory {
 
         this.viewer.openInventory(this.inventory);
         this.service.addInventory(this);
-        this.update();
+        this.updateContent();
     }
 
     @Override
@@ -71,7 +71,7 @@ public class SimpleFastInventory implements FastInventory {
     }
 
     @Override
-    public void update() {
+    public void updateContent() {
         this.updateInventoryContent();
         this.paginationManager.updatePaginations();
         this.updateBukkitInventory();

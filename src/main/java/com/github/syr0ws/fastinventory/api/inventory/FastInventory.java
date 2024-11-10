@@ -13,7 +13,7 @@ public interface FastInventory {
 
     void close();
 
-    void update();
+    void updateContent();
 
     String getTitle();
 
