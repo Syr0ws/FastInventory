@@ -27,7 +27,7 @@ public class PaginationPreviousPageItemProvider extends AbstractPaginationPageIt
                 itemConfig.getId(),
                 itemConfig.getItemStack(),
                 itemConfig.getActions(),
-                paginationConfig.getNextPageItemSlots(),
+                paginationConfig.getPreviousPageItemSlots(),
                 paginationConfig.getId(),
                 PaginationPageItemDto.PageItemType.PREVIOUS_PAGE
         );
