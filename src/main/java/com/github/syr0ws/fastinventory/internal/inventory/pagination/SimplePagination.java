@@ -3,6 +3,7 @@ package com.github.syr0ws.fastinventory.internal.inventory.pagination;
 import com.github.syr0ws.fastinventory.api.config.PaginationConfig;
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
 import com.github.syr0ws.fastinventory.api.inventory.InventoryContent;
+import com.github.syr0ws.fastinventory.api.inventory.exception.InventoryException;
 import com.github.syr0ws.fastinventory.api.inventory.item.InventoryItem;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.Pagination;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.PaginationModel;
@@ -75,7 +76,7 @@ public class SimplePagination<T> implements Pagination<T> {
 
                 PaginationItemDto dto = provider.getProviderManager()
                         .provide(ProviderNameEnum.PAGINATION_ITEM.name(), PaginationItemDto.class, provider, context)
-                        .orElseThrow(() -> new IllegalStateException("Cannot provide pagination item"));
+                        .orElseThrow(() -> new InventoryException(String.format("Cannot provide pagination item for pagination '%s'", this.id)));
 
                 item = new SimpleInventoryItem(dto.getId(), dto.getItem(), dto.getActions());
             }
@@ -99,12 +100,14 @@ public class SimplePagination<T> implements Pagination<T> {
 
         PaginationConfig paginationConfig = provider.getConfig()
                 .getPaginationConfig(this.id)
-                .orElseThrow(() -> new NullPointerException("Pagination not found"));
+                .orElseThrow(() -> new InventoryException(String.format("Cannot update page items: no pagination with id '%s' found in the configuration", this.id)));
 
+        // Previous page item handling.
         if (this.model.hasPreviousPage()) {
 
             provider.getProviderManager()
                     .provide(ProviderNameEnum.PAGINATION_PREVIOUS_PAGE_ITEM.name(), InventoryItemDto.class, provider, context)
+                    .filter(dto -> dto.getItemId() != null && dto.getItem() != null)
                     .ifPresent(dto -> {
                         InventoryItem item = new SimpleInventoryItem(dto.getItemId(), dto.getItem(), dto.getActions());
                         content.setItem(item, dto.getSlots());
@@ -114,10 +117,12 @@ public class SimplePagination<T> implements Pagination<T> {
             content.removeItems(paginationConfig.getPreviousPageItemSlots());
         }
 
+        // Next page item handling.
         if (this.model.hasNextPage()) {
 
             provider.getProviderManager()
                     .provide(ProviderNameEnum.PAGINATION_NEXT_PAGE_ITEM.name(), InventoryItemDto.class, provider, context)
+                    .filter(dto -> dto.getItemId() != null && dto.getItem() != null)
                     .ifPresent(dto -> {
                         InventoryItem item = new SimpleInventoryItem(dto.getItemId(), dto.getItem(), dto.getActions());
                         content.setItem(item, dto.getSlots());

@@ -1,6 +1,7 @@
 package com.github.syr0ws.fastinventory.common.transform.dto.pagination;
 
 import com.github.syr0ws.fastinventory.api.transform.dto.DTO;
+import com.github.syr0ws.fastinventory.common.transform.dto.DtoNameEnum;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -12,6 +13,6 @@ public record PaginationDto<T>(String paginationId,
 
     @Override
     public String getId() {
-        return this.paginationId;
+        return DtoNameEnum.PAGINATION.name();
     }
 }

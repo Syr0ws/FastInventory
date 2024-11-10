@@ -4,15 +4,22 @@ import com.github.syr0ws.fastinventory.api.inventory.action.ClickAction;
 import com.github.syr0ws.fastinventory.api.transform.dto.DTO;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class InventoryItemDto implements DTO {
 
-    private final String itemId;
     private final List<ClickAction> actions;
     private final Set<Integer> slots;
+    private String itemId;
     private ItemStack item;
+
+    public InventoryItemDto() {
+        this.actions = new ArrayList<>();
+        this.slots = new HashSet<>();
+    }
 
     public InventoryItemDto(String itemId, ItemStack item, List<ClickAction> actions, Set<Integer> slots) {
         this.itemId = itemId;
@@ -23,6 +30,10 @@ public class InventoryItemDto implements DTO {
 
     public String getItemId() {
         return this.itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
     }
 
     public List<ClickAction> getActions() {
@@ -43,6 +54,6 @@ public class InventoryItemDto implements DTO {
 
     @Override
     public String getId() {
-        return this.itemId;
+        return DtoNameEnum.INVENTORY_ITEM.name();
     }
 }

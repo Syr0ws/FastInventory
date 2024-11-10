@@ -14,13 +14,22 @@ public class PaginationItemDto implements DTO {
     private ItemStack item;
 
     public PaginationItemDto(String paginationId, ItemStack item, List<ClickAction> actions) {
+
+        if(paginationId == null) {
+            throw new IllegalArgumentException("paginationId cannot be null");
+        }
+
+        if(actions == null) {
+            throw new IllegalArgumentException("actions cannot be null");
+        }
+
         this.paginationId = paginationId;
         this.actions = actions;
-        this.item = item;
+        this.setItem(item);
     }
 
     public String getPaginationId() {
-        return paginationId;
+        return this.paginationId;
     }
 
     public List<ClickAction> getActions() {
@@ -32,6 +41,11 @@ public class PaginationItemDto implements DTO {
     }
 
     public void setItem(ItemStack item) {
+
+        if(item == null) {
+            throw new IllegalArgumentException("item cannot be null");
+        }
+
         this.item = item;
     }
 

@@ -72,36 +72,8 @@ public class SimpleFastInventory implements FastInventory {
 
     @Override
     public void update() {
-
-        FastInventoryType type = this.getType();
-
-        // Updating inventory content.
-        for (int row = 0; row < type.getRows(); row++) {
-
-            for (int col = 0; col < type.getColumns(); col++) {
-
-                int slot = (row * type.getColumns()) + col;
-
-                Context context = this.getDefaultContext();
-                context.addData(CommonContextKey.SLOT.name(), slot, Integer.class);
-
-                InventoryItem item = this.provider.getProviderManager()
-                        .provide(ProviderNameEnum.INVENTORY_ITEM_BY_SLOT.name(), InventoryItemDto.class, this.provider, context)
-                        .map(dto -> new SimpleInventoryItem(dto.getItemId(), dto.getItem(), dto.getActions()))
-                        .orElse(null);
-
-                if (item == null) {
-                    this.content.removeItem(slot);
-                } else {
-                    this.content.setItem(item, slot);
-                }
-            }
-        }
-
-        // Updating pagination contents.
+        this.updateInventoryContent();
         this.paginationManager.updatePaginations();
-
-        // Updating viewer inventory.
         this.updateBukkitInventory();
     }
 
@@ -176,6 +148,36 @@ public class SimpleFastInventory implements FastInventory {
         }
 
         return this.inventory = Bukkit.createInventory(null, bukkitType, this.getTitle());
+    }
+
+    private void updateInventoryContent() {
+
+        FastInventoryType type = this.getType();
+
+        for (int row = 0; row < type.getRows(); row++) {
+
+            for (int col = 0; col < type.getColumns(); col++) {
+
+                int slot = (row * type.getColumns()) + col;
+
+                Context context = this.getDefaultContext();
+                context.addData(CommonContextKey.SLOT.name(), slot, Integer.class);
+
+                InventoryItem item = this.provider.getProviderManager()
+                        .provide(ProviderNameEnum.INVENTORY_ITEM_BY_SLOT.name(), InventoryItemDto.class, this.provider, context)
+                        // A non-existing item can be enhanced.
+                        // This is to prevent a non-existing item to be considered as an InventoryItem.
+                        .filter(dto -> dto.getItemId() != null && dto.getItem() != null)
+                        .map(dto -> new SimpleInventoryItem(dto.getItemId(), dto.getItem(), dto.getActions()))
+                        .orElse(null);
+
+                if (item == null) {
+                    this.content.removeItem(slot);
+                } else {
+                    this.content.setItem(item, slot);
+                }
+            }
+        }
     }
 
     private void updateBukkitInventory() {
