@@ -59,7 +59,7 @@ public class PaginationProvider<T> extends AbstractPaginationDataProvider<Pagina
 
     @Override
     public String getName() {
-        return ProviderNameEnum.PAGINATION.name();
+        return this.paginationId;
     }
 
     @Override
