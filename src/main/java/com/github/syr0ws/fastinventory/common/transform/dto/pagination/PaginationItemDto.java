@@ -2,6 +2,7 @@ package com.github.syr0ws.fastinventory.common.transform.dto.pagination;
 
 import com.github.syr0ws.fastinventory.api.inventory.action.ClickAction;
 import com.github.syr0ws.fastinventory.api.transform.dto.DTO;
+import com.github.syr0ws.fastinventory.common.transform.dto.DtoNameEnum;
 import com.github.syr0ws.fastinventory.common.util.IdUtil;
 import org.bukkit.inventory.ItemStack;
 
@@ -51,6 +52,6 @@ public class PaginationItemDto implements DTO {
 
     @Override
     public String getId() {
-        return IdUtil.getPaginationItemId(this.paginationId);
+        return DtoNameEnum.PAGINATION_ITEM.name();
     }
 }
