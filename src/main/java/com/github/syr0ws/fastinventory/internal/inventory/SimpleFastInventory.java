@@ -86,7 +86,7 @@ public class SimpleFastInventory implements FastInventory {
                 context.addData(CommonContextKey.SLOT.name(), slot, Integer.class);
 
                 InventoryItem item = this.provider.getProviderManager()
-                        .provide(ProviderNameEnum.INVENTORY_ITEM_BY_SLOT.name(), InventoryItemDto.class, provider, context)
+                        .provide(ProviderNameEnum.INVENTORY_ITEM_BY_SLOT.name(), InventoryItemDto.class, this.provider, context)
                         .map(dto -> new SimpleInventoryItem(dto.getItemId(), dto.getItem(), dto.getActions()))
                         .orElse(null);
 
