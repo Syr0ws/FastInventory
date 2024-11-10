@@ -22,7 +22,7 @@ public class SimpleProviderManager implements ProviderManager {
     public void addProvider(Provider<?> provider) {
 
         if (provider == null) {
-            throw new IllegalArgumentException("Provider cannot be null");
+            throw new IllegalArgumentException("provider cannot be null");
         }
 
         this.providers.put(provider.getName(), provider);
