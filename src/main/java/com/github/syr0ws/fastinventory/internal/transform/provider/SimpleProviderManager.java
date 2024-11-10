@@ -1,6 +1,7 @@
 package com.github.syr0ws.fastinventory.internal.transform.provider;
 
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
+import com.github.syr0ws.fastinventory.api.transform.dto.DTO;
 import com.github.syr0ws.fastinventory.api.transform.provider.Provider;
 import com.github.syr0ws.fastinventory.api.transform.provider.ProviderManager;
 import com.github.syr0ws.fastinventory.api.util.Context;
@@ -12,8 +13,9 @@ public class SimpleProviderManager implements ProviderManager {
     private final Map<String, Provider<?>> providers = new HashMap<>();
 
     @Override
-    public <T> Optional<T> provide(String name, Class<T> type, InventoryProvider inventoryProvider, Context context) {
-        return this.getProvider(name, type).map(provider -> provider.provide(inventoryProvider, context));
+    public <T extends DTO> Optional<T> provide(String providerName, Class<T> dtoClass, InventoryProvider inventoryProvider, Context context) {
+        return this.getProvider(providerName, dtoClass)
+                .map(provider -> provider.provide(inventoryProvider, context));
     }
 
     @Override
@@ -27,21 +29,31 @@ public class SimpleProviderManager implements ProviderManager {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public <T> Optional<Provider<T>> getProvider(String name, Class<T> type) {
+    public boolean removeProvider(String providerName) {
 
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("Name cannot be null or empty");
+        if (providerName == null || providerName.isEmpty()) {
+            throw new IllegalArgumentException("name cannot be null or empty");
         }
 
-        if (type == null) {
-            throw new IllegalArgumentException("Type cannot be null");
+        return this.providers.remove(providerName) != null;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T extends DTO> Optional<Provider<T>> getProvider(String providerName, Class<T> dtoClass) {
+
+        if (providerName == null || providerName.isEmpty()) {
+            throw new IllegalArgumentException("providerName cannot be null or empty");
+        }
+
+        if (dtoClass == null) {
+            throw new IllegalArgumentException("dtoClass cannot be null");
         }
 
         return this.providers.entrySet().stream()
-                .filter(entry -> entry.getKey().equals(name))
+                .filter(entry -> entry.getKey().equals(providerName))
                 .map(Map.Entry::getValue)
-                .filter(provider -> provider.getType().equals(type))
+                .filter(provider -> provider.getDTOClass().equals(dtoClass))
                 .map(provider -> (Provider<T>) provider)
                 .findFirst();
     }

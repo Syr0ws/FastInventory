@@ -1,4 +1,4 @@
-package com.github.syr0ws.fastinventory.common.transform.provider;
+package com.github.syr0ws.fastinventory.common.transform.item;
 
 import com.github.syr0ws.fastinventory.api.transform.item.ItemParser;
 import com.github.syr0ws.fastinventory.api.transform.placeholder.PlaceholderManager;

@@ -9,8 +9,12 @@ import com.github.syr0ws.fastinventory.api.inventory.item.InventoryItem;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.PaginationManager;
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
-import com.github.syr0ws.fastinventory.common.transform.provider.CommonProviderType;
+import com.github.syr0ws.fastinventory.common.transform.dto.InventoryItemDto;
+import com.github.syr0ws.fastinventory.common.transform.dto.InventoryTypeDto;
+import com.github.syr0ws.fastinventory.common.transform.dto.TitleDto;
+import com.github.syr0ws.fastinventory.common.transform.provider.ProviderNameEnum;
 import com.github.syr0ws.fastinventory.common.util.CommonContextKey;
+import com.github.syr0ws.fastinventory.internal.inventory.item.SimpleInventoryItem;
 import com.github.syr0ws.fastinventory.internal.inventory.pagination.SimplePaginationManager;
 import com.github.syr0ws.fastinventory.internal.util.SimpleContext;
 import org.bukkit.Bukkit;
@@ -81,7 +85,9 @@ public class SimpleFastInventory implements FastInventory {
                 Context context = this.getDefaultContext();
                 context.addData(CommonContextKey.SLOT.name(), slot, Integer.class);
 
-                InventoryItem item = this.provider.getProviderManager().provide(CommonProviderType.CONTENT_ITEM.name(), InventoryItem.class, provider, context)
+                InventoryItem item = this.provider.getProviderManager()
+                        .provide(ProviderNameEnum.INVENTORY_ITEM_BY_SLOT.name(), InventoryItemDto.class, provider, context)
+                        .map(dto -> new SimpleInventoryItem(dto.getItemId(), dto.getItem(), dto.getActions()))
                         .orElse(null);
 
                 if (item == null) {
@@ -102,14 +108,16 @@ public class SimpleFastInventory implements FastInventory {
     @Override
     public String getTitle() {
         return this.provider.getProviderManager()
-                .provide(CommonProviderType.TITLE.name(), String.class, provider, this.getDefaultContext())
+                .provide(ProviderNameEnum.TITLE.name(), TitleDto.class, provider, this.getDefaultContext())
+                .map(TitleDto::getTitle)
                 .orElse("");
     }
 
     @Override
     public FastInventoryType getType() {
         return this.provider.getProviderManager()
-                .provide(CommonProviderType.INVENTORY_TYPE.name(), FastInventoryType.class, provider, this.getDefaultContext())
+                .provide(ProviderNameEnum.INVENTORY_TYPE.name(), InventoryTypeDto.class, provider, this.getDefaultContext())
+                .map(InventoryTypeDto::getType)
                 .orElseThrow(() -> new InventoryException("No provider found for FastInventoryType"));
     }
 

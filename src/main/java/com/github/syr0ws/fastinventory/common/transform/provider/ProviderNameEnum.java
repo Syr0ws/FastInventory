@@ -1,10 +1,10 @@
 package com.github.syr0ws.fastinventory.common.transform.provider;
 
-public enum CommonProviderType {
+public enum ProviderNameEnum {
 
     TITLE,
     INVENTORY_TYPE,
-    CONTENT_ITEM,
+    INVENTORY_ITEM_BY_SLOT,
     PAGINATION,
     PAGINATION_ITEM,
     PAGINATION_PREVIOUS_PAGE_ITEM,
