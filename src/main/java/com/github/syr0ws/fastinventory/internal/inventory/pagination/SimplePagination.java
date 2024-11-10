@@ -60,7 +60,7 @@ public class SimplePagination<T> implements Pagination<T> {
 
         int lastPage = this.model.getLastPage();
 
-        if(lastPage > this.model.getCurrentPage()) {
+        if(this.model.getCurrentPage() > lastPage) {
             this.model.setCurrentPage(lastPage);
         }
     }
