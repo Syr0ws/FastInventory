@@ -51,8 +51,18 @@ public class SimplePagination<T> implements Pagination<T> {
 
     @Override
     public void update() {
+        this.updateCurrentPage();
         this.updatePaginationItems();
         this.updatePageItems();
+    }
+
+    private void updateCurrentPage() {
+
+        int lastPage = this.model.getLastPage();
+
+        if(lastPage > this.model.getCurrentPage()) {
+            this.model.setCurrentPage(lastPage);
+        }
     }
 
     private void updatePaginationItems() {
