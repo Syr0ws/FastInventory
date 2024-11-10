@@ -29,12 +29,17 @@ public class InventoryItemProviderBySlot extends AbstractItemProvider<InventoryI
         Integer slot = context.getData(CommonContextKey.SLOT.name(), Integer.class);
         InventoryItemConfig itemConfig = config.getContent().get(slot);
 
+        // Case in which there is not item at the specified slot
+        if(itemConfig == null) {
+            return null;
+        }
+
         // DTO creation
         InventoryItemDto dto = new InventoryItemDto(
                 itemConfig.getId(),
                 itemConfig.getItemStack(),
                 itemConfig.getActions(),
-                Collections.emptySet()
+                Collections.singleton(slot)
         );
 
         super.process(provider, context, dto);
