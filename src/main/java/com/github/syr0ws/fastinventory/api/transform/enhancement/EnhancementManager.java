@@ -28,7 +28,7 @@ public interface EnhancementManager {
      * Remove an existing enhancement.
      *
      * @param enhancementId The enhancement to unregister.
-     * @return true if an enhancement that matches the given id has been removed or else false
+     * @return true if an enhancement that matches the given id has been removed or else false.
      */
     boolean removeEnhancement(String enhancementId);
 

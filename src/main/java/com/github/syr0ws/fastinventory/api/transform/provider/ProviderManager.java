@@ -48,7 +48,7 @@ public interface ProviderManager {
     /**
      * Get all the registered providers.
      *
-     * @return A Set of providers/
+     * @return A Set of providers.
      */
     Set<Provider<?>> getProviders();
 }
