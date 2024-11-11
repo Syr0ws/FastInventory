@@ -6,6 +6,7 @@ import com.github.syr0ws.fastinventory.api.inventory.FastInventoryType;
 import com.github.syr0ws.fastinventory.api.inventory.InventoryContent;
 import com.github.syr0ws.fastinventory.api.inventory.exception.InventoryException;
 import com.github.syr0ws.fastinventory.api.inventory.item.InventoryItem;
+import com.github.syr0ws.fastinventory.api.inventory.model.InventoryModel;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.PaginationManager;
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
@@ -15,6 +16,7 @@ import com.github.syr0ws.fastinventory.common.transform.dto.TitleDto;
 import com.github.syr0ws.fastinventory.common.transform.provider.ProviderNameEnum;
 import com.github.syr0ws.fastinventory.common.util.CommonContextKey;
 import com.github.syr0ws.fastinventory.internal.inventory.item.SimpleInventoryItem;
+import com.github.syr0ws.fastinventory.internal.inventory.model.SimpleInventoryModel;
 import com.github.syr0ws.fastinventory.internal.inventory.pagination.SimplePaginationManager;
 import com.github.syr0ws.fastinventory.internal.util.SimpleContext;
 import org.bukkit.Bukkit;
@@ -27,6 +29,7 @@ public class SimpleFastInventory implements FastInventory {
     private final InventoryProvider provider;
     private final InventoryContent content;
     private final InventoryService service;
+    private final InventoryModel model;
     private final SimplePaginationManager paginationManager;
     private final Player viewer;
 
@@ -50,6 +53,7 @@ public class SimpleFastInventory implements FastInventory {
         this.service = service;
         this.viewer = viewer;
         this.content = new SimpleInventoryContent(this);
+        this.model = new SimpleInventoryModel();
         this.paginationManager = new SimplePaginationManager();
     }
 
@@ -121,6 +125,11 @@ public class SimpleFastInventory implements FastInventory {
     @Override
     public InventoryContent getContent() {
         return this.content;
+    }
+
+    @Override
+    public InventoryModel getModel() {
+        return this.model;
     }
 
     @Override
