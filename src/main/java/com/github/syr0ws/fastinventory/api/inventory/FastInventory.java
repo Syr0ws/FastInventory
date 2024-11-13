@@ -1,6 +1,7 @@
 package com.github.syr0ws.fastinventory.api.inventory;
 
 import com.github.syr0ws.fastinventory.api.InventoryService;
+import com.github.syr0ws.fastinventory.api.inventory.hook.HookManager;
 import com.github.syr0ws.fastinventory.api.inventory.model.InventoryModel;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.PaginationManager;
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
@@ -35,6 +36,8 @@ public interface FastInventory {
     InventoryService getService();
 
     PaginationManager getPaginationManager();
+
+    HookManager getHookManager();
 
     Player getViewer();
 
