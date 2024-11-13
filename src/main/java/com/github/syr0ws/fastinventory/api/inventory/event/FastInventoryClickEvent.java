@@ -2,43 +2,57 @@ package com.github.syr0ws.fastinventory.api.inventory.event;
 
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
 import org.bukkit.entity.Player;
-import org.bukkit.event.HandlerList;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryView;
 
-public class FastInventoryClickEvent extends InventoryClickEvent {
+public class FastInventoryClickEvent extends FastInventoryEvent implements Cancellable {
 
-    private static final HandlerList handlers = new HandlerList();
+    private final InventoryView view;
+    private final InventoryType.SlotType slotType;
+    private final int slot;
+    private final ClickType clickType;
+    private final InventoryAction action;
+    private boolean cancelled;
 
-    private final FastInventory fastInventory;
-
-    public FastInventoryClickEvent(FastInventory fastInventory, InventoryView view, InventoryType.SlotType type, int slot, ClickType click, InventoryAction action) {
-        super(view, type, slot, click, action);
-
-        if (fastInventory == null) {
-            throw new IllegalArgumentException("fastInventory cannot be null");
-        }
-
-        this.fastInventory = fastInventory;
+    public FastInventoryClickEvent(FastInventory inventory, Player player, InventoryView view, InventoryType.SlotType slotType, int slot, ClickType clickType, InventoryAction action) {
+        super(inventory, player);
+        this.view = view;
+        this.slotType = slotType;
+        this.slot = slot;
+        this.clickType = clickType;
+        this.action = action;
     }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
+    public InventoryView getView() {
+        return this.view;
     }
 
-    public FastInventory getFastInventory() {
-        return this.fastInventory;
+    public InventoryType.SlotType getSlotType() {
+        return this.slotType;
     }
 
-    public Player getPlayer() {
-        return (Player) super.getWhoClicked();
+    public int getSlot() {
+        return this.slot;
+    }
+
+    public ClickType getClickType() {
+        return this.clickType;
+    }
+
+    public InventoryAction getAction() {
+        return this.action;
     }
 
     @Override
-    public HandlerList getHandlers() {
-        return handlers;
+    public boolean isCancelled() {
+        return this.cancelled;
+    }
+
+    @Override
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
     }
 }

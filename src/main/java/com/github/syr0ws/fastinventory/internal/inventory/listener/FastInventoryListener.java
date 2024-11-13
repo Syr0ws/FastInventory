@@ -73,14 +73,13 @@ public class FastInventoryListener implements Listener {
         // Calling event globally.
         FastInventoryClickEvent fastInventoryClickEvent = new FastInventoryClickEvent(
                 inventory,
+                player,
                 event.getView(),
                 event.getSlotType(),
                 event.getSlot(),
                 event.getClick(),
                 event.getAction()
         );
-
-        Bukkit.getPluginManager().callEvent(fastInventoryClickEvent);
 
         // Do not go further if the event has been cancelled.
         if (fastInventoryClickEvent.isCancelled()) {
