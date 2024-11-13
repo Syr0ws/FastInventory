@@ -26,7 +26,7 @@ public class NextPageAction extends CommonAction {
     @Override
     public void execute(FastInventoryClickEvent event) {
 
-        FastInventory inventory = event.getFastInventory();
+        FastInventory inventory = event.getInventory();
 
         Pagination<?> pagination = inventory.getPaginationManager()
                 .getPagination(this.paginationId)

@@ -31,7 +31,7 @@ public class PlayerCommandAction extends CommonAction {
     @Override
     public void execute(FastInventoryClickEvent event) {
 
-        FastInventory inventory = event.getFastInventory();
+        FastInventory inventory = event.getInventory();
         InventoryProvider provider = inventory.getProvider();
         PlaceholderManager placeholderManager = provider.getPlaceholderManager();
 

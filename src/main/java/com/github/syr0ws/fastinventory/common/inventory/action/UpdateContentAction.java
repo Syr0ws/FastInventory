@@ -16,7 +16,7 @@ public class UpdateContentAction extends CommonAction {
 
     @Override
     public void execute(FastInventoryClickEvent event) {
-        FastInventory inventory = event.getFastInventory();
+        FastInventory inventory = event.getInventory();
         inventory.updateContent();
     }
 

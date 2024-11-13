@@ -24,7 +24,7 @@ public class UpdatePaginationAction extends CommonAction {
 
     @Override
     public void execute(FastInventoryClickEvent event) {
-        FastInventory inventory = event.getFastInventory();
+        FastInventory inventory = event.getInventory();
         this.paginationIds.forEach(inventory::updatePagination);
     }
 
