@@ -8,7 +8,7 @@ public interface HookManager {
 
     <E extends FastInventoryEvent> void executeHooks(E event, Class<E> eventClass);
 
-    <E extends FastInventoryEvent> void addHook(Hook<E> hook);
+    <E extends FastInventoryEvent> void addHook(String id, Class<E> eventClass, Hook<E> hook);
 
     void removeHook(String hookId);
 

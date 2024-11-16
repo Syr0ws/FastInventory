@@ -24,6 +24,7 @@ public class SimpleHookManager implements HookManager {
             throw new IllegalArgumentException("eventClass cannot be null");
         }
 
+        // See comment in the addHook() method.
         int modifiers = eventClass.getModifiers();
 
         if(Modifier.isAbstract(modifiers)) {
@@ -42,31 +43,41 @@ public class SimpleHookManager implements HookManager {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <E extends FastInventoryEvent> void addHook(Hook<E> hook) {
+    public <E extends FastInventoryEvent> void addHook(String id, Class<E> eventClass, Hook<E> hook) {
 
         if(hook == null) {
             throw new IllegalArgumentException("hook cannot be null");
         }
 
-        Class<E> eventClass = hook.getEventClass();
-
         if(eventClass == null) {
-            throw new IllegalArgumentException("hook.eventClass cannot be null");
+            throw new IllegalArgumentException("eventClass cannot be null");
         }
 
+        // If the event class is abstract, it is not an event but an intermediate
+        // representation to reuse data / methods. Thus, it cannot be used for a hook.
         int modifiers = eventClass.getModifiers();
 
         if(Modifier.isAbstract(modifiers)) {
-            throw new IllegalArgumentException("hook.eventClass cannot be abstract");
+            throw new IllegalArgumentException("eventClass cannot be abstract");
         }
 
-        HookList<E> list = this.hooks.containsKey(eventClass) ?
-                (HookList<E>) this.hooks.get(eventClass) :
-                new HookList<>(eventClass);
+        // Two hooks cannot have the same id. This is to ensure that two hooks with the same id
+        // cannot be registered on a different event.
+        this.removeHook(id);
 
-        list.getHooks().add(hook);
+        // Registering the hook.
+        if(this.hooks.containsKey(eventClass)) {
 
-        this.hooks.replace(eventClass, list);
+            HookList<E> list = (HookList<E>) this.hooks.get(eventClass);
+            list.add(id, hook);
+
+        } else {
+
+            HookList<E> list = new HookList<>(eventClass);
+            list.add(id, hook);
+
+            this.hooks.put(eventClass, list);
+        }
     }
 
     @Override
@@ -77,8 +88,8 @@ public class SimpleHookManager implements HookManager {
         }
 
         this.hooks.values().removeIf(list -> {
-            list.getHooks().removeIf(hook -> hook.getId().equals(hookId));
-            return list.getHooks().isEmpty();
+            list.remove(hookId);
+            return list.isEmpty();
         });
     }
 
@@ -92,19 +103,31 @@ public class SimpleHookManager implements HookManager {
     private static class HookList<E extends FastInventoryEvent> {
 
         private final Class<E> eventClass;
-        private final List<Hook<E>> hooks;
+        private final LinkedHashMap<String, Hook<E>> hooks;
 
         private HookList(Class<E> eventClass) {
             this.eventClass = eventClass;
-            this.hooks = new ArrayList<>();
+            this.hooks = new LinkedHashMap<>();
+        }
+
+        public void add(String id, Hook<E> hook) {
+            this.hooks.put(id, hook);
+        }
+
+        public void remove(String id) {
+            this.hooks.remove(id);
+        }
+
+        public boolean isEmpty() {
+            return this.hooks.isEmpty();
         }
 
         public Class<E> getEventClass() {
             return eventClass;
         }
 
-        public List<Hook<E>> getHooks() {
-            return this.hooks;
+        public Collection<Hook<E>> getHooks() {
+            return this.hooks.values();
         }
     }
 }
