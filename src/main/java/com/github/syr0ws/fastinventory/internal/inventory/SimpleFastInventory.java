@@ -4,7 +4,10 @@ import com.github.syr0ws.fastinventory.api.InventoryService;
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
 import com.github.syr0ws.fastinventory.api.inventory.FastInventoryType;
 import com.github.syr0ws.fastinventory.api.inventory.InventoryContent;
+import com.github.syr0ws.fastinventory.api.inventory.event.FastInventoryAfterOpenEvent;
+import com.github.syr0ws.fastinventory.api.inventory.event.FastInventoryBeforeOpenEvent;
 import com.github.syr0ws.fastinventory.api.inventory.exception.InventoryException;
+import com.github.syr0ws.fastinventory.api.inventory.hook.HookManager;
 import com.github.syr0ws.fastinventory.api.inventory.item.InventoryItem;
 import com.github.syr0ws.fastinventory.api.inventory.model.InventoryModel;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.PaginationManager;
@@ -15,6 +18,7 @@ import com.github.syr0ws.fastinventory.common.transform.dto.InventoryTypeDto;
 import com.github.syr0ws.fastinventory.common.transform.dto.TitleDto;
 import com.github.syr0ws.fastinventory.common.transform.provider.ProviderNameEnum;
 import com.github.syr0ws.fastinventory.common.util.CommonContextKey;
+import com.github.syr0ws.fastinventory.internal.inventory.hook.SimpleHookManager;
 import com.github.syr0ws.fastinventory.internal.inventory.item.SimpleInventoryItem;
 import com.github.syr0ws.fastinventory.internal.inventory.model.SimpleInventoryModel;
 import com.github.syr0ws.fastinventory.internal.inventory.pagination.SimplePaginationManager;
@@ -31,6 +35,7 @@ public class SimpleFastInventory implements FastInventory {
     private final InventoryService service;
     private final InventoryModel model;
     private final SimplePaginationManager paginationManager;
+    private final HookManager hookManager;
     private final Player viewer;
 
     private Inventory inventory;
@@ -55,6 +60,7 @@ public class SimpleFastInventory implements FastInventory {
         this.content = new SimpleInventoryContent(this);
         this.model = new SimpleInventoryModel();
         this.paginationManager = new SimplePaginationManager();
+        this.hookManager = new SimpleHookManager();
     }
 
     @Override
@@ -62,13 +68,27 @@ public class SimpleFastInventory implements FastInventory {
 
         this.inventory = this.createBukkitInventory();
 
+        // Hook
+        FastInventoryBeforeOpenEvent event = new FastInventoryBeforeOpenEvent(this, this.viewer);
+        this.hookManager.executeHooks(event, FastInventoryBeforeOpenEvent.class);
+
+        if(event.isCancelled()) {
+            return; // Cancel inventory opening
+        }
+
+        // Opening the inventory
         this.viewer.openInventory(this.inventory);
         this.service.addInventory(this);
         this.updateContent();
+
+        // Hook
+        this.hookManager.executeHooks(new FastInventoryAfterOpenEvent(this, this.viewer), FastInventoryAfterOpenEvent.class);
     }
 
     @Override
     public void close() {
+
+        // Closing the inventory
         this.service.removeInventory(this.viewer);
         this.viewer.closeInventory();
     }
@@ -140,6 +160,11 @@ public class SimpleFastInventory implements FastInventory {
     @Override
     public PaginationManager getPaginationManager() {
         return this.paginationManager;
+    }
+
+    @Override
+    public HookManager getHookManager() {
+        return this.hookManager;
     }
 
     @Override

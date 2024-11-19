@@ -28,7 +28,7 @@ public abstract class CommonMessageAction extends CommonAction {
 
     protected String parseMessage(String message, FastInventoryClickEvent event) {
 
-        FastInventory inventory = event.getFastInventory();
+        FastInventory inventory = event.getInventory();
         InventoryProvider provider = inventory.getProvider();
         PlaceholderManager placeholderManager = provider.getPlaceholderManager();
 

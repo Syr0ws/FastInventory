@@ -1,44 +1,112 @@
 package com.github.syr0ws.fastinventory.api.inventory.event;
 
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
+import com.github.syr0ws.fastinventory.api.inventory.item.InventoryItem;
 import org.bukkit.entity.Player;
-import org.bukkit.event.HandlerList;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryView;
 
-public class FastInventoryClickEvent extends InventoryClickEvent {
+import java.util.Optional;
 
-    private static final HandlerList handlers = new HandlerList();
+/**
+ * Represents an event triggered when a {@link Player} clicks on a slot in a {@link FastInventory}.
+ */
+public class FastInventoryClickEvent extends FastInventoryEvent implements Cancellable {
 
-    private final FastInventory fastInventory;
+    private final InventoryItem item;
+    private final InventoryView view;
+    private final InventoryType.SlotType slotType;
+    private final int slot;
+    private final ClickType clickType;
+    private final InventoryAction action;
+    private boolean cancelled;
 
-    public FastInventoryClickEvent(FastInventory fastInventory, InventoryView view, InventoryType.SlotType type, int slot, ClickType click, InventoryAction action) {
-        super(view, type, slot, click, action);
-
-        if (fastInventory == null) {
-            throw new IllegalArgumentException("fastInventory cannot be null");
-        }
-
-        this.fastInventory = fastInventory;
+    /**
+     * Constructs a new {@code FastInventoryClickEvent}.
+     *
+     * @param inventory The {@link FastInventory} instance where the click occurred.
+     * @param player    The {@link Player} who clicked the inventory.
+     * @param item      The {@link InventoryItem} that was clicked (can be {@code null} if no item was clicked).
+     * @param view      The {@link InventoryView} representing the current view of the inventory.
+     * @param slotType  The {@link InventoryType.SlotType} representing the type of slot clicked.
+     * @param slot      The slot number where the click occurred.
+     * @param clickType The {@link ClickType } of the click performed.
+     * @param action    The {@link InventoryAction} that is being performed based on the click.
+     */
+    public FastInventoryClickEvent(FastInventory inventory, Player player, InventoryItem item, InventoryView view, InventoryType.SlotType slotType, int slot, ClickType clickType, InventoryAction action) {
+        super(inventory, player);
+        this.item = item;
+        this.view = view;
+        this.slotType = slotType;
+        this.slot = slot;
+        this.clickType = clickType;
+        this.action = action;
     }
 
-    public static HandlerList getHandlerList() {
-        return handlers;
+    /**
+     * Gets the {@link InventoryView} representing the current view of the inventory.
+     *
+     * @return The {@link InventoryView} of the clicked inventory.
+     */
+    public InventoryView getView() {
+        return this.view;
     }
 
-    public FastInventory getFastInventory() {
-        return this.fastInventory;
+    /**
+     * Gets the {@link InventoryType.SlotType} of the clicked slot.
+     *
+     * @return The {@link InventoryType.SlotType} of the clicked slot.
+     */
+    public InventoryType.SlotType getSlotType() {
+        return this.slotType;
     }
 
-    public Player getPlayer() {
-        return (Player) super.getWhoClicked();
+    /**
+     * Gets the slot number where the click occurred.
+     *
+     * @return The slot number of the clicked inventory.
+     */
+    public int getSlot() {
+        return this.slot;
+    }
+
+    /**
+     * Gets the {@link ClickType} representing the type of click performed.
+     *
+     * @return The {@link ClickType} of the click performed.
+     */
+    public ClickType getClickType() {
+        return this.clickType;
+    }
+
+    /**
+     * Retrieves the {@link InventoryAction} representing the action performed during the click.
+     *
+     * @return The {@link InventoryAction} that describes the action being performed during the click.
+     */
+    public InventoryAction getAction() {
+        return this.action;
+    }
+
+    /**
+     * Gets the {@link InventoryItem} that was clicked, if any.
+     *
+     * @return An {@link Optional} containing the {@link InventoryItem}, or an empty {@link Optional} if no item was clicked.
+     */
+    public Optional<InventoryItem> getItem() {
+        return Optional.ofNullable(this.item);
     }
 
     @Override
-    public HandlerList getHandlers() {
-        return handlers;
+    public boolean isCancelled() {
+        return this.cancelled;
+    }
+
+    @Override
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
     }
 }

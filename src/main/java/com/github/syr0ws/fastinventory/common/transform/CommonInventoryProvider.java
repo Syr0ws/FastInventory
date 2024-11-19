@@ -5,6 +5,7 @@ import com.github.syr0ws.fastinventory.api.config.InventoryConfig;
 import com.github.syr0ws.fastinventory.api.config.dao.InventoryConfigDAO;
 import com.github.syr0ws.fastinventory.api.config.exception.InventoryConfigException;
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
+import com.github.syr0ws.fastinventory.api.inventory.hook.HookManager;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.Pagination;
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.transform.enhancement.EnhancementManager;
@@ -77,6 +78,8 @@ public abstract class CommonInventoryProvider implements InventoryProvider {
     protected abstract void addPaginationProviders();
 
     protected abstract void addEnhancements(EnhancementManager manager);
+
+    protected abstract void addHooks(HookManager manager);
 
     private void registerPaginations(FastInventory inventory) {
 
@@ -156,6 +159,8 @@ public abstract class CommonInventoryProvider implements InventoryProvider {
     public FastInventory createInventory(InventoryService service, Player player) {
 
         FastInventory inventory = new SimpleFastInventory(this, service, player);
+
+        this.addHooks(inventory.getHookManager());
         this.registerPaginations(inventory);
 
         return inventory;

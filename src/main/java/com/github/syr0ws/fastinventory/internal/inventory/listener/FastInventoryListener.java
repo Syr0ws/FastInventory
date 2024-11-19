@@ -6,8 +6,8 @@ import com.github.syr0ws.fastinventory.api.inventory.InventoryContent;
 import com.github.syr0ws.fastinventory.api.inventory.action.ClickAction;
 import com.github.syr0ws.fastinventory.api.inventory.action.ClickType;
 import com.github.syr0ws.fastinventory.api.inventory.event.FastInventoryClickEvent;
+import com.github.syr0ws.fastinventory.api.inventory.event.FastInventoryCloseEvent;
 import com.github.syr0ws.fastinventory.api.inventory.item.InventoryItem;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -54,6 +54,11 @@ public class FastInventoryListener implements Listener {
             return;
         }
 
+        // This hook must be executed here to always ensure that it is called when an
+        // inventory is closed.
+        inventory.getHookManager().executeHooks(new FastInventoryCloseEvent(inventory, player), FastInventoryCloseEvent.class);
+
+        // Removing inventory data.
         this.service.removeInventory(player);
     }
 
@@ -67,12 +72,21 @@ public class FastInventoryListener implements Listener {
             return;
         }
 
+        // If the event is already cancelled, do not go further.
+        if(event.isCancelled()) {
+            return;
+        }
+
         // Cancelling the event by default.
         event.setCancelled(true);
 
-        // Calling event globally.
+        InventoryContent content = inventory.getContent();
+        InventoryItem item = content.getItem(event.getSlot()).orElse(null);
+
         FastInventoryClickEvent fastInventoryClickEvent = new FastInventoryClickEvent(
                 inventory,
+                player,
+                item,
                 event.getView(),
                 event.getSlotType(),
                 event.getSlot(),
@@ -80,26 +94,21 @@ public class FastInventoryListener implements Listener {
                 event.getAction()
         );
 
-        Bukkit.getPluginManager().callEvent(fastInventoryClickEvent);
+        // Calling event globally.
+        inventory.getHookManager().executeHooks(fastInventoryClickEvent, FastInventoryClickEvent.class);
 
         // Do not go further if the event has been cancelled.
-        if (fastInventoryClickEvent.isCancelled()) {
+        if(fastInventoryClickEvent.isCancelled()) {
             return;
         }
 
-        // If an item has been clicked, then calling its actions.
-        InventoryContent content = inventory.getContent();
-        Optional<InventoryItem> itemOptional = content.getItem(event.getSlot());
+        // If an item has been clicked, executing its actions.
+        if(item != null) {
 
-        if (itemOptional.isEmpty()) {
-            return;
+            item.getActions().stream()
+                    .filter(action -> this.hasClickType(action, event.getClick()))
+                    .forEach(action -> action.execute(fastInventoryClickEvent));
         }
-
-        InventoryItem item = itemOptional.get();
-
-        item.getActions().stream()
-                .filter(action -> this.hasClickType(action, event.getClick()))
-                .forEach(action -> action.execute(fastInventoryClickEvent));
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
