@@ -37,6 +37,11 @@ public interface FastInventory {
 
     PaginationManager getPaginationManager();
 
+    /**
+     * Retrieves the instance of the {@link HookManager} responsible for managing the hooks of the inventory.
+     *
+     * @return The {@link HookManager} instance for this inventory.
+     */
     HookManager getHookManager();
 
     Player getViewer();

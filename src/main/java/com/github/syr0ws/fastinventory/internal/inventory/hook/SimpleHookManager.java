@@ -43,7 +43,7 @@ public class SimpleHookManager implements HookManager {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <E extends FastInventoryEvent> void addHook(String id, Class<E> eventClass, Hook<E> hook) {
+    public <E extends FastInventoryEvent> void addHook(String hookId, Class<E> eventClass, Hook<E> hook) {
 
         if(hook == null) {
             throw new IllegalArgumentException("hook cannot be null");
@@ -63,18 +63,18 @@ public class SimpleHookManager implements HookManager {
 
         // Two hooks cannot have the same id. This is to ensure that two hooks with the same id
         // cannot be registered on a different event.
-        this.removeHook(id);
+        this.removeHook(hookId);
 
         // Registering the hook.
         if(this.hooks.containsKey(eventClass)) {
 
             HookList<E> list = (HookList<E>) this.hooks.get(eventClass);
-            list.add(id, hook);
+            list.add(hookId, hook);
 
         } else {
 
             HookList<E> list = new HookList<>(eventClass);
-            list.add(id, hook);
+            list.add(hookId, hook);
 
             this.hooks.put(eventClass, list);
         }
