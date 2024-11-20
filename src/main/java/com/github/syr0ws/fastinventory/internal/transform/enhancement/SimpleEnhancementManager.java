@@ -17,6 +17,19 @@ public class SimpleEnhancementManager implements EnhancementManager {
 
     @Override
     public <T extends DTO> void enhance(T dto, Class<T> dtoClass, Context context) {
+
+        if(dto == null) {
+            throw new IllegalArgumentException("dto cannot be null");
+        }
+
+        if(dtoClass == null) {
+            throw new IllegalArgumentException("dtoClass cannot be null");
+        }
+
+        if(context == null) {
+            throw new IllegalArgumentException("context cannot be null");
+        }
+
         List<Enhancement<T>> enhancements = this.getEnhancements(dto.getId(), dtoClass);
         enhancements.forEach(enhancement -> enhancement.enhance(dto, context));
     }
