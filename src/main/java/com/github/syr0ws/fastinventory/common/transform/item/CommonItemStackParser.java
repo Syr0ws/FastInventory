@@ -16,6 +16,14 @@ public class CommonItemStackParser implements ItemParser {
     @Override
     public ItemStack parse(InventoryProvider provider, ItemStack item, Context context) {
 
+        if(provider == null) {
+            throw new IllegalArgumentException("provider cannot be null");
+        }
+
+        if(context == null) {
+            throw new IllegalArgumentException("context cannot be null");
+        }
+
         if(item == null) {
             return null;
         }
