@@ -2,29 +2,43 @@ package com.github.syr0ws.fastinventory.api.transform.placeholder;
 
 import com.github.syr0ws.fastinventory.api.util.Context;
 
+/**
+ * Represents a dynamic placeholder that can be resolved to a value based on a given {@link Context}.
+ */
 public interface Placeholder {
 
     /**
-     * Get the name of the placeholder.
+     * Retrieves the name of this placeholder.
+     * <p>
+     * The name serves as the identifier for the placeholder and is typically used to match
+     * and replace the placeholder in a string.
+     * </p>
      *
-     * @return The name of the placeholder.
+     * @return A {@link String} representing the name of the placeholder. Must not be {@code null}.
      */
     String getName();
 
     /**
-     * Get the value of the placeholder for the given context.
+     * Resolves and retrieves the value of this placeholder based on the provided {@link Context}.
      *
-     * @param context A Context instance with additional data.
-     * @return The value of the placeholder as a String.
+     * @param context A {@link Context} instance containing the data necessary for placeholder resolution.
+     *                Must not be {@code null}.
+     * @return A {@link String} representing the resolved value of the placeholder.
+     *
      */
     String getValue(Context context);
 
     /**
-     * Check that the placeholder can be applied using the given context. That means that the given context
-     * contains all the required data to apply the placeholder.
+     * Determines whether this placeholder can be applied using the given {@link Context}.
+     * <p>
+     * A placeholder is considered applicable if the provided {@link Context} contains all the
+     * required data to resolve its value.
+     * </p>
      *
-     * @param context A Context instance with additional data.
-     * @return true if the placeholder can be applied using the given context or else false.
+     * @param context A {@link Context} instance containing additional data for validation.
+     *                Must not be {@code null}.
+     * @return {@code true} if the placeholder can be applied using the given {@link Context},
+     *         otherwise {@code false}.
      */
     boolean accept(Context context);
 }
