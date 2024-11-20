@@ -14,6 +14,23 @@ public class SimpleProviderManager implements ProviderManager {
 
     @Override
     public <T extends DTO> Optional<T> provide(String providerName, Class<T> dtoClass, InventoryProvider inventoryProvider, Context context) {
+
+        if(providerName == null) {
+            throw new IllegalArgumentException("providerName cannot be null");
+        }
+
+        if(dtoClass == null) {
+            throw new IllegalArgumentException("dtoClass cannot be null");
+        }
+
+        if(inventoryProvider == null) {
+            throw new IllegalArgumentException("inventoryProvider cannot be null");
+        }
+
+        if(context == null) {
+            throw new IllegalArgumentException("context cannot be null");
+        }
+
         return this.getProvider(providerName, dtoClass)
                 .map(provider -> provider.provide(inventoryProvider, context));
     }
