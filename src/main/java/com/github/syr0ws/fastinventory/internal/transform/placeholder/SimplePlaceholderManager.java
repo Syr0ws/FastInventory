@@ -19,6 +19,10 @@ public class SimplePlaceholderManager implements PlaceholderManager {
             throw new IllegalArgumentException("text cannot be null");
         }
 
+        if(context == null) {
+            throw new IllegalArgumentException("context cannot be null");
+        }
+
         List<Placeholder> placeholders = this.getPlaceholders(context);
 
         for (Placeholder placeholder : placeholders) {
@@ -40,6 +44,11 @@ public class SimplePlaceholderManager implements PlaceholderManager {
 
     @Override
     public List<Placeholder> getPlaceholders(Context context) {
+
+        if(context == null) {
+            throw new IllegalArgumentException("context cannot be null");
+        }
+
         return this.placeholders.values().stream()
                 .filter(placeholder -> placeholder.accept(context))
                 .toList();
