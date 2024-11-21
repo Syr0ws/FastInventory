@@ -10,7 +10,7 @@ import java.util.Set;
  * Interface for managing the content of an inventory.
  * <p>
  * None of the methods in this interface trigger an inventory update. To update the inventory view,
- * use the corresponding methods provided by the {@link FastInventory} interface.
+ * use the {@link FastInventory#updateView()} method.
  * </p>
  */
 public interface InventoryContent {
