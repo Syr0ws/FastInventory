@@ -3,27 +3,34 @@ package com.github.syr0ws.fastinventory.api.transform.enhancement;
 import com.github.syr0ws.fastinventory.api.transform.dto.DTO;
 import com.github.syr0ws.fastinventory.api.util.Context;
 
+/**
+ * Represents an operation that enhances a specific type of {@link DTO}.
+ *
+ * @param <T> The type of {@link DTO} this enhancement applies to.
+ */
 public interface Enhancement<T extends DTO> {
 
     /**
-     * Enhance a DTO by modifying its properties.
+     * Enhances a given {@link DTO} instance by modifying its properties.
      *
-     * @param dto     The DTO instance to enhance.
-     * @param context Context instance that contains additional data.
+     * @param dto     The {@link DTO} instance to enhance. Must not be {@code null}.
+     * @param context The {@link Context} instance containing additional data to support the enhancement.
+     *                Must not be {@code null}.
      */
     void enhance(T dto, Context context);
 
     /**
-     * Get the Java type of the dto the enhancement will be applied on.
+     * Retrieves the Java type of the {@link DTO} that this enhancement can be applied to.
      *
-     * @return The Java class type of the DTO.
+     * @return A {@link Class} object representing the type of {@link DTO}.
+     *         Must not be {@code null}.
      */
     Class<T> getDTOClass();
 
     /**
-     * Get the id that uniquely identify the enhancement.
+     * Retrieves the unique identifier for this enhancement.
      *
-     * @return The id of the enhancement.
+     * @return A {@link String} representing the unique id of the enhancement. Must not be {@code null}.
      */
     String getId();
 }

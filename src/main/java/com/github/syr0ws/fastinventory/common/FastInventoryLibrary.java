@@ -11,8 +11,20 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
+/**
+ * A utility class for creating and configuring the key components of the FastInventory library.
+ */
 public class FastInventoryLibrary {
 
+    /**
+     * Creates and configures an instance of the {@link InventoryService} for managing inventories.
+     * <p>
+     * This method also registers a listener to handle events related to inventories.
+     * </p>
+     *
+     * @param plugin The plugin instance that will be used to register events.
+     * @return An instance of the {@link InventoryService} to manage inventories.
+     */
     public static InventoryService createInventoryService(Plugin plugin) {
 
         InventoryService service = new SimpleInventoryService();
@@ -24,10 +36,23 @@ public class FastInventoryLibrary {
         return service;
     }
 
+    /**
+     * Creates the default {@link InventoryConfigDAO} which is responsible for loading inventory
+     * configurations from YAML files.
+     *
+     * @param factory The ClickActionLoaderFactory used for loading click actions.
+     * @return An instance of {@link InventoryConfigDAO} for loading inventory configurations.
+     */
     public static InventoryConfigDAO createDefaultConfigDAO(ClickActionLoaderFactory<ConfigurationSection> factory) {
         return new YamlInventoryConfigDAO(factory);
     }
 
+    /**
+     * Creates and configures a default {@link ClickActionLoaderFactory} for loading click actions
+     * from YAML configuration files.
+     *
+     * @return A fully configured {@link ClickActionLoaderFactory} for loading click actions from YAML files.
+     */
     public static ClickActionLoaderFactory<ConfigurationSection> createDefaultClickActionLoaderFactory() {
 
         ClickActionLoaderFactory<ConfigurationSection> factory = new YamlClickActionLoaderFactory();

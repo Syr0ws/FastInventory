@@ -4,29 +4,42 @@ import com.github.syr0ws.fastinventory.api.util.Context;
 
 import java.util.List;
 
+/**
+ * Manages {@link Placeholder}'s lifecycle.
+ */
 public interface PlaceholderManager {
 
     /**
-     * Apply placeholders on a given text.
+     * Applies placeholders to the given text by replacing them with their corresponding values.
+     * <p>
+     * The method looks for all placeholders within the text and resolves them using the provided {@link Context}.
+     * </p>
      *
-     * @param text    The text to apply placeholders on.
-     * @param context A Context instance with additional data.
-     * @return The text in which all the placeholders has been replaced by their value.
+     * @param text    The text containing placeholders to be replaced. Must not be {@code null}.
+     * @param context A {@link Context} instance containing additional data required for resolving the placeholders.
+     *                Must not be {@code null}.
+     * @return A {@link String} with all placeholders replaced by their corresponding values.
+     *         If no placeholders are found, the original text is returned.
+     * @throws IllegalArgumentException If {@code text} or {@code context} is {@code null}.
      */
     String parse(String text, Context context);
 
     /**
-     * Register a new placeholder.
+     * Registers a new {@link Placeholder} instance.
      *
-     * @param placeholder The Placeholder instance to register.
+     * @param placeholder The {@link Placeholder} instance to register. Must not be {@code null}.
+     * @throws IllegalArgumentException If {@code placeholder} is {@code null}.
      */
     void addPlaceholder(Placeholder placeholder);
 
     /**
-     * Find all the placeholders that can be applied on a text given a Context.
+     * Retrieves all {@link Placeholder} instances that can be applied to a text based on the provided {@link Context}.
      *
-     * @param context A Context instance with additional data.
-     * @return A list of placeholders.
+     * @param context A {@link Context} instance containing the necessary data for resolving placeholders.
+     *                Must not be {@code null}.
+     * @return A {@link List} of {@link Placeholder} instances that can be applied to the given {@link Context}.
+     *         If no placeholders are applicable, returns an empty list.
+     * @throws IllegalArgumentException If {@code context} is {@code null}.
      */
     List<Placeholder> getPlaceholders(Context context);
 }

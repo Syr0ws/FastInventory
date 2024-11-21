@@ -39,9 +39,29 @@ public class SimpleInventoryContent implements InventoryContent {
             throw new IllegalArgumentException("item cannot be null");
         }
 
+        if(slots == null) {
+            throw new IllegalArgumentException("slots cannot be null");
+        }
+
         slots.forEach(slot -> {
             try {
                 this.setItem(item, slot);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        });
+    }
+
+    @Override
+    public void setItems(Map<InventoryItem, Set<Integer>> items) {
+
+        if(items == null) {
+            throw new IllegalArgumentException("items cannot be null");
+        }
+
+        items.forEach((item, slots) -> {
+            try {
+                this.setItem(item, slots);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
@@ -57,6 +77,11 @@ public class SimpleInventoryContent implements InventoryContent {
 
     @Override
     public void removeItems(Set<Integer> slots) {
+
+        if(slots == null) {
+            throw new IllegalArgumentException("slots cannot be null");
+        }
+
         slots.forEach(slot -> {
             try {
                 this.removeItem(slot);
@@ -85,17 +110,6 @@ public class SimpleInventoryContent implements InventoryContent {
     @Override
     public Map<Integer, InventoryItem> getItems() {
         return Collections.unmodifiableMap(this.items);
-    }
-
-    @Override
-    public void setItems(Map<InventoryItem, Set<Integer>> items) {
-        items.forEach((item, slots) -> {
-            try {
-                this.setItem(item, slots);
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-        });
     }
 
     private void checkSlot(int slot) {
