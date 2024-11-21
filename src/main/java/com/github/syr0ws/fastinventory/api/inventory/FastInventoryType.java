@@ -2,6 +2,9 @@ package com.github.syr0ws.fastinventory.api.inventory;
 
 import org.bukkit.event.inventory.InventoryType;
 
+/**
+ * Enum that defines the supported inventory types.
+ */
 public enum FastInventoryType {
 
     CHEST_9x1(9, 1, 9, InventoryType.CHEST),
@@ -24,18 +27,38 @@ public enum FastInventoryType {
         this.type = type;
     }
 
+    /**
+     * Gets the total size (number of slots) of the inventory.
+     *
+     * @return The size of the inventory.
+     */
     public int getSize() {
         return this.size;
     }
 
+    /**
+     * Gets the number of rows in the inventory.
+     *
+     * @return The number of rows.
+     */
     public int getRows() {
         return this.rows;
     }
 
+    /**
+     * Gets the number of columns in the inventory.
+     *
+     * @return The number of columns.
+     */
     public int getColumns() {
         return this.columns;
     }
 
+    /**
+     * Gets the corresponding Bukkit {@link InventoryType} for this FastInventoryType.
+     *
+     * @return The corresponding Bukkit inventory type.
+     */
     public InventoryType getBukkitType() {
         return this.type;
     }
