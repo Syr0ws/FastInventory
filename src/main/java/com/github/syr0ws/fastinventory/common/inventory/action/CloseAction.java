@@ -1,8 +1,8 @@
 package com.github.syr0ws.fastinventory.common.inventory.action;
 
+import com.github.syr0ws.fastinventory.api.inventory.InventoryViewer;
 import com.github.syr0ws.fastinventory.api.inventory.action.ClickType;
 import com.github.syr0ws.fastinventory.api.inventory.event.FastInventoryClickEvent;
-import org.bukkit.entity.Player;
 
 import java.util.Set;
 
@@ -16,8 +16,8 @@ public class CloseAction extends CommonAction {
 
     @Override
     public void execute(FastInventoryClickEvent event) {
-        Player player = event.getPlayer();
-        player.closeInventory();
+        InventoryViewer viewer = event.getViewer();
+        viewer.getInventoryHistory().close();
     }
 
     @Override

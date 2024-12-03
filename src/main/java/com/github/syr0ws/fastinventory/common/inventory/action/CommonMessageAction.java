@@ -35,7 +35,7 @@ public abstract class CommonMessageAction extends CommonAction {
         Context context = inventory.getDefaultContext();
 
         String parsed = provider.getI18n()
-                .map(i18n -> i18n.getText(event.getPlayer(), message))
+                .map(i18n -> i18n.getText(event.getViewer(), message))
                 .orElse(message);
 
         parsed = placeholderManager.parse(parsed, context);

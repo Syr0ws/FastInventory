@@ -1,61 +1,13 @@
 package com.github.syr0ws.fastinventory.internal;
 
 import com.github.syr0ws.fastinventory.api.InventoryService;
-import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
-import org.bukkit.entity.Player;
 
 import java.util.*;
 
 public class SimpleInventoryService implements InventoryService {
 
-    private final Map<Player, FastInventory> inventories = new HashMap<>();
     private final Map<String, InventoryProvider> providers = new HashMap<>();
-
-    @Override
-    public void addInventory(FastInventory inventory) {
-
-        if (inventory == null) {
-            throw new IllegalArgumentException("inventory cannot be null");
-        }
-
-        this.inventories.put(inventory.getViewer(), inventory);
-    }
-
-    @Override
-    public void removeInventory(Player player) {
-
-        if (player == null) {
-            throw new IllegalArgumentException("player cannot be null");
-        }
-
-        this.inventories.remove(player);
-    }
-
-    @Override
-    public boolean hasInventory(Player player) {
-
-        if (player == null) {
-            throw new IllegalArgumentException("player cannot be null");
-        }
-
-        return this.inventories.containsKey(player);
-    }
-
-    @Override
-    public Optional<FastInventory> getInventory(Player player) {
-
-        if (player == null) {
-            throw new IllegalArgumentException("player cannot be null");
-        }
-
-        return Optional.ofNullable(this.inventories.get(player));
-    }
-
-    @Override
-    public Map<Player, FastInventory> getInventories() {
-        return Collections.unmodifiableMap(this.inventories);
-    }
 
     @Override
     public void addProvider(InventoryProvider provider) {

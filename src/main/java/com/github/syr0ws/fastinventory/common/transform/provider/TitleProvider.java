@@ -1,6 +1,7 @@
 package com.github.syr0ws.fastinventory.common.transform.provider;
 
 import com.github.syr0ws.fastinventory.api.config.InventoryConfig;
+import com.github.syr0ws.fastinventory.api.inventory.InventoryViewer;
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.transform.enhancement.EnhancementManager;
 import com.github.syr0ws.fastinventory.api.transform.provider.Provider;
@@ -49,7 +50,7 @@ public class TitleProvider implements Provider<TitleDto> {
             return TextUtil.parseColors(title);
         }
 
-        Player viewer = context.getData(CommonContextKey.VIEWER.name(), Player.class);
+        InventoryViewer viewer = context.getData(CommonContextKey.VIEWER.name(), InventoryViewer.class);
 
         String parsed = provider.getI18n()
                 .map(i18n -> i18n.getText(viewer, title))

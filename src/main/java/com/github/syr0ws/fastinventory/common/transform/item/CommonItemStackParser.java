@@ -1,11 +1,11 @@
 package com.github.syr0ws.fastinventory.common.transform.item;
 
+import com.github.syr0ws.fastinventory.api.inventory.InventoryViewer;
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.transform.item.ItemParser;
 import com.github.syr0ws.fastinventory.api.transform.placeholder.PlaceholderManager;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.common.util.CommonContextKey;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -52,7 +52,7 @@ public class CommonItemStackParser implements ItemParser {
 
         String name = provider.getI18n()
                 .map(i18n -> {
-                    Player viewer = context.getData(CommonContextKey.VIEWER.name(), Player.class);
+                    InventoryViewer viewer = context.getData(CommonContextKey.VIEWER.name(), InventoryViewer.class);
                     return i18n.getText(viewer, meta.getDisplayName());
                 }).orElse(meta.getDisplayName());
 
@@ -69,7 +69,7 @@ public class CommonItemStackParser implements ItemParser {
 
         List<String> lore = provider.getI18n()
                 .map(i18n -> {
-                    Player viewer = context.getData(CommonContextKey.VIEWER.name(), Player.class);
+                    InventoryViewer viewer = context.getData(CommonContextKey.VIEWER.name(), InventoryViewer.class);
                     return meta.getLore().stream().map(line -> i18n.getText(viewer, line)).toList();
                 }).orElse(meta.getLore());
 

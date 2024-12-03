@@ -1,6 +1,7 @@
 package com.github.syr0ws.fastinventory.api.inventory.event;
 
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
+import com.github.syr0ws.fastinventory.api.inventory.InventoryViewer;
 import com.github.syr0ws.fastinventory.api.inventory.item.InventoryItem;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
@@ -28,7 +29,7 @@ public class FastInventoryClickEvent extends FastInventoryEvent implements Cance
      * Constructs a new {@code FastInventoryClickEvent}.
      *
      * @param inventory The {@link FastInventory} instance where the click occurred.
-     * @param player    The {@link Player} who clicked the inventory.
+     * @param viewer    The {@link InventoryViewer} who clicked the inventory.
      * @param item      The {@link InventoryItem} that was clicked (can be {@code null} if no item was clicked).
      * @param view      The {@link InventoryView} representing the current view of the inventory.
      * @param slotType  The {@link InventoryType.SlotType} representing the type of slot clicked.
@@ -36,8 +37,8 @@ public class FastInventoryClickEvent extends FastInventoryEvent implements Cance
      * @param clickType The {@link ClickType } of the click performed.
      * @param action    The {@link InventoryAction} that is being performed based on the click.
      */
-    public FastInventoryClickEvent(FastInventory inventory, Player player, InventoryItem item, InventoryView view, InventoryType.SlotType slotType, int slot, ClickType clickType, InventoryAction action) {
-        super(inventory, player);
+    public FastInventoryClickEvent(FastInventory inventory, InventoryViewer viewer, InventoryItem item, InventoryView view, InventoryType.SlotType slotType, int slot, ClickType clickType, InventoryAction action) {
+        super(inventory, viewer);
         this.item = item;
         this.view = view;
         this.slotType = slotType;

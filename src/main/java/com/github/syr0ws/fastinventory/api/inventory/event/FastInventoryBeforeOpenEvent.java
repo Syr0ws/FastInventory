@@ -1,7 +1,7 @@
 package com.github.syr0ws.fastinventory.api.inventory.event;
 
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
-import org.bukkit.entity.Player;
+import com.github.syr0ws.fastinventory.api.inventory.InventoryViewer;
 import org.bukkit.event.Cancellable;
 
 /**
@@ -12,10 +12,10 @@ public class FastInventoryBeforeOpenEvent extends FastInventoryOpenEvent impleme
     private boolean cancelled;
 
     /**
-     * @see FastInventoryEvent#FastInventoryEvent(FastInventory, Player)
+     * @see FastInventoryEvent#FastInventoryEvent(FastInventory, InventoryViewer)
      */
-    public FastInventoryBeforeOpenEvent(FastInventory inventory, Player player) {
-        super(inventory, player);
+    public FastInventoryBeforeOpenEvent(FastInventory inventory, InventoryViewer viewer) {
+        super(inventory, viewer);
     }
 
     @Override
