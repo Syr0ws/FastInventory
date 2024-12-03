@@ -1,6 +1,8 @@
 package com.github.syr0ws.fastinventory.api;
 
+import com.github.syr0ws.fastinventory.api.inventory.InventoryViewer;
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
+import org.bukkit.entity.Player;
 
 import java.util.Optional;
 import java.util.Set;
@@ -9,6 +11,10 @@ import java.util.Set;
  * Service interface for managing inventories and inventory providers.
  */
 public interface InventoryService {
+
+    Optional<InventoryViewer> getInventoryViewer(Player player);
+
+    Set<InventoryViewer> getInventoryViewers();
 
     /**
      * Registers a new {@link InventoryProvider} in the service.
