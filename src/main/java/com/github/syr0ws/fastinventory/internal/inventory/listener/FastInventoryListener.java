@@ -3,6 +3,7 @@ package com.github.syr0ws.fastinventory.internal.inventory.listener;
 import com.github.syr0ws.fastinventory.api.InventoryService;
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
 import com.github.syr0ws.fastinventory.api.inventory.InventoryContent;
+import com.github.syr0ws.fastinventory.api.inventory.InventoryHistory;
 import com.github.syr0ws.fastinventory.api.inventory.InventoryViewer;
 import com.github.syr0ws.fastinventory.api.inventory.action.ClickAction;
 import com.github.syr0ws.fastinventory.api.inventory.action.ClickType;
@@ -47,7 +48,7 @@ public class FastInventoryListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onFastInventoryClose(InventoryCloseEvent event) {
 
-        InventoryViewer player = (Player) event.getPlayer();
+        Player player = (Player) event.getPlayer();
         FastInventory inventory = this.getFastInventory(player, event.getInventory());
 
         // Player doesn't have a FastInventory open.
@@ -55,18 +56,25 @@ public class FastInventoryListener implements Listener {
             return;
         }
 
+        InventoryViewer viewer = inventory.getViewer();
+        InventoryHistory history = viewer.getInventoryHistory();
+
         // This hook must be executed here to always ensure that it is called when an
         // inventory is closed.
-        inventory.getHookManager().executeHooks(new FastInventoryCloseEvent(inventory, player), FastInventoryCloseEvent.class);
+        inventory.getHookManager().executeHooks(
+                new FastInventoryCloseEvent(inventory, viewer), FastInventoryCloseEvent.class);
 
-        // Removing inventory data.
-        this.service.removeInventory(player);
+        // If no action is in progress, that means that no inventory is intended to be opened.
+        // Thus, the history must be cleared.
+        if(!history.hasActionInProgress()) {
+            history.close();
+        }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onFastInventoryClick(InventoryClickEvent event) {
 
-        InventoryViewer player = (Player) event.getWhoClicked();
+        Player player = (Player) event.getWhoClicked();
         FastInventory inventory = this.getFastInventory(player, event.getClickedInventory());
 
         if (inventory == null) {
@@ -81,12 +89,13 @@ public class FastInventoryListener implements Listener {
         // Cancelling the event by default.
         event.setCancelled(true);
 
+        InventoryViewer viewer = inventory.getViewer();
         InventoryContent content = inventory.getContent();
         InventoryItem item = content.getItem(event.getSlot()).orElse(null);
 
         FastInventoryClickEvent fastInventoryClickEvent = new FastInventoryClickEvent(
                 inventory,
-                player,
+                viewer,
                 item,
                 event.getView(),
                 event.getSlotType(),
@@ -115,7 +124,7 @@ public class FastInventoryListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onFastInventoryDrag(InventoryDragEvent event) {
 
-        InventoryViewer player = (Player) event.getWhoClicked();
+        Player player = (Player) event.getWhoClicked();
         FastInventory inventory = this.getFastInventory(player, event.getInventory());
 
         if (inventory != null) {
@@ -132,7 +141,7 @@ public class FastInventoryListener implements Listener {
             return;
         }
 
-        InventoryViewer player = (Player) event.getWhoClicked();
+        Player player = (Player) event.getWhoClicked();
 
         Inventory topInventory = player.getOpenInventory().getTopInventory();
         Inventory clickedInventory = event.getClickedInventory();
@@ -169,20 +178,29 @@ public class FastInventoryListener implements Listener {
         }
 
         // Closing all the inventories.
-        Map<Player, FastInventory> players = this.service.getInventories();
-        players.forEach((player, inventory) -> inventory.close());
+        Set<InventoryViewer> viewers = this.service.getInventoryViewers();
+        viewers.forEach(viewer -> viewer.getInventoryHistory().close());
     }
 
-    private FastInventory getFastInventory(InventoryViewer player, Inventory inventory) {
+    private FastInventory getFastInventory(Player player, Inventory inventory) {
 
-        Optional<FastInventory> inventoryOptional = this.service.getInventory(player);
+        Optional<InventoryViewer> optionalViewer = this.service.getInventoryViewer(player);
 
-        // Inventory is not a FastInventory.
-        if (inventoryOptional.isEmpty()) {
+        // Player does not have a FastInventory opened.
+        if (optionalViewer.isEmpty()) {
             return null;
         }
 
-        FastInventory fastInventory = inventoryOptional.get();
+        InventoryViewer viewer = optionalViewer.get();
+        InventoryHistory history = viewer.getInventoryHistory();
+
+        Optional<FastInventory> optionalInventory = history.getOpenedInventory();
+
+        if(optionalInventory.isEmpty()) {
+            return null;
+        }
+
+        FastInventory fastInventory = optionalInventory.get();
         Inventory bukkitInventory = fastInventory.getBukkitInventory();
 
         return bukkitInventory.equals(inventory) ? fastInventory : null;

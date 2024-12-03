@@ -1,13 +1,25 @@
 package com.github.syr0ws.fastinventory.internal;
 
 import com.github.syr0ws.fastinventory.api.InventoryService;
+import com.github.syr0ws.fastinventory.api.inventory.InventoryViewer;
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
+import org.bukkit.entity.Player;
 
 import java.util.*;
 
 public class SimpleInventoryService implements InventoryService {
 
     private final Map<String, InventoryProvider> providers = new HashMap<>();
+
+    @Override
+    public Optional<InventoryViewer> getInventoryViewer(Player player) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Set<InventoryViewer> getInventoryViewers() {
+        return Set.of();
+    }
 
     @Override
     public void addProvider(InventoryProvider provider) {
