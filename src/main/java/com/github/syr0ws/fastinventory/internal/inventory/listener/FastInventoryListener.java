@@ -3,6 +3,7 @@ package com.github.syr0ws.fastinventory.internal.inventory.listener;
 import com.github.syr0ws.fastinventory.api.InventoryService;
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
 import com.github.syr0ws.fastinventory.api.inventory.InventoryContent;
+import com.github.syr0ws.fastinventory.api.inventory.InventoryViewer;
 import com.github.syr0ws.fastinventory.api.inventory.action.ClickAction;
 import com.github.syr0ws.fastinventory.api.inventory.action.ClickType;
 import com.github.syr0ws.fastinventory.api.inventory.event.FastInventoryClickEvent;
@@ -46,7 +47,7 @@ public class FastInventoryListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onFastInventoryClose(InventoryCloseEvent event) {
 
-        Player player = (Player) event.getPlayer();
+        InventoryViewer player = (Player) event.getPlayer();
         FastInventory inventory = this.getFastInventory(player, event.getInventory());
 
         // Player doesn't have a FastInventory open.
@@ -65,7 +66,7 @@ public class FastInventoryListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onFastInventoryClick(InventoryClickEvent event) {
 
-        Player player = (Player) event.getWhoClicked();
+        InventoryViewer player = (Player) event.getWhoClicked();
         FastInventory inventory = this.getFastInventory(player, event.getClickedInventory());
 
         if (inventory == null) {
@@ -114,7 +115,7 @@ public class FastInventoryListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onFastInventoryDrag(InventoryDragEvent event) {
 
-        Player player = (Player) event.getWhoClicked();
+        InventoryViewer player = (Player) event.getWhoClicked();
         FastInventory inventory = this.getFastInventory(player, event.getInventory());
 
         if (inventory != null) {
@@ -131,7 +132,7 @@ public class FastInventoryListener implements Listener {
             return;
         }
 
-        Player player = (Player) event.getWhoClicked();
+        InventoryViewer player = (Player) event.getWhoClicked();
 
         Inventory topInventory = player.getOpenInventory().getTopInventory();
         Inventory clickedInventory = event.getClickedInventory();
@@ -172,7 +173,7 @@ public class FastInventoryListener implements Listener {
         players.forEach((player, inventory) -> inventory.close());
     }
 
-    private FastInventory getFastInventory(Player player, Inventory inventory) {
+    private FastInventory getFastInventory(InventoryViewer player, Inventory inventory) {
 
         Optional<FastInventory> inventoryOptional = this.service.getInventory(player);
 

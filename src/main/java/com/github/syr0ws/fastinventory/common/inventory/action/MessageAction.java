@@ -1,8 +1,8 @@
 package com.github.syr0ws.fastinventory.common.inventory.action;
 
+import com.github.syr0ws.fastinventory.api.inventory.InventoryViewer;
 import com.github.syr0ws.fastinventory.api.inventory.action.ClickType;
 import com.github.syr0ws.fastinventory.api.inventory.event.FastInventoryClickEvent;
-import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.Set;
@@ -22,8 +22,8 @@ public class MessageAction extends CommonMessageAction {
                 .map(message -> super.parseMessage(message, event))
                 .toArray(String[]::new);
 
-        Player player = event.getPlayer();
-        player.sendMessage(messages);
+        InventoryViewer viewer = event.getViewer();
+        viewer.getPlayer().sendMessage(messages);
     }
 
     @Override
