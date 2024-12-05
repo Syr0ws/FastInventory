@@ -67,6 +67,10 @@ public class FastInventoryLibrary {
         factory.addLoader(new YamlSoundActionLoader());
         factory.addLoader(new YamlUpdateContentActionLoader());
         factory.addLoader(new YamlUpdatePaginationActionLoader());
+        factory.addLoader(new YamlOpenInventoryActionLoader());
+        factory.addLoader(new YamlHomeActionLoader());
+        factory.addLoader(new YamlBackActionLoader());
+        factory.addLoader(new YamlForwardActionLoader());
 
         return factory;
     }
