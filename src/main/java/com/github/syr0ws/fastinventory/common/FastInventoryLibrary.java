@@ -27,7 +27,7 @@ public class FastInventoryLibrary {
      */
     public static InventoryService createInventoryService(Plugin plugin) {
 
-        InventoryService service = new SimpleInventoryService();
+        SimpleInventoryService service = new SimpleInventoryService();
         FastInventoryListener listener = new FastInventoryListener(plugin, service);
 
         PluginManager manager = plugin.getServer().getPluginManager();

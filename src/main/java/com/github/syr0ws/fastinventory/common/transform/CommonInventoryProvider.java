@@ -5,6 +5,7 @@ import com.github.syr0ws.fastinventory.api.config.InventoryConfig;
 import com.github.syr0ws.fastinventory.api.config.dao.InventoryConfigDAO;
 import com.github.syr0ws.fastinventory.api.config.exception.InventoryConfigException;
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
+import com.github.syr0ws.fastinventory.api.inventory.InventoryViewer;
 import com.github.syr0ws.fastinventory.api.inventory.hook.HookManager;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.Pagination;
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
@@ -158,7 +159,8 @@ public abstract class CommonInventoryProvider implements InventoryProvider {
     @Override
     public FastInventory createInventory(InventoryService service, Player player) {
 
-        FastInventory inventory = new SimpleFastInventory(this, service, player);
+        InventoryViewer viewer = service.getInventoryViewer(player);
+        FastInventory inventory = new SimpleFastInventory(this, service, viewer);
 
         this.addHooks(inventory.getHookManager());
         this.registerPaginations(inventory);

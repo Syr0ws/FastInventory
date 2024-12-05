@@ -78,9 +78,8 @@ public class SimpleFastInventory implements FastInventory {
         }
 
         // Opening the inventory
-        this.viewer.getPlayer().openInventory(this.inventory);
-        this.service.addInventory(this);
         this.updateContent();
+        this.viewer.getPlayer().openInventory(this.inventory);
 
         // Hook
         this.hookManager.executeHooks(new FastInventoryAfterOpenEvent(this, this.viewer), FastInventoryAfterOpenEvent.class);

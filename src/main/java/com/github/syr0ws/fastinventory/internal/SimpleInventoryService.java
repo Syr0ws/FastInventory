@@ -3,22 +3,51 @@ package com.github.syr0ws.fastinventory.internal;
 import com.github.syr0ws.fastinventory.api.InventoryService;
 import com.github.syr0ws.fastinventory.api.inventory.InventoryViewer;
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
+import com.github.syr0ws.fastinventory.internal.inventory.SimpleInventoryViewer;
 import org.bukkit.entity.Player;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SimpleInventoryService implements InventoryService {
 
+    private final Map<Player, InventoryViewer> viewers = new HashMap<>();
     private final Map<String, InventoryProvider> providers = new HashMap<>();
 
+    public void addInventoryViewer(Player player) {
+
+        if(player == null) {
+            throw new IllegalArgumentException("player cannot be null");
+        }
+
+        this.viewers.put(player, new SimpleInventoryViewer(player));
+    }
+
+    public void removeInventoryViewer(Player player) {
+
+        if(player == null) {
+            throw new IllegalArgumentException("player cannot be null");
+        }
+
+        InventoryViewer viewer = this.viewers.get(player);
+        viewer.getViewManager().clear();
+
+        this.viewers.remove(player);
+    }
+
     @Override
-    public Optional<InventoryViewer> getInventoryViewer(Player player) {
-        return Optional.empty();
+    public InventoryViewer getInventoryViewer(Player player) {
+
+        if(player == null) {
+            throw new IllegalArgumentException("player cannot be null");
+        }
+
+        return this.viewers.get(player);
     }
 
     @Override
     public Set<InventoryViewer> getInventoryViewers() {
-        return Set.of();
+        return this.viewers.values().stream().collect(Collectors.toUnmodifiableSet());
     }
 
     @Override
