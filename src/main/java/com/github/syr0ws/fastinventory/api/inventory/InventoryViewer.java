@@ -6,5 +6,5 @@ public interface InventoryViewer {
 
     Player getPlayer();
 
-    InventoryHistory getInventoryHistory();
+    InventoryViewManager getViewManager();
 }

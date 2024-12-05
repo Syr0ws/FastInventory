@@ -1,34 +1,39 @@
-package com.github.syr0ws.fastinventory.internal.inventory.history;
+package com.github.syr0ws.fastinventory.internal.inventory;
 
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
-import com.github.syr0ws.fastinventory.api.inventory.InventoryHistory;
+import com.github.syr0ws.fastinventory.api.inventory.InventoryViewManager;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class SimpleInventoryHistory implements InventoryHistory {
+public class SimpleInventoryViewManager implements InventoryViewManager {
 
     private final List<FastInventory> history = new ArrayList<>();
     private int index = -1;
     private boolean actionInProgress;
 
     @Override
-    public void open(FastInventory inventory) {
-        this.open(inventory, true);
+    public void openView(FastInventory inventory) {
+        this.openView(inventory, true);
     }
 
     @Override
-    public void open(FastInventory inventory, boolean newHistory) {
+    public void openView(FastInventory inventory, boolean newHistory) {
 
         if(inventory == null) {
             throw new IllegalArgumentException("inventory cannot be null");
         }
 
+        // If the new inventory must be opened in a new history, clearing the existing one.
+        // Otherwise, closing the currently opened inventory if it exists and opening the new one.
         if(newHistory) {
-            this.close();
+            this.clear();
+        } else {
+            this.closeCurrentInventory();
         }
 
+        // Adding the inventory to the history and updating index to point on it.
         this.history.add(inventory);
         this.index++;
 
@@ -36,9 +41,15 @@ public class SimpleInventoryHistory implements InventoryHistory {
     }
 
     @Override
-    public void close() {
+    public void clear() {
 
-        // Close the currently opened inventory.
+        // If the player has no opened inventory, then the history is already empty.
+        if(!this.hasOpenedInventory()) {
+            return;
+        }
+
+        // Closing the currently opened inventory.
+        // Here, this.closeCurrentInventory() must not be used because we will not reopen another inventory.
         this.history.get(this.index).close();
 
         // Reset the history.

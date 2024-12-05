@@ -3,7 +3,7 @@ package com.github.syr0ws.fastinventory.internal.inventory.listener;
 import com.github.syr0ws.fastinventory.api.InventoryService;
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
 import com.github.syr0ws.fastinventory.api.inventory.InventoryContent;
-import com.github.syr0ws.fastinventory.api.inventory.InventoryHistory;
+import com.github.syr0ws.fastinventory.api.inventory.InventoryViewManager;
 import com.github.syr0ws.fastinventory.api.inventory.InventoryViewer;
 import com.github.syr0ws.fastinventory.api.inventory.action.ClickAction;
 import com.github.syr0ws.fastinventory.api.inventory.action.ClickType;
@@ -22,7 +22,6 @@ import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
 
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -57,7 +56,7 @@ public class FastInventoryListener implements Listener {
         }
 
         InventoryViewer viewer = inventory.getViewer();
-        InventoryHistory history = viewer.getInventoryHistory();
+        InventoryViewManager history = viewer.getViewManager();
 
         // This hook must be executed here to always ensure that it is called when an
         // inventory is closed.
@@ -67,7 +66,7 @@ public class FastInventoryListener implements Listener {
         // If no action is in progress, that means that no inventory is intended to be opened.
         // Thus, the history must be cleared.
         if(!history.hasActionInProgress()) {
-            history.close();
+            history.clear();
         }
     }
 
@@ -179,7 +178,7 @@ public class FastInventoryListener implements Listener {
 
         // Closing all the inventories.
         Set<InventoryViewer> viewers = this.service.getInventoryViewers();
-        viewers.forEach(viewer -> viewer.getInventoryHistory().close());
+        viewers.forEach(viewer -> viewer.getViewManager().clear());
     }
 
     private FastInventory getFastInventory(Player player, Inventory inventory) {
@@ -192,7 +191,7 @@ public class FastInventoryListener implements Listener {
         }
 
         InventoryViewer viewer = optionalViewer.get();
-        InventoryHistory history = viewer.getInventoryHistory();
+        InventoryViewManager history = viewer.getViewManager();
 
         Optional<FastInventory> optionalInventory = history.getOpenedInventory();
 

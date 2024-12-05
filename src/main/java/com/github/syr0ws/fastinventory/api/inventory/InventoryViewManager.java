@@ -2,13 +2,13 @@ package com.github.syr0ws.fastinventory.api.inventory;
 
 import java.util.Optional;
 
-public interface InventoryHistory {
+public interface InventoryViewManager {
 
-    void open(FastInventory inventory);
+    void openView(FastInventory inventory);
 
-    void open(FastInventory inventory, boolean newHistory);
+    void openView(FastInventory inventory, boolean newHistory);
 
-    void close();
+    void clear();
 
     void home();
 
