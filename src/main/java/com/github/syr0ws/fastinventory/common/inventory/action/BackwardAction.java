@@ -7,13 +7,13 @@ import com.github.syr0ws.fastinventory.api.inventory.event.FastInventoryClickEve
 
 import java.util.Set;
 
-public class BackAction extends CommonAction {
+public class BackwardAction extends CommonAction {
 
-    public static final String ACTION_NAME = "BACK";
+    public static final String ACTION_NAME = "BACKWARD";
 
     private final String inventoryId;
 
-    public BackAction(Set<ClickType> clickTypes, String inventoryId) {
+    public BackwardAction(Set<ClickType> clickTypes, String inventoryId) {
         super(clickTypes);
         this.inventoryId = inventoryId;
     }
