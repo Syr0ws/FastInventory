@@ -8,7 +8,7 @@ public interface InventoryViewManager {
 
     void openView(FastInventory inventory, boolean newHistory);
 
-    void clear();
+    void clear(boolean closeView);
 
     void home();
 

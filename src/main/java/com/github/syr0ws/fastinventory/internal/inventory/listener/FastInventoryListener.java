@@ -68,7 +68,7 @@ public class FastInventoryListener implements Listener {
         // If no action is in progress, that means that no inventory is intended to be opened.
         // Thus, the history must be cleared.
         if(!history.hasActionInProgress()) {
-            history.clear();
+            history.clear(false);
         }
     }
 
@@ -180,7 +180,7 @@ public class FastInventoryListener implements Listener {
 
         // Closing all the inventories.
         Set<InventoryViewer> viewers = this.service.getInventoryViewers();
-        viewers.forEach(viewer -> viewer.getViewManager().clear());
+        viewers.forEach(viewer -> viewer.getViewManager().clear(true));
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
