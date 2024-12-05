@@ -33,9 +33,13 @@ public class SimpleInventoryViewManager implements InventoryViewManager {
             this.closeCurrentInventory();
         }
 
-        // Adding the inventory to the history and updating index to point on it.
+        // When an inventory is opened, going forward on the previous inventory must
+        // open this inventory. Thus, we must clear the forward history and add the
+        // inventory at the end of the list.
+        this.history.subList(this.index + 1, this.history.size()).clear();
+
         this.history.add(inventory);
-        this.index++;
+        this.index = this.history.size() - 1;
 
         inventory.open();
     }
