@@ -28,7 +28,7 @@ public class SimpleInventoryViewManager implements InventoryViewManager {
         // If the new inventory must be opened in a new history, clearing the existing one.
         // Otherwise, closing the currently opened inventory if it exists and opening the new one.
         if(newHistory) {
-            this.clear();
+            this.clear(true);
         } else {
             this.closeCurrentInventory();
         }
@@ -41,7 +41,7 @@ public class SimpleInventoryViewManager implements InventoryViewManager {
     }
 
     @Override
-    public void clear() {
+    public void clear(boolean closeView) {
 
         // If the player has no opened inventory, then the history is already empty.
         if(!this.hasOpenedInventory()) {
@@ -50,7 +50,9 @@ public class SimpleInventoryViewManager implements InventoryViewManager {
 
         // Closing the currently opened inventory.
         // Here, this.closeCurrentInventory() must not be used because we will not reopen another inventory.
-        this.history.get(this.index).close();
+        if(closeView) {
+            this.history.get(this.index).close();
+        }
 
         // Reset the history.
         this.index = -1;
