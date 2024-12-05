@@ -10,6 +10,7 @@ import com.github.syr0ws.fastinventory.api.inventory.event.FastInventoryClickEve
 import com.github.syr0ws.fastinventory.api.inventory.event.FastInventoryCloseEvent;
 import com.github.syr0ws.fastinventory.api.inventory.item.InventoryItem;
 import com.github.syr0ws.fastinventory.internal.SimpleInventoryService;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -21,6 +22,7 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.PluginDisableEvent;
+import org.bukkit.event.server.PluginEnableEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
 
@@ -168,13 +170,25 @@ public class FastInventoryListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
+    public void onPluginEnable(PluginEnableEvent event) {
+
+        Plugin enabled = event.getPlugin();
+
+        // Checking that the enabled plugin is the same as the one that registered this listener.
+        if (!enabled.equals(this.plugin)) {
+            return;
+        }
+
+        Bukkit.getOnlinePlayers().forEach(this.service::addInventoryViewer);
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPluginDisable(PluginDisableEvent event) {
 
         Plugin disabled = event.getPlugin();
 
-        // Checking that the disabled plugin is the same as the one
-        // that registered this listener.
-        if (disabled.equals(this.plugin)) {
+        // Checking that the disabled plugin is the same as the one that registered this listener.
+        if (!disabled.equals(this.plugin)) {
             return;
         }
 
