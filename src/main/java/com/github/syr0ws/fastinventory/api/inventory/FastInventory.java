@@ -6,7 +6,6 @@ import com.github.syr0ws.fastinventory.api.inventory.model.InventoryModel;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.PaginationManager;
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 /**
@@ -21,7 +20,7 @@ public interface FastInventory {
     /**
      * Opens the inventory to the {@link InventoryViewer} referred by the {@code getViewer()} method.
      * <p>
-     * This method is for internal use only. You should always use the {@link InventoryHistory#open(FastInventory)}
+     * This method is for internal use only. You should always use the {@link InventoryViewManager#openView(FastInventory)}
      * method to open an inventory.
      * </p>
      */
@@ -30,7 +29,7 @@ public interface FastInventory {
     /**
      * Closes the inventory to the {@link InventoryViewer} referred by the {@code getViewer()} method.
      * <p>
-     * This method is for internal use only. You should always use the {@link InventoryHistory#close()} method
+     * This method is for internal use only. You should always use the {@link InventoryViewManager#clear()} method
      * to close an inventory.
      * </p>
      */

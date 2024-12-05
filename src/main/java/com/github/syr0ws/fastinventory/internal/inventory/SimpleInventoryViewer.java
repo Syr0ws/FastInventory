@@ -1,14 +1,13 @@
 package com.github.syr0ws.fastinventory.internal.inventory;
 
-import com.github.syr0ws.fastinventory.api.inventory.InventoryHistory;
+import com.github.syr0ws.fastinventory.api.inventory.InventoryViewManager;
 import com.github.syr0ws.fastinventory.api.inventory.InventoryViewer;
-import com.github.syr0ws.fastinventory.internal.inventory.history.SimpleInventoryHistory;
 import org.bukkit.entity.Player;
 
 public class SimpleInventoryViewer implements InventoryViewer {
 
     private final Player player;
-    private final InventoryHistory history;
+    private final InventoryViewManager history;
 
     public SimpleInventoryViewer(Player player) {
 
@@ -17,7 +16,7 @@ public class SimpleInventoryViewer implements InventoryViewer {
         }
 
         this.player = player;
-        this.history = new SimpleInventoryHistory();
+        this.history = new SimpleInventoryViewManager();
     }
 
     @Override
@@ -26,7 +25,7 @@ public class SimpleInventoryViewer implements InventoryViewer {
     }
 
     @Override
-    public InventoryHistory getInventoryHistory() {
+    public InventoryViewManager getViewManager() {
         return this.history;
     }
 }
