@@ -30,7 +30,7 @@ public class SimpleInventoryService implements InventoryService {
         }
 
         InventoryViewer viewer = this.viewers.get(player);
-        viewer.getViewManager().clear();
+        viewer.getViewManager().clear(true);
 
         this.viewers.remove(player);
     }
