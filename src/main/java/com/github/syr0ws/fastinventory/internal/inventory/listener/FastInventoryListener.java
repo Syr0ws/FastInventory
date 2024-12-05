@@ -1,6 +1,5 @@
 package com.github.syr0ws.fastinventory.internal.inventory.listener;
 
-import com.github.syr0ws.fastinventory.api.InventoryService;
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
 import com.github.syr0ws.fastinventory.api.inventory.InventoryContent;
 import com.github.syr0ws.fastinventory.api.inventory.InventoryViewManager;
@@ -10,6 +9,7 @@ import com.github.syr0ws.fastinventory.api.inventory.action.ClickType;
 import com.github.syr0ws.fastinventory.api.inventory.event.FastInventoryClickEvent;
 import com.github.syr0ws.fastinventory.api.inventory.event.FastInventoryCloseEvent;
 import com.github.syr0ws.fastinventory.api.inventory.item.InventoryItem;
+import com.github.syr0ws.fastinventory.internal.SimpleInventoryService;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -18,6 +18,8 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
@@ -28,9 +30,9 @@ import java.util.Set;
 public class FastInventoryListener implements Listener {
 
     private final Plugin plugin;
-    private final InventoryService service;
+    private final SimpleInventoryService service;
 
-    public FastInventoryListener(Plugin plugin, InventoryService service) {
+    public FastInventoryListener(Plugin plugin, SimpleInventoryService service) {
 
         if (plugin == null) {
             throw new IllegalArgumentException("plugin cannot be null");
@@ -181,25 +183,30 @@ public class FastInventoryListener implements Listener {
         viewers.forEach(viewer -> viewer.getViewManager().clear());
     }
 
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        this.service.addInventoryViewer(player);
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onPlayerQuit(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        this.service.removeInventoryViewer(player);
+    }
+
     private FastInventory getFastInventory(Player player, Inventory inventory) {
 
-        Optional<InventoryViewer> optionalViewer = this.service.getInventoryViewer(player);
-
-        // Player does not have a FastInventory opened.
-        if (optionalViewer.isEmpty()) {
-            return null;
-        }
-
-        InventoryViewer viewer = optionalViewer.get();
+        InventoryViewer viewer = this.service.getInventoryViewer(player);
         InventoryViewManager history = viewer.getViewManager();
 
-        Optional<FastInventory> optionalInventory = history.getOpenedInventory();
+        Optional<FastInventory> optional = history.getOpenedInventory();
 
-        if(optionalInventory.isEmpty()) {
+        if(optional.isEmpty()) {
             return null;
         }
 
-        FastInventory fastInventory = optionalInventory.get();
+        FastInventory fastInventory = optional.get();
         Inventory bukkitInventory = fastInventory.getBukkitInventory();
 
         return bukkitInventory.equals(inventory) ? fastInventory : null;

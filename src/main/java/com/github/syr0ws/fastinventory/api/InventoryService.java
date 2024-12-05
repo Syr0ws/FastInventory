@@ -12,7 +12,7 @@ import java.util.Set;
  */
 public interface InventoryService {
 
-    Optional<InventoryViewer> getInventoryViewer(Player player);
+    InventoryViewer getInventoryViewer(Player player);
 
     Set<InventoryViewer> getInventoryViewers();
 
