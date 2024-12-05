@@ -17,7 +17,7 @@ public class CloseAction extends CommonAction {
     @Override
     public void execute(FastInventoryClickEvent event) {
         InventoryViewer viewer = event.getViewer();
-        viewer.getViewManager().clear();
+        viewer.getViewManager().clear(true);
     }
 
     @Override
