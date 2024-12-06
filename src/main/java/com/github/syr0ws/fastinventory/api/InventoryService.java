@@ -8,12 +8,28 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * Service interface for managing inventories and inventory providers.
+ * Service interface for managing inventory viewers and providers.
  */
 public interface InventoryService {
 
+    /**
+     * Retrieves the {@link InventoryViewer} instance associated with the specified player.
+     * <p>
+     * By default, an {@link InventoryViewer} instance is created for each player joining the server.
+     * This instance is removed when the player leaves the server.
+     * </p>
+     *
+     * @param player The {@link Player} whose {@link InventoryViewer} is to be retrieved. Must not be {@code null}.
+     * @return The {@link InventoryViewer} associated with the specified player.
+     * @throws IllegalArgumentException If the player is {@code null}.
+     */
     InventoryViewer getInventoryViewer(Player player);
 
+    /**
+     * Retrieves all the {@link InventoryViewer} instances currently managed by this service.
+     *
+     * @return A {@link Set} of all registered {@link InventoryViewer}. Never {@code null}.
+     */
     Set<InventoryViewer> getInventoryViewers();
 
     /**
