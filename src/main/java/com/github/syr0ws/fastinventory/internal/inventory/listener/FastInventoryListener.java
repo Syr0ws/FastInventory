@@ -212,6 +212,11 @@ public class FastInventoryListener implements Listener {
     private FastInventory getFastInventory(Player player, Inventory inventory) {
 
         InventoryViewer viewer = this.service.getInventoryViewer(player);
+
+        if(viewer == null) {
+            return null;
+        }
+
         InventoryViewManager history = viewer.getViewManager();
 
         Optional<FastInventory> optional = history.getOpenedInventory();
