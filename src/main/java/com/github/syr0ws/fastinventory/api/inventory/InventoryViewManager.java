@@ -41,7 +41,7 @@ public interface InventoryViewManager {
     void home();
 
     /**
-     * Backward the viewer to the previous inventory in the history
+     * Backward the viewer to the previous inventory in the history.
      * This does nothing is there is no previous inventory in the history.
      */
     void backward();
