@@ -1,7 +1,7 @@
 package com.github.syr0ws.fastinventory.api.inventory.event;
 
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
-import org.bukkit.entity.Player;
+import com.github.syr0ws.fastinventory.api.inventory.InventoryViewer;
 
 /**
  * An abstract class that serves as base for events triggered when a {@link FastInventory} is opened.
@@ -9,9 +9,9 @@ import org.bukkit.entity.Player;
 public abstract class FastInventoryOpenEvent extends FastInventoryEvent {
 
     /**
-     * @see FastInventoryEvent#FastInventoryEvent(FastInventory, Player)
+     * @see FastInventoryEvent#FastInventoryEvent(FastInventory, InventoryViewer)
      */
-    public FastInventoryOpenEvent(FastInventory inventory, Player player) {
-        super(inventory, player);
+    public FastInventoryOpenEvent(FastInventory inventory, InventoryViewer viewer) {
+        super(inventory, viewer);
     }
 }

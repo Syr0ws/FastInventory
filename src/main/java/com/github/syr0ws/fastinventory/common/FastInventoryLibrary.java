@@ -27,7 +27,7 @@ public class FastInventoryLibrary {
      */
     public static InventoryService createInventoryService(Plugin plugin) {
 
-        InventoryService service = new SimpleInventoryService();
+        SimpleInventoryService service = new SimpleInventoryService();
         FastInventoryListener listener = new FastInventoryListener(plugin, service);
 
         PluginManager manager = plugin.getServer().getPluginManager();
@@ -67,6 +67,10 @@ public class FastInventoryLibrary {
         factory.addLoader(new YamlSoundActionLoader());
         factory.addLoader(new YamlUpdateContentActionLoader());
         factory.addLoader(new YamlUpdatePaginationActionLoader());
+        factory.addLoader(new YamlOpenInventoryActionLoader());
+        factory.addLoader(new YamlHomeActionLoader());
+        factory.addLoader(new YamlBackActionLoader());
+        factory.addLoader(new YamlForwardActionLoader());
 
         return factory;
     }

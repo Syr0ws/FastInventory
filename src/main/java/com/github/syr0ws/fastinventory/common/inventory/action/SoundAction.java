@@ -1,5 +1,6 @@
 package com.github.syr0ws.fastinventory.common.inventory.action;
 
+import com.github.syr0ws.fastinventory.api.inventory.InventoryViewer;
 import com.github.syr0ws.fastinventory.api.inventory.action.ClickType;
 import com.github.syr0ws.fastinventory.api.inventory.event.FastInventoryClickEvent;
 import org.bukkit.Sound;
@@ -37,7 +38,8 @@ public class SoundAction extends CommonAction {
 
     @Override
     public void execute(FastInventoryClickEvent event) {
-        Player player = event.getPlayer();
+        InventoryViewer viewer = event.getViewer();
+        Player player = viewer.getPlayer();
         player.playSound(player.getLocation(), this.sound, this.volume, this.pitch);
     }
 

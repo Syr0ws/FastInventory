@@ -1,5 +1,6 @@
 package com.github.syr0ws.fastinventory.common.transform.placeholder.player;
 
+import com.github.syr0ws.fastinventory.api.inventory.InventoryViewer;
 import com.github.syr0ws.fastinventory.api.transform.placeholder.Placeholder;
 import com.github.syr0ws.fastinventory.api.util.Context;
 import com.github.syr0ws.fastinventory.common.util.CommonContextKey;
@@ -14,8 +15,9 @@ public class PlayerUUIDPlaceholder implements Placeholder {
 
     @Override
     public String getValue(Context context) {
-        Player viewer = context.getData(CommonContextKey.VIEWER.name(), Player.class);
-        return viewer.getUniqueId().toString();
+        InventoryViewer viewer = context.getData(CommonContextKey.VIEWER.name(), InventoryViewer.class);
+        Player player = viewer.getPlayer();
+        return player.getUniqueId().toString();
     }
 
     @Override

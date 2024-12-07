@@ -6,7 +6,6 @@ import com.github.syr0ws.fastinventory.api.inventory.model.InventoryModel;
 import com.github.syr0ws.fastinventory.api.inventory.pagination.PaginationManager;
 import com.github.syr0ws.fastinventory.api.transform.InventoryProvider;
 import com.github.syr0ws.fastinventory.api.util.Context;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 /**
@@ -19,12 +18,20 @@ import org.bukkit.inventory.Inventory;
 public interface FastInventory {
 
     /**
-     * Opens the inventory to the {@link Player} referred by the {@code getView()} method.
+     * Opens the inventory to the {@link InventoryViewer} referred by the {@code getViewer()} method.
+     * <p>
+     * This method is for internal use only. You should always use the {@link InventoryViewManager#openView(FastInventory)}
+     * method to open an inventory.
+     * </p>
      */
     void open();
 
     /**
-     * Closes the inventory to the {@link Player} referred by the {@code getView()} method.
+     * Closes the inventory to the {@link InventoryViewer} referred by the {@code getViewer()} method.
+     * <p>
+     * This method is for internal use only. You should always use the {@link InventoryViewManager#clear()} method
+     * to close an inventory.
+     * </p>
      */
     void close();
 
@@ -55,6 +62,13 @@ public interface FastInventory {
      * </p>
      */
     void updateView();
+
+    /**
+     * Retrieves the id of the inventory.
+     *
+     * @return The id of the inventory. Never {@code null}.
+     */
+    String getId();
 
     /**
      * Retrieves the title of the inventory.
@@ -128,12 +142,12 @@ public interface FastInventory {
     /**
      * Retrieves the player viewing the inventory.
      * <p>
-     * A {@link FastInventory} instance is always associated with a single {@link Player}.
+     * A {@link FastInventory} instance is always associated with a single {@link InventoryViewer}.
      * </p>
      *
-     * @return The {@link Player} instance who is viewing the inventory.
+     * @return The player instance who is viewing the inventory.
      */
-    Player getViewer();
+    InventoryViewer getViewer();
 
     /**
      * Retrieves the underlying {@link Inventory} from the Bukkit API.

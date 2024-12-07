@@ -4,26 +4,20 @@ import com.github.syr0ws.fastinventory.api.inventory.InventoryViewer;
 import com.github.syr0ws.fastinventory.api.inventory.action.ClickType;
 import com.github.syr0ws.fastinventory.api.inventory.event.FastInventoryClickEvent;
 
-import java.util.List;
 import java.util.Set;
 
-public class MessageAction extends CommonMessageAction {
+public class HomeAction extends CommonAction {
 
-    public static final String ACTION_NAME = "MESSAGE";
+    public static final String ACTION_NAME = "HOME";
 
-    public MessageAction(Set<ClickType> clickTypes, List<String> messages) {
-        super(clickTypes, messages);
+    public HomeAction(Set<ClickType> clickTypes) {
+        super(clickTypes);
     }
 
     @Override
     public void execute(FastInventoryClickEvent event) {
-
-        String[] messages = super.getMessages().stream()
-                .map(message -> super.parseMessage(message, event))
-                .toArray(String[]::new);
-
         InventoryViewer viewer = event.getViewer();
-        viewer.getPlayer().sendMessage(messages);
+        viewer.getViewManager().home();
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.github.syr0ws.fastinventory.api.InventoryService;
 import com.github.syr0ws.fastinventory.api.inventory.FastInventory;
 import com.github.syr0ws.fastinventory.api.inventory.FastInventoryType;
 import com.github.syr0ws.fastinventory.api.inventory.InventoryContent;
+import com.github.syr0ws.fastinventory.api.inventory.InventoryViewer;
 import com.github.syr0ws.fastinventory.api.inventory.event.FastInventoryAfterOpenEvent;
 import com.github.syr0ws.fastinventory.api.inventory.event.FastInventoryBeforeOpenEvent;
 import com.github.syr0ws.fastinventory.api.inventory.exception.InventoryException;
@@ -36,11 +37,11 @@ public class SimpleFastInventory implements FastInventory {
     private final InventoryModel model;
     private final SimplePaginationManager paginationManager;
     private final HookManager hookManager;
-    private final Player viewer;
+    private final InventoryViewer viewer;
 
     private Inventory inventory;
 
-    public SimpleFastInventory(InventoryProvider provider, InventoryService service, Player viewer) {
+    public SimpleFastInventory(InventoryProvider provider, InventoryService service, InventoryViewer viewer) {
 
         if (provider == null) {
             throw new IllegalArgumentException("provider cannot be null");
@@ -77,9 +78,8 @@ public class SimpleFastInventory implements FastInventory {
         }
 
         // Opening the inventory
-        this.viewer.openInventory(this.inventory);
-        this.service.addInventory(this);
         this.updateContent();
+        this.viewer.getPlayer().openInventory(this.inventory);
 
         // Hook
         this.hookManager.executeHooks(new FastInventoryAfterOpenEvent(this, this.viewer), FastInventoryAfterOpenEvent.class);
@@ -87,10 +87,7 @@ public class SimpleFastInventory implements FastInventory {
 
     @Override
     public void close() {
-
-        // Closing the inventory
-        this.service.removeInventory(this.viewer);
-        this.viewer.closeInventory();
+        this.viewer.getPlayer().closeInventory();
     }
 
     @Override
@@ -113,7 +110,12 @@ public class SimpleFastInventory implements FastInventory {
 
     @Override
     public void updateView() {
-        this.viewer.updateInventory();
+        this.viewer.getPlayer().updateInventory();
+    }
+
+    @Override
+    public String getId() {
+        return this.provider.getId();
     }
 
     @Override
@@ -168,7 +170,7 @@ public class SimpleFastInventory implements FastInventory {
     }
 
     @Override
-    public Player getViewer() {
+    public InventoryViewer getViewer() {
         return this.viewer;
     }
 
@@ -181,7 +183,7 @@ public class SimpleFastInventory implements FastInventory {
     public Context getDefaultContext() {
 
         Context context = new SimpleContext();
-        context.addData(CommonContextKey.VIEWER.name(), this.viewer, Player.class);
+        context.addData(CommonContextKey.VIEWER.name(), this.viewer, InventoryViewer.class);
         context.addData(CommonContextKey.INVENTORY.name(), this, FastInventory.class);
 
         return context;
