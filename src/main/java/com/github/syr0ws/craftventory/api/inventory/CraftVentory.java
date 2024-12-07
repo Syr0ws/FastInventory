@@ -29,7 +29,7 @@ public interface CraftVentory {
     /**
      * Closes the inventory to the {@link InventoryViewer} referred by the {@code getViewer()} method.
      * <p>
-     * This method is for internal use only. You should always use the {@link InventoryViewManager#clear()} method
+     * This method is for internal use only. You should always use the {@link InventoryViewManager#clear(boolean)} method
      * to close an inventory.
      * </p>
      */
