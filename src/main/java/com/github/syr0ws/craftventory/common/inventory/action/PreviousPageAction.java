@@ -2,7 +2,7 @@ package com.github.syr0ws.craftventory.common.inventory.action;
 
 import com.github.syr0ws.craftventory.api.inventory.CraftVentory;
 import com.github.syr0ws.craftventory.api.inventory.action.ClickType;
-import com.github.syr0ws.craftventory.api.inventory.event.FastInventoryClickEvent;
+import com.github.syr0ws.craftventory.api.inventory.event.CraftVentoryClickEvent;
 import com.github.syr0ws.craftventory.api.inventory.pagination.Pagination;
 
 import java.util.Set;
@@ -24,7 +24,7 @@ public class PreviousPageAction extends CommonAction {
     }
 
     @Override
-    public void execute(FastInventoryClickEvent event) {
+    public void execute(CraftVentoryClickEvent event) {
 
         CraftVentory inventory = event.getInventory();
 

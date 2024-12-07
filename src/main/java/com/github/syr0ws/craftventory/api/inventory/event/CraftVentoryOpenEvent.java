@@ -6,12 +6,12 @@ import com.github.syr0ws.craftventory.api.inventory.InventoryViewer;
 /**
  * An abstract class that serves as base for events triggered when a {@link CraftVentory} is opened.
  */
-public abstract class FastInventoryOpenEvent extends FastInventoryEvent {
+public abstract class CraftVentoryOpenEvent extends CraftVentoryEvent {
 
     /**
-     * @see FastInventoryEvent#FastInventoryEvent(CraftVentory, InventoryViewer)
+     * @see CraftVentoryEvent#CraftVentoryEvent(CraftVentory, InventoryViewer)
      */
-    public FastInventoryOpenEvent(CraftVentory inventory, InventoryViewer viewer) {
+    public CraftVentoryOpenEvent(CraftVentory inventory, InventoryViewer viewer) {
         super(inventory, viewer);
     }
 }

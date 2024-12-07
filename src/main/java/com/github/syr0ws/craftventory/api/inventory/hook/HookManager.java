@@ -1,6 +1,6 @@
 package com.github.syr0ws.craftventory.api.inventory.hook;
 
-import com.github.syr0ws.craftventory.api.inventory.event.FastInventoryEvent;
+import com.github.syr0ws.craftventory.api.inventory.event.CraftVentoryEvent;
 
 import java.util.Set;
 
@@ -16,9 +16,9 @@ public interface HookManager {
      * @param event      The event to process. Hooks registered for this event's type will be executed.
      * @param eventClass The Java class representing the type of the event.
      *                   This determines which hooks are eligible to handle the event.
-     * @param <E>        The type of the event, extending {@link FastInventoryEvent}.
+     * @param <E>        The type of the event, extending {@link CraftVentoryEvent}.
      */
-    <E extends FastInventoryEvent> void executeHooks(E event, Class<E> eventClass);
+    <E extends CraftVentoryEvent> void executeHooks(E event, Class<E> eventClass);
 
     /**
      * Registers a new hook for a specific event type.
@@ -26,9 +26,9 @@ public interface HookManager {
      * @param hookId     A unique identifier for the hook. This id is used to manage the hook lifecycle.
      * @param eventClass The Java class representing the type of event the hook handles.
      * @param hook       The hook to register, which contains the logic to execute when the event occurs.
-     * @param <E>        The type of the event, extending {@link FastInventoryEvent}.
+     * @param <E>        The type of the event, extending {@link CraftVentoryEvent}.
      */
-    <E extends FastInventoryEvent> void addHook(String hookId, Class<E> eventClass, Hook<E> hook);
+    <E extends CraftVentoryEvent> void addHook(String hookId, Class<E> eventClass, Hook<E> hook);
 
     /**
      * Removes a registered hook by its unique identifier.

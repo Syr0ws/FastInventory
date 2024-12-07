@@ -2,7 +2,7 @@ package com.github.syr0ws.craftventory.common.inventory.action;
 
 import com.github.syr0ws.craftventory.api.inventory.InventoryViewer;
 import com.github.syr0ws.craftventory.api.inventory.action.ClickType;
-import com.github.syr0ws.craftventory.api.inventory.event.FastInventoryClickEvent;
+import com.github.syr0ws.craftventory.api.inventory.event.CraftVentoryClickEvent;
 
 import java.util.Set;
 
@@ -15,7 +15,7 @@ public class HomeAction extends CommonAction {
     }
 
     @Override
-    public void execute(FastInventoryClickEvent event) {
+    public void execute(CraftVentoryClickEvent event) {
         InventoryViewer viewer = event.getViewer();
         viewer.getViewManager().home();
     }

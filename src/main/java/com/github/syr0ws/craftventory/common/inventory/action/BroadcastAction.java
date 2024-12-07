@@ -1,7 +1,7 @@
 package com.github.syr0ws.craftventory.common.inventory.action;
 
 import com.github.syr0ws.craftventory.api.inventory.action.ClickType;
-import com.github.syr0ws.craftventory.api.inventory.event.FastInventoryClickEvent;
+import com.github.syr0ws.craftventory.api.inventory.event.CraftVentoryClickEvent;
 import org.bukkit.Bukkit;
 
 import java.util.List;
@@ -16,7 +16,7 @@ public class BroadcastAction extends CommonMessageAction {
     }
 
     @Override
-    public void execute(FastInventoryClickEvent event) {
+    public void execute(CraftVentoryClickEvent event) {
 
         String[] messages = super.getMessages().stream()
                 .map(message -> super.parseMessage(message, event))

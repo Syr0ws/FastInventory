@@ -2,7 +2,7 @@ package com.github.syr0ws.craftventory.common.inventory.action;
 
 import com.github.syr0ws.craftventory.api.inventory.CraftVentory;
 import com.github.syr0ws.craftventory.api.inventory.action.ClickType;
-import com.github.syr0ws.craftventory.api.inventory.event.FastInventoryClickEvent;
+import com.github.syr0ws.craftventory.api.inventory.event.CraftVentoryClickEvent;
 import com.github.syr0ws.craftventory.api.transform.InventoryProvider;
 import com.github.syr0ws.craftventory.api.transform.placeholder.PlaceholderManager;
 import com.github.syr0ws.craftventory.api.util.Context;
@@ -26,7 +26,7 @@ public abstract class CommonMessageAction extends CommonAction {
         this.messages.addAll(messages);
     }
 
-    protected String parseMessage(String message, FastInventoryClickEvent event) {
+    protected String parseMessage(String message, CraftVentoryClickEvent event) {
 
         CraftVentory inventory = event.getInventory();
         InventoryProvider provider = inventory.getProvider();

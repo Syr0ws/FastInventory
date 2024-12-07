@@ -6,8 +6,8 @@ import com.github.syr0ws.craftventory.api.inventory.InventoryViewManager;
 import com.github.syr0ws.craftventory.api.inventory.InventoryViewer;
 import com.github.syr0ws.craftventory.api.inventory.action.ClickAction;
 import com.github.syr0ws.craftventory.api.inventory.action.ClickType;
-import com.github.syr0ws.craftventory.api.inventory.event.FastInventoryClickEvent;
-import com.github.syr0ws.craftventory.api.inventory.event.FastInventoryCloseEvent;
+import com.github.syr0ws.craftventory.api.inventory.event.CraftVentoryClickEvent;
+import com.github.syr0ws.craftventory.api.inventory.event.CraftVentoryCloseEvent;
 import com.github.syr0ws.craftventory.api.inventory.item.InventoryItem;
 import com.github.syr0ws.craftventory.internal.SimpleInventoryService;
 import org.bukkit.Bukkit;
@@ -65,7 +65,7 @@ public class FastInventoryListener implements Listener {
         // This hook must be executed here to always ensure that it is called when an
         // inventory is closed.
         inventory.getHookManager().executeHooks(
-                new FastInventoryCloseEvent(inventory, viewer), FastInventoryCloseEvent.class);
+                new CraftVentoryCloseEvent(inventory, viewer), CraftVentoryCloseEvent.class);
 
         // If no action is in progress, that means that no inventory is intended to be opened.
         // Thus, the history must be cleared.
@@ -96,7 +96,7 @@ public class FastInventoryListener implements Listener {
         InventoryContent content = inventory.getContent();
         InventoryItem item = content.getItem(event.getSlot()).orElse(null);
 
-        FastInventoryClickEvent fastInventoryClickEvent = new FastInventoryClickEvent(
+        CraftVentoryClickEvent fastInventoryClickEvent = new CraftVentoryClickEvent(
                 inventory,
                 viewer,
                 item,
@@ -108,7 +108,7 @@ public class FastInventoryListener implements Listener {
         );
 
         // Calling event globally.
-        inventory.getHookManager().executeHooks(fastInventoryClickEvent, FastInventoryClickEvent.class);
+        inventory.getHookManager().executeHooks(fastInventoryClickEvent, CraftVentoryClickEvent.class);
 
         // Do not go further if the event has been cancelled.
         if(fastInventoryClickEvent.isCancelled()) {

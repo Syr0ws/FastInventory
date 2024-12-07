@@ -1,6 +1,6 @@
 package com.github.syr0ws.craftventory.internal.inventory.hook;
 
-import com.github.syr0ws.craftventory.api.inventory.event.FastInventoryEvent;
+import com.github.syr0ws.craftventory.api.inventory.event.CraftVentoryEvent;
 import com.github.syr0ws.craftventory.api.inventory.hook.Hook;
 import com.github.syr0ws.craftventory.api.inventory.hook.HookManager;
 
@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 
 public class SimpleHookManager implements HookManager {
 
-    private final Map<Class<? extends FastInventoryEvent>, HookList<? extends FastInventoryEvent>> hooks = new HashMap<>();
+    private final Map<Class<? extends CraftVentoryEvent>, HookList<? extends CraftVentoryEvent>> hooks = new HashMap<>();
 
     @Override
     @SuppressWarnings("unchecked")
-    public <E extends FastInventoryEvent> void executeHooks(E event, Class<E> eventClass) {
+    public <E extends CraftVentoryEvent> void executeHooks(E event, Class<E> eventClass) {
 
         if(event == null) {
             throw new IllegalArgumentException("event cannot be null");
@@ -43,7 +43,7 @@ public class SimpleHookManager implements HookManager {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <E extends FastInventoryEvent> void addHook(String hookId, Class<E> eventClass, Hook<E> hook) {
+    public <E extends CraftVentoryEvent> void addHook(String hookId, Class<E> eventClass, Hook<E> hook) {
 
         if(hook == null) {
             throw new IllegalArgumentException("hook cannot be null");
@@ -100,7 +100,7 @@ public class SimpleHookManager implements HookManager {
                 .collect(Collectors.toSet());
     }
 
-    private static class HookList<E extends FastInventoryEvent> {
+    private static class HookList<E extends CraftVentoryEvent> {
 
         private final Class<E> eventClass;
         private final LinkedHashMap<String, Hook<E>> hooks;

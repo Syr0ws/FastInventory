@@ -2,7 +2,7 @@ package com.github.syr0ws.craftventory.common.inventory.action;
 
 import com.github.syr0ws.craftventory.api.inventory.InventoryViewer;
 import com.github.syr0ws.craftventory.api.inventory.action.ClickType;
-import com.github.syr0ws.craftventory.api.inventory.event.FastInventoryClickEvent;
+import com.github.syr0ws.craftventory.api.inventory.event.CraftVentoryClickEvent;
 
 import java.util.List;
 import java.util.Set;
@@ -16,7 +16,7 @@ public class MessageAction extends CommonMessageAction {
     }
 
     @Override
-    public void execute(FastInventoryClickEvent event) {
+    public void execute(CraftVentoryClickEvent event) {
 
         String[] messages = super.getMessages().stream()
                 .map(message -> super.parseMessage(message, event))

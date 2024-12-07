@@ -5,7 +5,7 @@ import com.github.syr0ws.craftventory.api.inventory.CraftVentory;
 import com.github.syr0ws.craftventory.api.inventory.InventoryViewManager;
 import com.github.syr0ws.craftventory.api.inventory.InventoryViewer;
 import com.github.syr0ws.craftventory.api.inventory.action.ClickType;
-import com.github.syr0ws.craftventory.api.inventory.event.FastInventoryClickEvent;
+import com.github.syr0ws.craftventory.api.inventory.event.CraftVentoryClickEvent;
 import com.github.syr0ws.craftventory.api.inventory.exception.InventoryException;
 import com.github.syr0ws.craftventory.api.transform.InventoryProvider;
 
@@ -31,7 +31,7 @@ public class OpenInventoryAction extends CommonAction {
 
 
     @Override
-    public void execute(FastInventoryClickEvent event) {
+    public void execute(CraftVentoryClickEvent event) {
 
         InventoryViewer viewer = event.getViewer();
         InventoryViewManager manager = viewer.getViewManager();

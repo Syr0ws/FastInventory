@@ -7,14 +7,14 @@ import org.bukkit.event.Cancellable;
 /**
  * Represents an event that is triggered before a {@link CraftVentory} is opened.
  */
-public class FastInventoryBeforeOpenEvent extends FastInventoryOpenEvent implements Cancellable {
+public class CraftVentoryBeforeOpenEvent extends CraftVentoryOpenEvent implements Cancellable {
 
     private boolean cancelled;
 
     /**
-     * @see FastInventoryEvent#FastInventoryEvent(CraftVentory, InventoryViewer)
+     * @see CraftVentoryEvent#CraftVentoryEvent(CraftVentory, InventoryViewer)
      */
-    public FastInventoryBeforeOpenEvent(CraftVentory inventory, InventoryViewer viewer) {
+    public CraftVentoryBeforeOpenEvent(CraftVentory inventory, InventoryViewer viewer) {
         super(inventory, viewer);
     }
 

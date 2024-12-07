@@ -2,7 +2,7 @@ package com.github.syr0ws.craftventory.common.inventory.action;
 
 import com.github.syr0ws.craftventory.api.inventory.InventoryViewer;
 import com.github.syr0ws.craftventory.api.inventory.action.ClickType;
-import com.github.syr0ws.craftventory.api.inventory.event.FastInventoryClickEvent;
+import com.github.syr0ws.craftventory.api.inventory.event.CraftVentoryClickEvent;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
@@ -37,7 +37,7 @@ public class SoundAction extends CommonAction {
     }
 
     @Override
-    public void execute(FastInventoryClickEvent event) {
+    public void execute(CraftVentoryClickEvent event) {
         InventoryViewer viewer = event.getViewer();
         Player player = viewer.getPlayer();
         player.playSound(player.getLocation(), this.sound, this.volume, this.pitch);

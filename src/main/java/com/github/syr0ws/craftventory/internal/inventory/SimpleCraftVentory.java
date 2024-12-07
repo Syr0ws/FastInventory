@@ -5,8 +5,8 @@ import com.github.syr0ws.craftventory.api.inventory.CraftVentory;
 import com.github.syr0ws.craftventory.api.inventory.CraftVentoryType;
 import com.github.syr0ws.craftventory.api.inventory.InventoryContent;
 import com.github.syr0ws.craftventory.api.inventory.InventoryViewer;
-import com.github.syr0ws.craftventory.api.inventory.event.FastInventoryAfterOpenEvent;
-import com.github.syr0ws.craftventory.api.inventory.event.FastInventoryBeforeOpenEvent;
+import com.github.syr0ws.craftventory.api.inventory.event.CraftVentoryAfterOpenEvent;
+import com.github.syr0ws.craftventory.api.inventory.event.CraftVentoryBeforeOpenEvent;
 import com.github.syr0ws.craftventory.api.inventory.exception.InventoryException;
 import com.github.syr0ws.craftventory.api.inventory.hook.HookManager;
 import com.github.syr0ws.craftventory.api.inventory.item.InventoryItem;
@@ -69,8 +69,8 @@ public class SimpleCraftVentory implements CraftVentory {
         this.inventory = this.createBukkitInventory();
 
         // Hook
-        FastInventoryBeforeOpenEvent event = new FastInventoryBeforeOpenEvent(this, this.viewer);
-        this.hookManager.executeHooks(event, FastInventoryBeforeOpenEvent.class);
+        CraftVentoryBeforeOpenEvent event = new CraftVentoryBeforeOpenEvent(this, this.viewer);
+        this.hookManager.executeHooks(event, CraftVentoryBeforeOpenEvent.class);
 
         if(event.isCancelled()) {
             return; // Cancel inventory opening
@@ -81,7 +81,7 @@ public class SimpleCraftVentory implements CraftVentory {
         this.viewer.getPlayer().openInventory(this.inventory);
 
         // Hook
-        this.hookManager.executeHooks(new FastInventoryAfterOpenEvent(this, this.viewer), FastInventoryAfterOpenEvent.class);
+        this.hookManager.executeHooks(new CraftVentoryAfterOpenEvent(this, this.viewer), CraftVentoryAfterOpenEvent.class);
     }
 
     @Override

@@ -6,12 +6,12 @@ import com.github.syr0ws.craftventory.api.inventory.InventoryViewer;
 /**
  * Represents an event triggered when a {@link CraftVentory} is closed.
  */
-public class FastInventoryCloseEvent extends FastInventoryEvent {
+public class CraftVentoryCloseEvent extends CraftVentoryEvent {
 
     /**
-     * @see FastInventoryEvent#FastInventoryEvent(CraftVentory, InventoryViewer)
+     * @see CraftVentoryEvent#CraftVentoryEvent(CraftVentory, InventoryViewer)
      */
-    public FastInventoryCloseEvent(CraftVentory inventory, InventoryViewer viewer) {
+    public CraftVentoryCloseEvent(CraftVentory inventory, InventoryViewer viewer) {
         super(inventory, viewer);
     }
 }

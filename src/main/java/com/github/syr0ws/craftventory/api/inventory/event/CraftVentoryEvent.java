@@ -6,18 +6,18 @@ import com.github.syr0ws.craftventory.api.inventory.InventoryViewer;
 /**
  * Represents a base class for all events related to a {@link CraftVentory}.
  */
-public abstract class FastInventoryEvent {
+public abstract class CraftVentoryEvent {
 
     private final CraftVentory inventory;
     private final InventoryViewer viewer;
 
     /**
-     * Constructs a new {@code FastInventoryEvent}.
+     * Constructs a new {@link CraftVentoryEvent}.
      *
      * @param inventory The {@link CraftVentory} instance associated with this event.
      * @param viewer    The player who triggered this event.
      */
-    public FastInventoryEvent(CraftVentory inventory, InventoryViewer viewer) {
+    public CraftVentoryEvent(CraftVentory inventory, InventoryViewer viewer) {
         this.inventory = inventory;
         this.viewer = viewer;
     }

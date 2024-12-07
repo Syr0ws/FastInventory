@@ -1,14 +1,14 @@
 package com.github.syr0ws.craftventory.api.inventory.hook;
 
-import com.github.syr0ws.craftventory.api.inventory.event.FastInventoryEvent;
+import com.github.syr0ws.craftventory.api.inventory.event.CraftVentoryEvent;
 
 /**
  * Represents a functional interface for handling events of a specific type.
  *
- * @param <E> The type of event this hook handles, extending {@link FastInventoryEvent}.
+ * @param <E> The type of event this hook handles, extending {@link CraftVentoryEvent}.
  */
 @FunctionalInterface
-public interface Hook<E extends FastInventoryEvent> {
+public interface Hook<E extends CraftVentoryEvent> {
 
     /**
      * Handles the given event. This method is invoked when the associated event is triggered,

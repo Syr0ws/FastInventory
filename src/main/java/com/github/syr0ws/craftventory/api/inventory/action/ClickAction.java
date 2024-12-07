@@ -1,6 +1,6 @@
 package com.github.syr0ws.craftventory.api.inventory.action;
 
-import com.github.syr0ws.craftventory.api.inventory.event.FastInventoryClickEvent;
+import com.github.syr0ws.craftventory.api.inventory.event.CraftVentoryClickEvent;
 
 import java.util.Set;
 
@@ -12,9 +12,9 @@ public interface ClickAction {
     /**
      * Executes the action based on the provided inventory click event.
      *
-     * @param event The {@link FastInventoryClickEvent} that triggered the action. Never {@code null}.
+     * @param event The {@link CraftVentoryClickEvent} that triggered the action. Never {@code null}.
      */
-    void execute(FastInventoryClickEvent event);
+    void execute(CraftVentoryClickEvent event);
 
     /**
      * Retrieves the set of {@link ClickType} that can trigger the action.

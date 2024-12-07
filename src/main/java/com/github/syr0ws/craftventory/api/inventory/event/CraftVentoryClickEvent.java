@@ -15,7 +15,7 @@ import java.util.Optional;
 /**
  * Represents an event triggered when a {@link Player} clicks on a slot in a {@link CraftVentory}.
  */
-public class FastInventoryClickEvent extends FastInventoryEvent implements Cancellable {
+public class CraftVentoryClickEvent extends CraftVentoryEvent implements Cancellable {
 
     private final InventoryItem item;
     private final InventoryView view;
@@ -26,7 +26,7 @@ public class FastInventoryClickEvent extends FastInventoryEvent implements Cance
     private boolean cancelled;
 
     /**
-     * Constructs a new {@code FastInventoryClickEvent}.
+     * Constructs a new {@link CraftVentoryClickEvent}.
      *
      * @param inventory The {@link CraftVentory} instance where the click occurred.
      * @param viewer    The {@link InventoryViewer} who clicked the inventory.
@@ -37,7 +37,7 @@ public class FastInventoryClickEvent extends FastInventoryEvent implements Cance
      * @param clickType The {@link ClickType } of the click performed.
      * @param action    The {@link InventoryAction} that is being performed based on the click.
      */
-    public FastInventoryClickEvent(CraftVentory inventory, InventoryViewer viewer, InventoryItem item, InventoryView view, InventoryType.SlotType slotType, int slot, ClickType clickType, InventoryAction action) {
+    public CraftVentoryClickEvent(CraftVentory inventory, InventoryViewer viewer, InventoryItem item, InventoryView view, InventoryType.SlotType slotType, int slot, ClickType clickType, InventoryAction action) {
         super(inventory, viewer);
         this.item = item;
         this.view = view;
