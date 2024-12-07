@@ -29,12 +29,12 @@ import org.bukkit.plugin.Plugin;
 import java.util.Optional;
 import java.util.Set;
 
-public class FastInventoryListener implements Listener {
+public class CraftVentoryListener implements Listener {
 
     private final Plugin plugin;
     private final SimpleInventoryService service;
 
-    public FastInventoryListener(Plugin plugin, SimpleInventoryService service) {
+    public CraftVentoryListener(Plugin plugin, SimpleInventoryService service) {
 
         if (plugin == null) {
             throw new IllegalArgumentException("plugin cannot be null");
@@ -49,12 +49,12 @@ public class FastInventoryListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onFastInventoryClose(InventoryCloseEvent event) {
+    public void onCraftVentoryClose(InventoryCloseEvent event) {
 
         Player player = (Player) event.getPlayer();
-        CraftVentory inventory = this.getFastInventory(player, event.getInventory());
+        CraftVentory inventory = this.getCraftVentory(player, event.getInventory());
 
-        // Player doesn't have a FastInventory open.
+        // Player doesn't have a CraftVentory open.
         if (inventory == null) {
             return;
         }
@@ -75,10 +75,10 @@ public class FastInventoryListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onFastInventoryClick(InventoryClickEvent event) {
+    public void onCraftVentoryClick(InventoryClickEvent event) {
 
         Player player = (Player) event.getWhoClicked();
-        CraftVentory inventory = this.getFastInventory(player, event.getClickedInventory());
+        CraftVentory inventory = this.getCraftVentory(player, event.getClickedInventory());
 
         if (inventory == null) {
             return;
@@ -96,7 +96,7 @@ public class FastInventoryListener implements Listener {
         InventoryContent content = inventory.getContent();
         InventoryItem item = content.getItem(event.getSlot()).orElse(null);
 
-        CraftVentoryClickEvent fastInventoryClickEvent = new CraftVentoryClickEvent(
+        CraftVentoryClickEvent craftVentoryClickEvent = new CraftVentoryClickEvent(
                 inventory,
                 viewer,
                 item,
@@ -108,10 +108,10 @@ public class FastInventoryListener implements Listener {
         );
 
         // Calling event globally.
-        inventory.getHookManager().executeHooks(fastInventoryClickEvent, CraftVentoryClickEvent.class);
+        inventory.getHookManager().executeHooks(craftVentoryClickEvent, CraftVentoryClickEvent.class);
 
         // Do not go further if the event has been cancelled.
-        if(fastInventoryClickEvent.isCancelled()) {
+        if(craftVentoryClickEvent.isCancelled()) {
             return;
         }
 
@@ -120,15 +120,15 @@ public class FastInventoryListener implements Listener {
 
             item.getActions().stream()
                     .filter(action -> this.hasClickType(action, event.getClick()))
-                    .forEach(action -> action.execute(fastInventoryClickEvent));
+                    .forEach(action -> action.execute(craftVentoryClickEvent));
         }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onFastInventoryDrag(InventoryDragEvent event) {
+    public void onCraftVentoryDrag(InventoryDragEvent event) {
 
         Player player = (Player) event.getWhoClicked();
-        CraftVentory inventory = this.getFastInventory(player, event.getInventory());
+        CraftVentory inventory = this.getCraftVentory(player, event.getInventory());
 
         if (inventory != null) {
 
@@ -154,9 +154,9 @@ public class FastInventoryListener implements Listener {
             return;
         }
 
-        CraftVentory inventory = this.getFastInventory(player, topInventory);
+        CraftVentory inventory = this.getCraftVentory(player, topInventory);
 
-        // Top inventory is not a FastInventory.
+        // Top inventory is not a CraftVentory.
         if (inventory == null) {
             return;
         }
@@ -209,7 +209,7 @@ public class FastInventoryListener implements Listener {
         this.service.removeInventoryViewer(player);
     }
 
-    private CraftVentory getFastInventory(Player player, Inventory inventory) {
+    private CraftVentory getCraftVentory(Player player, Inventory inventory) {
 
         InventoryViewer viewer = this.service.getInventoryViewer(player);
 

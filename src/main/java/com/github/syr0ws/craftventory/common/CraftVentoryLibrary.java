@@ -6,13 +6,13 @@ import com.github.syr0ws.craftventory.api.config.dao.InventoryConfigDAO;
 import com.github.syr0ws.craftventory.internal.SimpleInventoryService;
 import com.github.syr0ws.craftventory.internal.config.yaml.YamlInventoryConfigDAO;
 import com.github.syr0ws.craftventory.internal.config.yaml.action.*;
-import com.github.syr0ws.craftventory.internal.inventory.listener.FastInventoryListener;
+import com.github.syr0ws.craftventory.internal.inventory.listener.CraftVentoryListener;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
 /**
- * A utility class for creating and configuring the key components of the FastInventory library.
+ * A utility class for creating and configuring the key components of the library.
  */
 public class CraftVentoryLibrary {
 
@@ -28,7 +28,7 @@ public class CraftVentoryLibrary {
     public static InventoryService createInventoryService(Plugin plugin) {
 
         SimpleInventoryService service = new SimpleInventoryService();
-        FastInventoryListener listener = new FastInventoryListener(plugin, service);
+        CraftVentoryListener listener = new CraftVentoryListener(plugin, service);
 
         PluginManager manager = plugin.getServer().getPluginManager();
         manager.registerEvents(listener, plugin);

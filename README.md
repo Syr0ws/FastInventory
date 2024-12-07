@@ -25,5 +25,5 @@ CraftVentory comes with the following features:
 
 ## Documentation
 
-The documentation of the library is available on its [wiki](https://syrows-development.gitbook.io/fastinventory/).
+The documentation of the library is available on its [wiki](https://syrows-development.gitbook.io/craftventory/).
 

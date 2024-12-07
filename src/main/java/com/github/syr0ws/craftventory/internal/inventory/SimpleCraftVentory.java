@@ -130,7 +130,7 @@ public class SimpleCraftVentory implements CraftVentory {
         return this.provider.getProviderManager()
                 .provide(ProviderNameEnum.INVENTORY_TYPE.name(), InventoryTypeDto.class, provider, this.getDefaultContext())
                 .map(InventoryTypeDto::getType)
-                .orElseThrow(() -> new InventoryException("No provider found for FastInventoryType"));
+                .orElseThrow(() -> new InventoryException("No provider found for CraftVentoryType"));
     }
 
     @Override

@@ -55,7 +55,7 @@ public enum CraftVentoryType {
     }
 
     /**
-     * Gets the corresponding Bukkit {@link InventoryType} for this FastInventoryType.
+     * Gets the corresponding Bukkit {@link InventoryType} for this CraftVentoryType.
      *
      * @return The corresponding Bukkit inventory type.
      */
