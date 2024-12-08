@@ -10,7 +10,7 @@ import com.github.syr0ws.craftventory.api.inventory.event.CraftVentoryBeforeOpen
 import com.github.syr0ws.craftventory.api.inventory.exception.InventoryException;
 import com.github.syr0ws.craftventory.api.inventory.hook.HookManager;
 import com.github.syr0ws.craftventory.api.inventory.item.InventoryItem;
-import com.github.syr0ws.craftventory.api.inventory.model.InventoryModel;
+import com.github.syr0ws.craftventory.api.inventory.InventoryStorage;
 import com.github.syr0ws.craftventory.api.inventory.pagination.PaginationManager;
 import com.github.syr0ws.craftventory.api.transform.InventoryProvider;
 import com.github.syr0ws.craftventory.api.util.Context;
@@ -21,7 +21,7 @@ import com.github.syr0ws.craftventory.common.transform.provider.ProviderNameEnum
 import com.github.syr0ws.craftventory.common.util.CommonContextKey;
 import com.github.syr0ws.craftventory.internal.inventory.hook.SimpleHookManager;
 import com.github.syr0ws.craftventory.internal.inventory.item.SimpleInventoryItem;
-import com.github.syr0ws.craftventory.internal.inventory.model.SimpleInventoryModel;
+import com.github.syr0ws.craftventory.internal.inventory.model.SimpleInventoryStorage;
 import com.github.syr0ws.craftventory.internal.inventory.pagination.SimplePaginationManager;
 import com.github.syr0ws.craftventory.internal.util.SimpleContext;
 import org.bukkit.Bukkit;
@@ -33,7 +33,7 @@ public class SimpleCraftVentory implements CraftVentory {
     private final InventoryProvider provider;
     private final InventoryContent content;
     private final InventoryService service;
-    private final InventoryModel model;
+    private final InventoryStorage model;
     private final SimplePaginationManager paginationManager;
     private final HookManager hookManager;
     private final InventoryViewer viewer;
@@ -58,7 +58,7 @@ public class SimpleCraftVentory implements CraftVentory {
         this.service = service;
         this.viewer = viewer;
         this.content = new SimpleInventoryContent(this);
-        this.model = new SimpleInventoryModel();
+        this.model = new SimpleInventoryStorage();
         this.paginationManager = new SimplePaginationManager();
         this.hookManager = new SimpleHookManager();
     }
@@ -149,7 +149,7 @@ public class SimpleCraftVentory implements CraftVentory {
     }
 
     @Override
-    public InventoryModel getModel() {
+    public InventoryStorage getModel() {
         return this.model;
     }
 

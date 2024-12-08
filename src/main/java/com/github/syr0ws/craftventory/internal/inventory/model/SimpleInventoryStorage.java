@@ -1,10 +1,10 @@
 package com.github.syr0ws.craftventory.internal.inventory.model;
 
-import com.github.syr0ws.craftventory.api.inventory.model.InventoryModel;
+import com.github.syr0ws.craftventory.api.inventory.InventoryStorage;
 
 import java.util.*;
 
-public class SimpleInventoryModel implements InventoryModel {
+public class SimpleInventoryStorage implements InventoryStorage {
 
     private final Map<String, Data<?>> data = new HashMap<>();
 

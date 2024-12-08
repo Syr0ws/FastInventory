@@ -1,4 +1,4 @@
-package com.github.syr0ws.craftventory.api.inventory.model;
+package com.github.syr0ws.craftventory.api.inventory;
 
 import java.util.Optional;
 import java.util.Set;
@@ -6,12 +6,12 @@ import java.util.Set;
 /**
  * Represents a data model associated with an inventory.
  * <p>
- * The {@link InventoryModel} provides a flexible way to store, retrieve, and manage
+ * The {@link InventoryStorage} provides a flexible way to store, retrieve, and manage
  * data associated with an inventory instance. It supports typed data storage
  * and retrieval based on unique keys.
  * </p>
  */
-public interface InventoryModel {
+public interface InventoryStorage {
 
     /**
      * Stores a data entry in the inventory model.
