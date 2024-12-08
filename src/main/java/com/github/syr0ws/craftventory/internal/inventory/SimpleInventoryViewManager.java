@@ -64,6 +64,7 @@ public class SimpleInventoryViewManager implements InventoryViewManager {
         // Reset the history.
         this.index = -1;
         this.history.clear();
+        this.storage.clear();
     }
 
     @Override
