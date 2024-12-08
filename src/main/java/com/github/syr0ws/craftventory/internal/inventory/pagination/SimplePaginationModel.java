@@ -69,7 +69,8 @@ public class SimplePaginationModel<T> implements PaginationModel<T> {
 
     @Override
     public int countPages() {
-        return (int) Math.ceil(this.countItems() / (double) this.perPage);
+        int pages = (int) Math.ceil(this.countItems() / (double) this.perPage);
+        return pages > 0 ? pages : 1;
     }
 
     @Override
