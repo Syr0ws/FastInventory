@@ -2,7 +2,6 @@ package com.github.syr0ws.craftventory.api.inventory;
 
 import com.github.syr0ws.craftventory.api.InventoryService;
 import com.github.syr0ws.craftventory.api.inventory.hook.HookManager;
-import com.github.syr0ws.craftventory.api.inventory.model.InventoryModel;
 import com.github.syr0ws.craftventory.api.inventory.pagination.PaginationManager;
 import com.github.syr0ws.craftventory.api.transform.InventoryProvider;
 import com.github.syr0ws.craftventory.api.util.Context;
@@ -112,11 +111,11 @@ public interface CraftVentory {
     InventoryContent getContent();
 
     /**
-     * Retrieves the model for the inventory.
+     * Retrieves the local storage for the inventory.
      *
-     * @return The {@link InventoryModel} instance associated with the inventory.
+     * @return The {@link InventoryStorage} instance associated with the inventory.
      */
-    InventoryModel getModel();
+    InventoryStorage getLocalStorage();
 
     /**
      * Retrieves the service managing the inventory.

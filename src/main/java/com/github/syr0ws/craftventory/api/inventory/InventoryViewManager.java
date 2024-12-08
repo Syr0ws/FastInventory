@@ -15,7 +15,7 @@ public interface InventoryViewManager {
      * </p>
      *
      * @param inventory The {@link CraftVentory} to open. Must not be {@code null}.
-     * @throws IllegalArgumentException  if the {@code inventory} is {@code null}.
+     * @throws IllegalArgumentException if the {@code inventory} is {@code null}.
      */
     void openView(CraftVentory inventory);
 
@@ -122,4 +122,11 @@ public interface InventoryViewManager {
      * or an empty {@link Optional} if no inventory is open.
      */
     Optional<CraftVentory> getOpenedInventory();
+
+    /**
+     * Retrieves the shared storage between inventories in the history.
+     *
+     * @return The {@link InventoryStorage} instance shared among inventories. Never {@code null}.
+     */
+    InventoryStorage getSharedStorage();
 }

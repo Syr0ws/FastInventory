@@ -1,4 +1,4 @@
-package com.github.syr0ws.craftventory.api.inventory.model;
+package com.github.syr0ws.craftventory.api.inventory;
 
 import java.util.Optional;
 import java.util.Set;
@@ -6,12 +6,12 @@ import java.util.Set;
 /**
  * Represents a data model associated with an inventory.
  * <p>
- * The {@link InventoryModel} provides a flexible way to store, retrieve, and manage
+ * The {@link InventoryStorage} provides a flexible way to store, retrieve, and manage
  * data associated with an inventory instance. It supports typed data storage
  * and retrieval based on unique keys.
  * </p>
  */
-public interface InventoryModel {
+public interface InventoryStorage {
 
     /**
      * Stores a data entry in the inventory model.
@@ -32,12 +32,26 @@ public interface InventoryModel {
     boolean removeData(String key);
 
     /**
+     * Removes all the stored data in the storage.
+     */
+    void clear();
+
+    /**
      * Checks if the inventory model contains a data entry for the specified key.
      *
      * @param key The unique key that identifies the data entry. Must not be {@code null}.
      * @return {@code true} if a data entry exists for the given key, {@code false} otherwise.
      */
     boolean hasData(String key);
+
+    /**
+     * Checks if the inventory model contains a data entry for the specified key and class.
+     *
+     * @param key The unique key that identifies the data entry. Must not be {@code null}.
+     * @param type The {@link Class} type of the data. Must not be {@code null}.
+     * @return {@code true} if a data entry exists for the given key, {@code false} otherwise.
+     */
+    boolean hasData(String key, Class<?> type);
 
     /**
      * Retrieves a data entry from the inventory model.

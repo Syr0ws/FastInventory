@@ -1,10 +1,10 @@
-package com.github.syr0ws.craftventory.internal.inventory.model;
+package com.github.syr0ws.craftventory.internal.inventory;
 
-import com.github.syr0ws.craftventory.api.inventory.model.InventoryModel;
+import com.github.syr0ws.craftventory.api.inventory.InventoryStorage;
 
 import java.util.*;
 
-public class SimpleInventoryModel implements InventoryModel {
+public class SimpleInventoryStorage implements InventoryStorage {
 
     private final Map<String, Data<?>> data = new HashMap<>();
 
@@ -17,6 +17,10 @@ public class SimpleInventoryModel implements InventoryModel {
 
         if(type == null) {
             throw new IllegalArgumentException("type cannot be null");
+        }
+
+        if(value == null) {
+            throw new IllegalArgumentException("null value is not allowed");
         }
 
         this.data.put(key, new Data<>(type, value));
@@ -33,6 +37,11 @@ public class SimpleInventoryModel implements InventoryModel {
     }
 
     @Override
+    public void clear() {
+        this.data.clear();
+    }
+
+    @Override
     public boolean hasData(String key) {
 
         if(key == null) {
@@ -40,6 +49,26 @@ public class SimpleInventoryModel implements InventoryModel {
         }
 
         return this.data.containsKey(key);
+    }
+
+    @Override
+    public boolean hasData(String key, Class<?> type) {
+
+        if(key == null) {
+            throw new IllegalArgumentException("key cannot be null");
+        }
+
+        if(type == null) {
+            throw new IllegalArgumentException("type cannot be null");
+        }
+
+        if(!this.data.containsKey(key)) {
+            return false;
+        }
+
+        Object data = this.data.get(key);
+
+        return type.isInstance(data);
     }
 
     @Override
@@ -60,11 +89,11 @@ public class SimpleInventoryModel implements InventoryModel {
             return Optional.empty();
         }
 
-        if(data.value() != null && !type.isInstance(data.value())) {
+        if(!type.isInstance(data.value())) {
             throw new IllegalArgumentException(String.format("type %s is not compatible with data type %s", type.getName(), data.getClass().getName()));
         }
 
-        return Optional.ofNullable((T) data.value());
+        return Optional.of((T) data.value());
     }
 
     @Override
