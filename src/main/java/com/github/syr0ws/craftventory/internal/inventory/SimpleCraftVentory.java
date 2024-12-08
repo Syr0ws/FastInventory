@@ -21,7 +21,6 @@ import com.github.syr0ws.craftventory.common.transform.provider.ProviderNameEnum
 import com.github.syr0ws.craftventory.common.util.CommonContextKey;
 import com.github.syr0ws.craftventory.internal.inventory.hook.SimpleHookManager;
 import com.github.syr0ws.craftventory.internal.inventory.item.SimpleInventoryItem;
-import com.github.syr0ws.craftventory.internal.inventory.model.SimpleInventoryStorage;
 import com.github.syr0ws.craftventory.internal.inventory.pagination.SimplePaginationManager;
 import com.github.syr0ws.craftventory.internal.util.SimpleContext;
 import org.bukkit.Bukkit;

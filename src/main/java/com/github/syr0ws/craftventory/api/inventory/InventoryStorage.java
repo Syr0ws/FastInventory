@@ -40,6 +40,15 @@ public interface InventoryStorage {
     boolean hasData(String key);
 
     /**
+     * Checks if the inventory model contains a data entry for the specified key and class.
+     *
+     * @param key The unique key that identifies the data entry. Must not be {@code null}.
+     * @param type The {@link Class} type of the data. Must not be {@code null}.
+     * @return {@code true} if a data entry exists for the given key, {@code false} otherwise.
+     */
+    boolean hasData(String key, Class<?> type);
+
+    /**
      * Retrieves a data entry from the inventory model.
      *
      * @param key  The unique key that identifies the data entry. Must not be {@code null}.
