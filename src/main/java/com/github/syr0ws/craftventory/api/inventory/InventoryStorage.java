@@ -32,6 +32,11 @@ public interface InventoryStorage {
     boolean removeData(String key);
 
     /**
+     * Removes all the stored data in the storage.
+     */
+    void clear();
+
+    /**
      * Checks if the inventory model contains a data entry for the specified key.
      *
      * @param key The unique key that identifies the data entry. Must not be {@code null}.

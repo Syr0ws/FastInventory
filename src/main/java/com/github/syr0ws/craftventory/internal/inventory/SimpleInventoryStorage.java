@@ -37,6 +37,11 @@ public class SimpleInventoryStorage implements InventoryStorage {
     }
 
     @Override
+    public void clear() {
+        this.data.clear();
+    }
+
+    @Override
     public boolean hasData(String key) {
 
         if(key == null) {
