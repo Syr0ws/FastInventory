@@ -1,6 +1,7 @@
 package com.github.syr0ws.craftventory.internal.inventory;
 
 import com.github.syr0ws.craftventory.api.inventory.CraftVentory;
+import com.github.syr0ws.craftventory.api.inventory.InventoryStorage;
 import com.github.syr0ws.craftventory.api.inventory.InventoryViewManager;
 
 import java.util.ArrayList;
@@ -9,7 +10,9 @@ import java.util.Optional;
 
 public class SimpleInventoryViewManager implements InventoryViewManager {
 
+    private final InventoryStorage storage = new SimpleInventoryStorage();
     private final List<CraftVentory> history = new ArrayList<>();
+
     private int index = -1;
     private boolean actionInProgress;
 
@@ -188,6 +191,11 @@ public class SimpleInventoryViewManager implements InventoryViewManager {
     @Override
     public Optional<CraftVentory> getOpenedInventory() {
         return this.hasOpenedInventory() ? Optional.of(this.history.get(this.index)) : Optional.empty();
+    }
+
+    @Override
+    public InventoryStorage getSharedStorage() {
+        return this.storage;
     }
 
     private void closeCurrentInventory() {
