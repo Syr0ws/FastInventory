@@ -111,11 +111,11 @@ public interface CraftVentory {
     InventoryContent getContent();
 
     /**
-     * Retrieves the model for the inventory.
+     * Retrieves the local storage for the inventory.
      *
      * @return The {@link InventoryStorage} instance associated with the inventory.
      */
-    InventoryStorage getModel();
+    InventoryStorage getLocalStorage();
 
     /**
      * Retrieves the service managing the inventory.

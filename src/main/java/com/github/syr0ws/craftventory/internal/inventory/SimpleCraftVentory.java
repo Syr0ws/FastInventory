@@ -148,7 +148,7 @@ public class SimpleCraftVentory implements CraftVentory {
     }
 
     @Override
-    public InventoryStorage getModel() {
+    public InventoryStorage getLocalStorage() {
         return this.model;
     }
 
