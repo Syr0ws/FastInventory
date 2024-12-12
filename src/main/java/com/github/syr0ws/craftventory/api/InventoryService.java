@@ -1,6 +1,7 @@
 package com.github.syr0ws.craftventory.api;
 
 import com.github.syr0ws.craftventory.api.inventory.InventoryViewer;
+import com.github.syr0ws.craftventory.api.transform.InventoryDescriptor;
 import com.github.syr0ws.craftventory.api.transform.InventoryProvider;
 import org.bukkit.entity.Player;
 
@@ -33,12 +34,17 @@ public interface InventoryService {
     Set<InventoryViewer> getInventoryViewers();
 
     /**
-     * Registers a new {@link InventoryProvider} in the service.
+     * Loads the inventory configurations for all registered {@link InventoryProvider} instances.
+     */
+    void loadInventoryConfigs();
+
+    /**
+     * Creates and register a new {@link InventoryProvider} from an {@link InventoryDescriptor}.
      *
-     * @param provider The {@link InventoryProvider} to be registered. Must not be {@code null}.
+     * @param descriptor The {@link InventoryDescriptor} that describes the inventory properties. Must not be {@code null}.
      * @throws IllegalArgumentException If the {@code provider} is {@code null}.
      */
-    void addProvider(InventoryProvider provider);
+    void createProvider(InventoryDescriptor descriptor);
 
     /**
      * Removes the {@link InventoryProvider} by id.

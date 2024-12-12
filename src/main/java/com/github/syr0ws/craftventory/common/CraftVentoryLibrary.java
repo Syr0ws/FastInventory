@@ -27,7 +27,7 @@ public class CraftVentoryLibrary {
      */
     public static InventoryService createInventoryService(Plugin plugin) {
 
-        SimpleInventoryService service = new SimpleInventoryService();
+        SimpleInventoryService service = new SimpleInventoryService(plugin);
         CraftVentoryListener listener = new CraftVentoryListener(plugin, service);
 
         PluginManager manager = plugin.getServer().getPluginManager();

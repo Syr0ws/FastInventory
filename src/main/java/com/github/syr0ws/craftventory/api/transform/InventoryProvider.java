@@ -18,11 +18,6 @@ import java.util.Optional;
 public interface InventoryProvider {
 
     /**
-     * Load the configuration of the inventory.
-     */
-    void loadConfig();
-
-    /**
      * Creates a new {@link CraftVentory} instance for a specific player.
      *
      * @param service The {@link InventoryService} where the inventory will be stored. Must not be {@code null}.
@@ -31,6 +26,11 @@ public interface InventoryProvider {
      * @throws IllegalArgumentException If {@code service} or {@code player} is {@code null}.
      */
     CraftVentory createInventory(InventoryService service, Player player);
+
+    /**
+     * Load the configuration of the inventory.
+     */
+    void loadConfig();
 
     /**
      * Retrieves the configuration of the inventory.
