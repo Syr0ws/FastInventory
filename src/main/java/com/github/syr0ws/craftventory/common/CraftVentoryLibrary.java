@@ -57,20 +57,9 @@ public class CraftVentoryLibrary {
 
         ClickActionLoaderFactory<ConfigurationSection> factory = new YamlClickActionLoaderFactory();
 
-        factory.addLoader(new YamlCloseActionLoader());
-        factory.addLoader(new YamlMessageActionLoader());
-        factory.addLoader(new YamlPlayerCommandActionLoader());
-        factory.addLoader(new YamlConsoleCommandActionLoader());
-        factory.addLoader(new YamlPreviousPageActionLoader());
-        factory.addLoader(new YamlNextPageActionLoader());
-        factory.addLoader(new YamlBroadcastActionLoader());
-        factory.addLoader(new YamlSoundActionLoader());
-        factory.addLoader(new YamlUpdateContentActionLoader());
-        factory.addLoader(new YamlUpdatePaginationActionLoader());
-        factory.addLoader(new YamlOpenInventoryActionLoader());
-        factory.addLoader(new YamlHomeActionLoader());
-        factory.addLoader(new YamlBackActionLoader());
-        factory.addLoader(new YamlForwardActionLoader());
+        for(YamlActionLoaderEnum action : YamlActionLoaderEnum.values()) {
+            factory.addLoader(action.getLoader());
+        }
 
         return factory;
     }
