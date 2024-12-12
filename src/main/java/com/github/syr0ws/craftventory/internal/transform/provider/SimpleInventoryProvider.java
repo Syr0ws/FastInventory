@@ -169,11 +169,10 @@ public class SimpleInventoryProvider implements InventoryProvider {
 
         SimplePaginationModel<T> model = new SimplePaginationModel<>(
                 dto.paginationDataType(),
-                dto.dataSupplier(),
                 dto.slots().size()
         );
 
-        return new SimplePagination<>(dto.paginationId(), inventory, model, dto.slots());
+        return new SimplePagination<>(dto.paginationId(), inventory, model, dto.dataSupplier(), dto.slots());
     }
 
     private void addDefaultProviders() {

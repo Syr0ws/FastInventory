@@ -10,11 +10,6 @@ import java.util.List;
 public interface PaginationModel<T> {
 
     /**
-     * Updates the pagination data.
-     */
-    void update();
-
-    /**
      * Moves to the previous page in the pagination.
      */
     void previousPage();
@@ -45,6 +40,15 @@ public interface PaginationModel<T> {
      * @return A collection of all items in the pagination.
      */
     Collection<T> getItems();
+
+    /**
+     * Updates pagination items.
+     *
+     * @param items The collection of items to set in the pagination. Must not be {@code null}.
+     *              The provided collection will replace the current items in the pagination.
+     * @throws IllegalArgumentException if {@code items} is {@code null}.
+     */
+    void updateItems(Collection<T> items);
 
     /**
      * Retrieves the current page number.
