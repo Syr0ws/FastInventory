@@ -17,15 +17,21 @@ import com.github.syr0ws.craftventory.internal.inventory.item.SimpleInventoryIte
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 
 public class SimplePagination<T> implements Pagination<T> {
 
     private final String id;
     private final CraftVentory inventory;
     private final PaginationModel<T> model;
+    private final Function<CraftVentory, List<T>> dataSupplier;
     private final List<Integer> slots;
 
-    public SimplePagination(String id, CraftVentory inventory, PaginationModel<T> model, List<Integer> slots) {
+    public SimplePagination(String id,
+                            CraftVentory inventory,
+                            PaginationModel<T> model,
+                            Function<CraftVentory, List<T>> dataSupplier,
+                            List<Integer> slots) {
 
         if (id == null || id.isEmpty()) {
             throw new IllegalArgumentException("id cannot be null or empty");
@@ -39,6 +45,10 @@ public class SimplePagination<T> implements Pagination<T> {
             throw new IllegalArgumentException("model cannot be null");
         }
 
+        if(dataSupplier == null) {
+            throw new IllegalArgumentException("dataSupplier cannot be null");
+        }
+
         if (slots == null) {
             throw new IllegalArgumentException("slots cannot be null");
         }
@@ -46,24 +56,15 @@ public class SimplePagination<T> implements Pagination<T> {
         this.id = id;
         this.inventory = inventory;
         this.model = model;
+        this.dataSupplier = dataSupplier;
         this.slots = slots;
     }
 
     @Override
     public void update() {
-        this.model.update();
-        this.updateCurrentPage();
+        this.model.updateItems(this.dataSupplier.apply(this.inventory));
         this.updatePaginationItems();
         this.updatePageItems();
-    }
-
-    private void updateCurrentPage() {
-
-        int lastPage = this.model.getLastPage();
-
-        if(this.model.getCurrentPage() > lastPage) {
-            this.model.setCurrentPage(lastPage);
-        }
     }
 
     private void updatePaginationItems() {
