@@ -2,17 +2,30 @@ package com.github.syr0ws.craftventory.internal;
 
 import com.github.syr0ws.craftventory.api.InventoryService;
 import com.github.syr0ws.craftventory.api.inventory.InventoryViewer;
+import com.github.syr0ws.craftventory.api.transform.InventoryDescriptor;
 import com.github.syr0ws.craftventory.api.transform.InventoryProvider;
 import com.github.syr0ws.craftventory.internal.inventory.SimpleInventoryViewer;
+import com.github.syr0ws.craftventory.internal.transform.provider.SimpleInventoryProvider;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class SimpleInventoryService implements InventoryService {
 
+    private final Plugin plugin;
     private final Map<Player, InventoryViewer> viewers = new HashMap<>();
     private final Map<String, InventoryProvider> providers = new HashMap<>();
+
+    public SimpleInventoryService(Plugin plugin) {
+
+        if(plugin == null) {
+            throw new IllegalArgumentException("plugin cannot be null");
+        }
+
+        this.plugin = plugin;
+    }
 
     public void addInventoryViewer(Player player) {
 
@@ -51,12 +64,18 @@ public class SimpleInventoryService implements InventoryService {
     }
 
     @Override
-    public void addProvider(InventoryProvider provider) {
+    public void reloadInventoryConfigs() {
+        this.providers.values().forEach(InventoryProvider::loadConfig);
+    }
 
-        if (provider == null) {
-            throw new IllegalArgumentException("provider cannot be null");
+    @Override
+    public void createProvider(InventoryDescriptor descriptor) {
+
+        if(descriptor == null) {
+            throw new IllegalArgumentException("descriptor cannot be null");
         }
 
+        InventoryProvider provider = new SimpleInventoryProvider(this.plugin, descriptor);
         this.providers.put(provider.getId(), provider);
     }
 
