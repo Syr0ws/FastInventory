@@ -34,9 +34,9 @@ public interface InventoryService {
     Set<InventoryViewer> getInventoryViewers();
 
     /**
-     * Reloads the inventory configurations for all registered {@link InventoryProvider} instances.
+     * Loads the inventory configurations for all registered {@link InventoryProvider} instances.
      */
-    void reloadInventoryConfigs();
+    void loadInventoryConfigs();
 
     /**
      * Creates and register a new {@link InventoryProvider} from an {@link InventoryDescriptor}.

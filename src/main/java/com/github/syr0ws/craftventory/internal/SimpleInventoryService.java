@@ -64,7 +64,7 @@ public class SimpleInventoryService implements InventoryService {
     }
 
     @Override
-    public void reloadInventoryConfigs() {
+    public void loadInventoryConfigs() {
         this.providers.values().forEach(InventoryProvider::loadConfig);
     }
 
