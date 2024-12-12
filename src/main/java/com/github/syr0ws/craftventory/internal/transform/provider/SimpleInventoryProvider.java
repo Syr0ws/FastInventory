@@ -74,6 +74,9 @@ public class SimpleInventoryProvider implements InventoryProvider {
 
         // Registering default placeholders.
         this.addDefaultPlaceholders();
+
+        // Registering enhancements.
+        this.descriptor.addEnhancements(this.enhancementManager);
     }
 
     @Override
