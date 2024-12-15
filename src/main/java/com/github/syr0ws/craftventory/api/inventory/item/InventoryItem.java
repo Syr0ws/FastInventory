@@ -1,6 +1,7 @@
 package com.github.syr0ws.craftventory.api.inventory.item;
 
 import com.github.syr0ws.craftventory.api.inventory.action.ClickAction;
+import com.github.syr0ws.craftventory.api.inventory.data.DataStore;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
@@ -23,6 +24,13 @@ public interface InventoryItem {
      * @return Retrieves the corresponding {@link ItemStack} set in the inventory.
      */
     ItemStack getItemStack();
+
+    /**
+     * Retrieves the local storage for the item.
+     *
+     * @return The {@link DataStore} instance associated with the item.
+     */
+    DataStore getLocalStore();
 
     /**
      * Retrieves the list of {@link ClickAction} associated with this inventory item.

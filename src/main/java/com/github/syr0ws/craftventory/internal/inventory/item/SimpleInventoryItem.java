@@ -1,7 +1,9 @@
 package com.github.syr0ws.craftventory.internal.inventory.item;
 
 import com.github.syr0ws.craftventory.api.inventory.action.ClickAction;
+import com.github.syr0ws.craftventory.api.inventory.data.DataStore;
 import com.github.syr0ws.craftventory.api.inventory.item.InventoryItem;
+import com.github.syr0ws.craftventory.internal.inventory.SimpleDataStore;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Collections;
@@ -11,6 +13,7 @@ public class SimpleInventoryItem implements InventoryItem {
 
     private final String id;
     private final ItemStack item;
+    private final DataStore dataStore;
     private final List<ClickAction> actions;
 
     public SimpleInventoryItem(String id, ItemStack item, List<ClickAction> actions) {
@@ -29,6 +32,7 @@ public class SimpleInventoryItem implements InventoryItem {
 
         this.id = id;
         this.item = item;
+        this.dataStore = new SimpleDataStore();
         this.actions = Collections.unmodifiableList(actions);
     }
 
@@ -40,6 +44,11 @@ public class SimpleInventoryItem implements InventoryItem {
     @Override
     public ItemStack getItemStack() {
         return this.item;
+    }
+
+    @Override
+    public DataStore getLocalStore() {
+        return this.dataStore;
     }
 
     @Override
