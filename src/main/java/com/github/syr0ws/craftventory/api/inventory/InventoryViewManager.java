@@ -1,5 +1,7 @@
 package com.github.syr0ws.craftventory.api.inventory;
 
+import com.github.syr0ws.craftventory.api.inventory.data.DataStore;
+
 import java.util.Optional;
 
 /**
@@ -126,7 +128,7 @@ public interface InventoryViewManager {
     /**
      * Retrieves the shared storage between inventories in the history.
      *
-     * @return The {@link InventoryStorage} instance shared among inventories. Never {@code null}.
+     * @return The {@link DataStore} instance shared among inventories. Never {@code null}.
      */
-    InventoryStorage getSharedStorage();
+    DataStore getSharedStorage();
 }

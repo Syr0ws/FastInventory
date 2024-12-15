@@ -1,7 +1,7 @@
 package com.github.syr0ws.craftventory.internal.inventory;
 
 import com.github.syr0ws.craftventory.api.inventory.CraftVentory;
-import com.github.syr0ws.craftventory.api.inventory.InventoryStorage;
+import com.github.syr0ws.craftventory.api.inventory.data.DataStore;
 import com.github.syr0ws.craftventory.api.inventory.InventoryViewManager;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class SimpleInventoryViewManager implements InventoryViewManager {
 
-    private final InventoryStorage storage = new SimpleInventoryStorage();
+    private final DataStore storage = new SimpleDataStore();
     private final List<CraftVentory> history = new ArrayList<>();
 
     private int index = -1;
@@ -195,7 +195,7 @@ public class SimpleInventoryViewManager implements InventoryViewManager {
     }
 
     @Override
-    public InventoryStorage getSharedStorage() {
+    public DataStore getSharedStorage() {
         return this.storage;
     }
 
