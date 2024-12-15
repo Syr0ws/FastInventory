@@ -9,6 +9,7 @@ import com.github.syr0ws.craftventory.api.inventory.pagination.Pagination;
 import com.github.syr0ws.craftventory.api.inventory.pagination.PaginationModel;
 import com.github.syr0ws.craftventory.api.transform.InventoryProvider;
 import com.github.syr0ws.craftventory.api.util.Context;
+import com.github.syr0ws.craftventory.common.inventory.data.DataStoreKey;
 import com.github.syr0ws.craftventory.common.transform.dto.InventoryItemDto;
 import com.github.syr0ws.craftventory.common.transform.dto.pagination.PaginationItemDto;
 import com.github.syr0ws.craftventory.common.transform.provider.ProviderNameEnum;
@@ -91,6 +92,7 @@ public class SimplePagination<T> implements Pagination<T> {
                         .orElseThrow(() -> new InventoryException(String.format("Cannot provide pagination item for pagination '%s'", this.id)));
 
                 item = new SimpleInventoryItem(dto.getId(), dto.getItem(), dto.getActions());
+                item.getLocalStore().setData(DataStoreKey.PAGINATION_DATA.getName(), this.model.getDataType(), items.get(i));
             }
 
             if (item == null) {
