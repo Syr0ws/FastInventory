@@ -130,5 +130,5 @@ public interface InventoryViewManager {
      *
      * @return The {@link DataStore} instance shared among inventories. Never {@code null}.
      */
-    DataStore getSharedStorage();
+    DataStore getSharedStore();
 }

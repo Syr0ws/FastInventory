@@ -116,7 +116,7 @@ public interface CraftVentory {
      *
      * @return The {@link DataStore} instance associated with the inventory.
      */
-    DataStore getLocalStorage();
+    DataStore getLocalStore();
 
     /**
      * Retrieves the service managing the inventory.

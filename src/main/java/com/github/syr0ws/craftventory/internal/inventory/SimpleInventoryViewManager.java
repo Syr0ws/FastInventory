@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class SimpleInventoryViewManager implements InventoryViewManager {
 
-    private final DataStore storage = new SimpleDataStore();
+    private final DataStore dataStore = new SimpleDataStore();
     private final List<CraftVentory> history = new ArrayList<>();
 
     private int index = -1;
@@ -64,7 +64,7 @@ public class SimpleInventoryViewManager implements InventoryViewManager {
         // Reset the history.
         this.index = -1;
         this.history.clear();
-        this.storage.clear();
+        this.dataStore.clear();
     }
 
     @Override
@@ -195,8 +195,8 @@ public class SimpleInventoryViewManager implements InventoryViewManager {
     }
 
     @Override
-    public DataStore getSharedStorage() {
-        return this.storage;
+    public DataStore getSharedStore() {
+        return this.dataStore;
     }
 
     private void closeCurrentInventory() {

@@ -32,7 +32,7 @@ public class SimpleCraftVentory implements CraftVentory {
     private final InventoryProvider provider;
     private final InventoryContent content;
     private final InventoryService service;
-    private final DataStore model;
+    private final DataStore dataStore;
     private final SimplePaginationManager paginationManager;
     private final HookManager hookManager;
     private final InventoryViewer viewer;
@@ -57,7 +57,7 @@ public class SimpleCraftVentory implements CraftVentory {
         this.service = service;
         this.viewer = viewer;
         this.content = new SimpleInventoryContent(this);
-        this.model = new SimpleDataStore();
+        this.dataStore = new SimpleDataStore();
         this.paginationManager = new SimplePaginationManager();
         this.hookManager = new SimpleHookManager();
     }
@@ -148,8 +148,8 @@ public class SimpleCraftVentory implements CraftVentory {
     }
 
     @Override
-    public DataStore getLocalStorage() {
-        return this.model;
+    public DataStore getLocalStore() {
+        return this.dataStore;
     }
 
     @Override
