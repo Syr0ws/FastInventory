@@ -3,7 +3,7 @@ package com.github.syr0ws.craftventory.internal.inventory.item;
 import com.github.syr0ws.craftventory.api.inventory.action.ClickAction;
 import com.github.syr0ws.craftventory.api.inventory.data.DataStore;
 import com.github.syr0ws.craftventory.api.inventory.item.InventoryItem;
-import com.github.syr0ws.craftventory.internal.inventory.SimpleDataStore;
+import com.github.syr0ws.craftventory.internal.inventory.data.SimpleDataStore;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Collections;

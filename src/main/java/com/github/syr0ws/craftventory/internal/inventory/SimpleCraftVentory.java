@@ -19,6 +19,7 @@ import com.github.syr0ws.craftventory.common.transform.dto.InventoryTypeDto;
 import com.github.syr0ws.craftventory.common.transform.dto.TitleDto;
 import com.github.syr0ws.craftventory.common.transform.provider.ProviderNameEnum;
 import com.github.syr0ws.craftventory.common.util.CommonContextKey;
+import com.github.syr0ws.craftventory.internal.inventory.data.SimpleDataStore;
 import com.github.syr0ws.craftventory.internal.inventory.hook.SimpleHookManager;
 import com.github.syr0ws.craftventory.internal.inventory.item.SimpleInventoryItem;
 import com.github.syr0ws.craftventory.internal.inventory.pagination.SimplePaginationManager;

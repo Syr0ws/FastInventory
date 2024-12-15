@@ -1,4 +1,4 @@
-package com.github.syr0ws.craftventory.internal.inventory;
+package com.github.syr0ws.craftventory.internal.inventory.data;
 
 import com.github.syr0ws.craftventory.api.inventory.data.DataStore;
 

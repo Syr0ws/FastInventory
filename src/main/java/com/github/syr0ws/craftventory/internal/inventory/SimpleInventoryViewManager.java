@@ -3,6 +3,7 @@ package com.github.syr0ws.craftventory.internal.inventory;
 import com.github.syr0ws.craftventory.api.inventory.CraftVentory;
 import com.github.syr0ws.craftventory.api.inventory.data.DataStore;
 import com.github.syr0ws.craftventory.api.inventory.InventoryViewManager;
+import com.github.syr0ws.craftventory.internal.inventory.data.SimpleDataStore;
 
 import java.util.ArrayList;
 import java.util.List;
