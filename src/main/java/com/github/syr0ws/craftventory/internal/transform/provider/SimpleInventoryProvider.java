@@ -72,8 +72,9 @@ public class SimpleInventoryProvider implements InventoryProvider {
         this.addDefaultProviders();
         this.descriptor.addProviders(this.providerManager);
 
-        // Registering default placeholders.
+        // Registering placeholders.
         this.addDefaultPlaceholders();
+        this.descriptor.addPlaceholders(this.placeholderManager);
 
         // Registering enhancements.
         this.descriptor.addEnhancements(this.enhancementManager);
