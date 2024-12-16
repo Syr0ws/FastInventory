@@ -66,9 +66,9 @@ public class SimpleInventoryStorage implements InventoryStorage {
             return false;
         }
 
-        Object data = this.data.get(key);
+        Data<?> data = this.data.get(key);
 
-        return type.isInstance(data);
+        return type.isInstance(data.value());
     }
 
     @Override
