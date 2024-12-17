@@ -23,7 +23,46 @@ CraftVentory comes with the following features:
 - **Enhancements** to dynamically modify inventory properties with Java code.
 - **Hooks** to execute custom Java code for an inventory when specific events happen.
 
+## Setup
+
+To use CraftVentory, you can directly include the JAR file as a dependency of your plugin. This JAR file can be downloaded
+on the [Releases page](https://github.com/Syr0ws/CraftVentory/releases) of the GitHub repository of the project.
+
+The library can also be included in your project by using a dependency manager like **Maven** or **Gradle**.
+
+**Maven**
+```xml
+<repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+</repository>
+
+<dependency>
+    <groupId>com.github.Syr0ws</groupId>
+    <artifactId>CraftVentory</artifactId>
+    <version>{VERSION}</version>
+    <scope>compile</scope>
+</dependency>
+```
+
+**Gradle**
+```groovy
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+dependencies {
+    implementation 'com.github.Syr0ws:CraftVentory:{VERSION}'
+}
+```
+
+After being added as a dependency, you must initialize the library by following this [tutorial](https://syrows-development.gitbook.io/craftventory/get-started/initialize-the-library).
+
 ## Documentation
 
 The documentation of the library is available on its [wiki](https://syrows-development.gitbook.io/craftventory/).
-
