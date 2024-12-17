@@ -25,7 +25,7 @@ CraftVentory comes with the following features:
 
 ## Setup
 
-To use CraftVentory, you can directly include the library JAR file as a dependency of your plugin. This JAR file can be downloaded
+To use CraftVentory, you can directly include the JAR file as a dependency of your plugin. This JAR file can be downloaded
 on the [Releases page](https://github.com/Syr0ws/CraftVentory/releases) of the GitHub repository of the project.
 
 The library can also be included in your project by using a dependency manager like **Maven** or **Gradle**.
@@ -61,7 +61,7 @@ dependencies {
 }
 ```
 
-After being added as dependency, you must initialize the library by following this [tutorial](https://syrows-development.gitbook.io/craftventory/get-started/initialize-the-library).
+After being added as a dependency, you must initialize the library by following this [tutorial](https://syrows-development.gitbook.io/craftventory/get-started/initialize-the-library).
 
 ## Documentation
 
